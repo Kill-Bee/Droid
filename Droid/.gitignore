@@ -3,6 +3,7 @@
 
 # Jangan abaikan folder src dan dua file ini
 !src/
+!src/components/
 !src/index.css
 !src/App.jsx
 
