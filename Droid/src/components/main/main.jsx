@@ -1,31 +1,31 @@
 export default function Main() {
   return (
-    <main class="main-content">
-      <div class="hero-background">
+    <main className="main-content">
+      <div className="hero-background">
         <img
           src="./images/background1.jpeg"
           alt="Hero Background"
-          class="background-img"
+          className="background-img"
           id="carouselImg"
         />
       </div>
 
-      <div class="content-wrapper">
-        <div class="content-left">
-          <h1 class="anime-title">SOUSOU NO FRIRENS BEYOND JOURNEYS:END'S</h1>
+      <div className="content-wrapper">
+        <div className="content-left">
+          <h1 className="anime-title">SOUSOU NO FRIRENS BEYOND JOURNEYS:END'S</h1>
 
-          <div class="action-buttons">
-            <button class="play-btn">
-              <span class="play-icon">▶</span>
-              <span class="play-text">PLAY</span>
+          <div className="action-buttons">
+            <button className="play-btn">
+              <span className="play-icon">▶</span>
+              <span className="play-text">PLAY</span>
             </button>
-            <button class="add-list-btn">
-              <span class="plus-icon">+</span>
-              <span class="add-text">ADD TO LIST</span>
+            <button className="add-list-btn">
+              <span className="plus-icon">+</span>
+              <span className="add-text">ADD TO LIST</span>
             </button>
           </div>
 
-          <div class="description">
+          <div className="description">
             <p>
               the story of Frieren, an elf wizard who has a very long life.
               After his team, consisting of human heroes, defeats the Demon
@@ -37,9 +37,9 @@ export default function Main() {
             </p>
           </div>
 
-          <div class="rating">
-            <span class="star">★</span>
-            <span class="rating-value">9.7</span>
+          <div className="rating">
+            <span className="star">★</span>
+            <span className="rating-value">9.7</span>
           </div>
         </div>
       </div>
