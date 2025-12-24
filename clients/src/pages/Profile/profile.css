@@ -1,0 +1,91 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.box {
+  width: 100%;
+  height: 70px;
+  background-color: rgb(16, 16, 16);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bacground{
+background-color: #1d1d1d;
+}
+.headerProfile {
+  flex-direction: column;
+  display: flex;
+  position: relative;
+  justify-content: left;
+  align-items: left;
+  width: 100%;
+  height: 300px;
+  margin:auto;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url(https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg);
+  background-size: cover;
+  background-blend-mode: darken;
+}
+.fotoProfile {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 20px;
+}
+.biodata {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+.biodata img {
+  flex-shrink: 0;
+  margin-left: 60px;
+  border: solid 3px #646464;
+}
+.biodata > div {
+  flex: 1;
+}
+.biodata h1 {
+  margin: 0 0 10px 0;
+}
+.biodata p {
+  margin: 0 0 10px 0;
+ color: rgb(154, 154, 154);
+}
+.biodata label {
+  display: block;
+  margin: 0 0 10px 0;
+  width: 400px;
+  overflow: hidden; 
+}
+.biodata button {
+  margin-top: 200px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 50px;
+  background-color: #c4c4c472;
+  color: rgba(255, 255, 255, 0.669);
+  font-weight: bold;
+  cursor: pointer;
+  border: solid 2px #1a1a1acf;
+}
+.biodata button:hover {
+  color: rgba(255, 0, 0, 0.523);
+  transition: all 0.3s ease;
+}
+.mainProfile h1 {
+    color: white;
+  width: 90%;
+  margin: 20px auto;
+}
+.slider-wrapper-profile {
+  width: 90%;
+  margin: auto;
+  position: relative;
+  padding: 0 30px;
+}
