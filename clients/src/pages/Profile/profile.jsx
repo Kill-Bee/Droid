@@ -14,6 +14,12 @@ export default function Profile() {
             />
             <div>
               <h1>FauzanGaming0202</h1>
+                 <div className="hero-tags">
+                  <span className="tag">VETERAN</span>
+                  <span className="tag">SERVIS GOD</span>
+                  <span className="tag">TABOLA BALE</span>
+                  <span className="tag">DEVELOPERS</span>
+                </div>
               <label>
                 manuk nyo manuk manuk nyo manuk manuk nyo manukmanuk nyo
                 manukmanuk nyo manukmanuk nyo manukmanuk nyo manukmanuk nyo
