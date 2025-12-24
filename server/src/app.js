@@ -1,5 +1,6 @@
 import express from "express";
-import userRoutes from "./routes/userRoutes.js";
+import animeRoutes from "./routes/animeRoutes.js";
+import healthRoutes from "./routes/healthRoutes.js";
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
 
 export function buildApp() {
@@ -8,11 +9,9 @@ export function buildApp() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.use("/health", (_, res) => {
-    res.status(200).json({ status: "ok" });
-  });
+  app.use("/health", healthRoutes);
 
-  app.use("/api/users", userRoutes);
+  app.use("/api/anime", animeRoutes);
 
   app.use(errorMiddleware);
 
