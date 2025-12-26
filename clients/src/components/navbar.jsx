@@ -1,11 +1,11 @@
 import "./navbar.css";
 
-export default function Navbar({ onHomeClick, onProfileClick }) {
+export default function Navbar({ onHomeClick, onProfileClick, onLoginClick }) {
   return (
     <nav>
       <ul>
         <li onClick={onHomeClick}>Home</li>
-        <li>Anime</li>
+        <li >Anime</li>
         <li>Manga</li>
         <li>Comunitiy</li>
       </ul>
@@ -16,6 +16,7 @@ export default function Navbar({ onHomeClick, onProfileClick }) {
           alt="profile"
           onClick={onProfileClick}
         />
+        <button onClick={onLoginClick} className="login-navbar">Login</button>
       </div>
     </nav>
   );

@@ -6,9 +6,6 @@
   width: 100%;
   height: 70px;
   background-color: rgb(16, 16, 16);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .bacground{
 background-color: #1d1d1d;

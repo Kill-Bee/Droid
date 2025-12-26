@@ -64,4 +64,14 @@ nav img:hover {
   transform: scale(1.1);
   transition: all 0.3s ease;
 }
+.login-navbar{
+  padding: 5px 15px 5px 15px;
+  border-radius: 8px;
+  font-size: medium;
+  font-weight: bolder;
+  cursor: pointer;
+  background-color: rgba(54, 54, 54, 0.405) ;
+  color: white;
+  border: solid 2px #969696;
+}
 /*NAV END*/
