@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import animeRoutes from "./routes/animeRoutes.js";
 import healthRoutes from "./routes/healthRoutes.js";
 import authRoutes from "./routes/authRoutes.js";

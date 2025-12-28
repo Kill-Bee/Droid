@@ -2,7 +2,7 @@ export function errorMiddleware(err, req, res, next) {
   // Schema validation (zod / joi / express-validator)
   if (err.name === "ZodError") {
     return res.status(400).json({
-      error: "bad request",
+      error: "Bad request",
       details: err.errors,
     });
   }
@@ -11,10 +11,10 @@ export function errorMiddleware(err, req, res, next) {
   const pgCode = err.code || err?.cause?.code;
   if (pgCode === "23505") {
     return res.status(409).json({
-      error: "unique constraint violation",
+      error: "Unique constraint violation",
     });
   }
 
   console.error(err);
-  res.status(500).json({ error: "internal server error" });
+  res.status(500).json({ error: "Internal server error" });
 }
