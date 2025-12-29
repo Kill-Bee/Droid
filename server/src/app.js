@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import animeRoutes from "./routes/animeRoutes.js";
-import healthRoutes from "./routes/healthRoutes.js";
-import authRoutes from "./routes/authRoutes.js";
-import { errorMiddleware } from "./middleware/errorMiddleware.js";
-import { authMiddleware } from "./middleware/authMiddleware.js";
+import animeRoutes from "./routes/anime.routes.js";
+import healthRoutes from "./routes/health.routes.js";
+import authRoutes from "./routes/auth.routes.js";
+import { errorMiddleware } from "./middleware/error.middleware.js";
+import { authMiddleware } from "./middleware/auth.middleware.js";
 
 export function buildApp() {
   const app = express();

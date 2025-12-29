@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAnimeList } from "../controllers/animeController.js";
+import { getAnimeList } from "../controllers/anime.controller.js";
 
 const router = Router();
 

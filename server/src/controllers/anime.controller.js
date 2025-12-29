@@ -1,4 +1,4 @@
-import { getAllAnime } from "../services/animeService.js";
+import { getAllAnime } from "../services/anime.service.js";
 
 export async function getAnimeList(req, res, next) {
   try {
