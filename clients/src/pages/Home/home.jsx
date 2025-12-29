@@ -1,6 +1,6 @@
 import "./home.css";
 
-export default function Home() {
+export default function Home({onRatingClick}) {
     const handleSlideLeft = () => {
     const container = document.querySelector('.container-slide');
     container.scrollBy({ left: -400, behavior: 'smooth' });
@@ -54,8 +54,8 @@ export default function Home() {
         <button className="slide-arrow slide-arrow-left" onClick={handleSlideLeft}>‹</button>
         <div className="container-slide">
           <div className="card">
-            <img src="https://cdn.myanimelist.net/r/216x326/images/anime/5/87048.webp?s=8b58c1a2928f95ed0d5dbe2f9e5b9991" alt="card" />
-            <h3>Shingeki no Kyojin</h3>
+            <img src="https://cdn.myanimelist.net/r/216x326/images/anime/5/87048.webp?s=8b58c1a2928f95ed0d5dbe2f9e5b9991" alt="card" onClick={onRatingClick} />
+            <h3 onClick={onRatingClick}>Shingeki no Kyojin</h3>
             <p>⭐ 9.0</p>
           </div>
           <div className="card">
