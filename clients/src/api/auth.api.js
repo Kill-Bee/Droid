@@ -1,15 +1,15 @@
 import { apiFetch } from "./client.js";
 
 export function loginApi(username, password) {
-  return apiFetch("/users/login", {
+  return apiFetch("/auth/login", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
 }
 
-export function registerApi(username, email, password) {
-  return apiFetch("/users/register", {
+export function registerApi(username, password) {
+  return apiFetch("/auth/register", {
     method: "POST",
-    body: JSON.stringify({ username, email, password }),
+    body: JSON.stringify({ username, password }),
   });
 }
