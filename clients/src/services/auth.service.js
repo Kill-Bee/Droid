@@ -4,8 +4,8 @@ export async function login(username, password) {
   return loginApi(username, password);
 }
 
-export async function register(username, email, password) {
-  return registerApi(username, email, password);
+export async function register(username, password) {
+  return registerApi(username, password);
 }
 
 export async function logout() {

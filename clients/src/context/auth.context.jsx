@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import * as authService from "../services/auth.service.js";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(authService.isAuthenticated());
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
     setIsAuth(true);
   }
 
-  async function logout() {
+  function logout() {
     authService.logout();
     setIsAuth(false);
   }
@@ -26,8 +26,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
 }

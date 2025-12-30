@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../../context/auth.context";
+import { useAuth } from "../../context/useAuth";
 import "./login.css";
 
 export default function LoginPage({ onHomeClick }) {
@@ -46,20 +46,20 @@ function Login({ onHomeClick, onRegristerClick }) {
               stroke="#ffffff"
               onClick={onHomeClick}
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
                 <path
                   d="M15 7L10 12L15 17"
                   stroke="#ffffffff"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>{" "}
               </g>
             </svg>
@@ -91,9 +91,7 @@ function Login({ onHomeClick, onRegristerClick }) {
               </a>
               .
             </p>
-            <button type="submit" onClick={onHomeClick}>
-              Login
-            </button>
+            <button type="submit">Login</button>
           </form>
         </div>
       </div>
@@ -102,6 +100,19 @@ function Login({ onHomeClick, onRegristerClick }) {
 }
 
 function Register({ onHomeClick, onLoginClick }) {
+  const { register } = useAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await register(username, password);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleLoginClick = (event) => {
     event.preventDefault();
     onLoginClick?.();
@@ -118,36 +129,45 @@ function Register({ onHomeClick, onLoginClick }) {
             stroke="#ffffff"
             onClick={onHomeClick}
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
               <path
                 d="M15 7L10 12L15 17"
                 stroke="#ffffffff"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></path>{" "}
             </g>
           </svg>
           <h2>Register</h2>
         </div>
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="username">Username:</label>
           <input
             type="text"
             id="username"
             name="username"
             placeholder=""
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" required />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           <p>
             Already have an account?{" "}
             <a href="" onClick={handleLoginClick}>
@@ -155,9 +175,7 @@ function Register({ onHomeClick, onLoginClick }) {
             </a>
             .
           </p>
-          <button type="submit" onClick={onHomeClick}>
-            Register
-          </button>
+          <button type="submit">Register</button>
         </form>
       </div>
     </div>
