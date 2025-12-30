@@ -21,9 +21,7 @@ export default function Profile() {
                   <span className="tag">DEVELOPERS</span>
                 </div>
               <label>
-                manuk nyo manuk manuk nyo manuk manuk nyo manukmanuk nyo
-                manukmanuk nyo manukmanuk nyo manukmanuk nyo manukmanuk nyo
-                manukmanuk nyo manukmanuk nyo manukmanuk nyo manuk
+               carpe diem!
               </label>
               <p htmlFor="">Joined on September 17, 2025</p>
             </div>
