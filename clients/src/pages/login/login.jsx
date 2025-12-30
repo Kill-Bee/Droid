@@ -1,7 +1,34 @@
 import { useState } from "react";
+import { useAuth } from "../../context/auth.context";
 import "./login.css";
 
+export default function LoginPage({ onHomeClick }) {
+  const [view, setView] = useState("login");
+
+  const showLogin = () => setView("login");
+  const showRegister = () => setView("register");
+
+  return view === "login" ? (
+    <Login onHomeClick={onHomeClick} onRegristerClick={showRegister} />
+  ) : (
+    <Register onHomeClick={onHomeClick} onLoginClick={showLogin} />
+  );
+}
+
 function Login({ onHomeClick, onRegristerClick }) {
+  const { login } = useAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await login(username, password);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleRegisterClick = (event) => {
     event.preventDefault();
     onRegristerClick?.();
@@ -38,11 +65,25 @@ function Login({ onHomeClick, onRegristerClick }) {
             </svg>
             <h2>Login </h2>
           </div>
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleSubmit}>
             <label htmlFor="username">Username:</label>
-            <input type="text" id="username" name="username" required />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" required />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <p>
               Don't have an account?{" "}
               <a href="" onClick={handleRegisterClick}>
@@ -59,6 +100,7 @@ function Login({ onHomeClick, onRegristerClick }) {
     </>
   );
 }
+
 function Register({ onHomeClick, onLoginClick }) {
   const handleLoginClick = (event) => {
     event.preventDefault();
@@ -97,7 +139,13 @@ function Register({ onHomeClick, onLoginClick }) {
         </div>
         <form className="login-form">
           <label htmlFor="username">Username:</label>
-          <input type="text" id="username" name="username" placeholder="" required />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder=""
+            required
+          />
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" required />
           <p>
@@ -113,18 +161,5 @@ function Register({ onHomeClick, onLoginClick }) {
         </form>
       </div>
     </div>
-  );
-}
-
-export default function LoginPage({onHomeClick}) {
-  const [view, setView] = useState("login");
-
-  const showLogin = () => setView("login");
-  const showRegister = () => setView("register");
-
-  return view === "login" ? (
-    <Login onHomeClick={onHomeClick} onRegristerClick={showRegister} />
-  ) : (
-    <Register onHomeClick={onHomeClick} onLoginClick={showLogin} />
   );
 }
