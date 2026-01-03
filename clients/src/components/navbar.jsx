@@ -1,13 +1,13 @@
 import "./navbar.css";
 
-export default function Navbar({ onHomeClick, onProfileClick, onLoginClick }) {
+export default function Navbar({ onHomeClick, onProfileClick, onLoginClick, onAddDataClick }) {
   return (
     <nav>
       <ul>
         <li onClick={onHomeClick}>Home</li>
         <li >Anime</li>
         <li>Manga</li>
-        <li>Comunitiy</li>
+        <li onClick={onAddDataClick}>Comunitiy</li>
       </ul>
       <div className="nav-right">
         <input type="text" className="search-btn" placeholder="Search..." />
@@ -16,7 +16,7 @@ export default function Navbar({ onHomeClick, onProfileClick, onLoginClick }) {
           alt="profile"
           onClick={onProfileClick}
         />
-        <button onClick={onLoginClick} className="login-navbar">Login</button>
+        <button onClick={onLoginClick} className="login-navbar">Logout</button>
       </div>
     </nav>
   );

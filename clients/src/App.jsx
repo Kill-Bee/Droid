@@ -4,9 +4,10 @@ import Home from "./pages/Home/home.jsx";
 import Profile from "./pages/Profile/profile.jsx";
 import LoginPage from "./pages/login/login.jsx";
 import Rating from "./pages/Rating/rating.jsx";
+import AddData from "./pages/Data/addData.jsx";
 
 export default function App() {
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("login");
   const isLoginView = view === "login";
 
   const handleProfileClick = () =>{
@@ -21,6 +22,9 @@ export default function App() {
   const handleRatingClick = () =>{
     setView("rating");
   }
+  const handleAddDataClick = () =>{
+    setView("add");
+  }
 
   return (
     <>
@@ -29,12 +33,15 @@ export default function App() {
           onHomeClick={handleHomeClick}
           onProfileClick={handleProfileClick}
           onLoginClick={handleLoginClick}
+          onAddDataClick={handleAddDataClick}
         />
       )}
       {view === "home" && <Home  onRatingClick={handleRatingClick} />}
       {view === "profile" && <Profile />}
       {view === "login" && <LoginPage onHomeClick={handleHomeClick} />}
       {view === "rating" && <Rating/>}
+      {view === "add" && <AddData/>}
+      
     </>
   );
 }

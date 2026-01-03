@@ -1,6 +1,15 @@
+import { useState } from "react";
 import "./profile.css";
 
 export default function Profile() {
+  const [IsPopupOpen, setIspopupOpne] = useState(false);
+
+  const handlePopupOpen = () => {
+    setIspopupOpne(true);
+  };
+  const handlePopupClose = () => {
+    setIspopupOpne(false);
+  };
   return (
     <>
       <div className="box"></div>
@@ -14,20 +23,55 @@ export default function Profile() {
             />
             <div>
               <h1>FauzanGaming0202</h1>
-                 <div className="hero-tags">
-                  <span className="tag">VETERAN</span>
-                  <span className="tag">SERVIS GOD</span>
-                  <span className="tag">TABOLA BALE</span>
-                  <span className="tag">DEVELOPERS</span>
-                </div>
-              <label>
-               carpe diem!
-              </label>
+              <div className="hero-tags">
+                <span className="tag">VETERAN</span>
+                <span className="tag">SERVIS GOD</span>
+                <span className="tag">TABOLA BALE</span>
+                <span className="tag">DEVELOPERS</span>
+              </div>
+              <label>carpe diem!</label>
               <p htmlFor="">Joined on September 17, 2025</p>
             </div>
-            <button>Edit Profile</button>
+            <button onClick={handlePopupOpen}>Edit Profile</button>
           </div>
         </div>
+        {IsPopupOpen && (
+          <div className="popup-overlay" onClick={handlePopupClose}>
+            <div className="popup-container" onClick={(e) => e.stopPropagation()}>
+              <div className="popup-header">
+                <h2>Edit Profile</h2>
+                <button className="popup-close" onClick={handlePopupClose}>✕</button>
+              </div>
+              
+              <div className="popup-body">
+                <div className="form-field">
+                  <label>Nickname</label>
+                  <input type="text" placeholder="Enter your nickname..." />
+                </div>
+
+                <div className="form-field">
+                  <label>Profile Picture</label>
+                  <input type="file" accept="image/*" />
+                </div>
+
+                <div className="form-field">
+                  <label>Banner Image</label>
+                  <input type="file" accept="image/*" />
+                </div>
+
+                <div className="form-field">
+                  <label>About You</label>
+                  <textarea placeholder="Tell us about yourself..."></textarea>
+                </div>
+              </div>
+
+              <div className="popup-footer">
+                <button className="btn-cancel" onClick={handlePopupClose}>Cancel</button>
+                <button className="btn-save">Save</button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="mainProfile">
           <h1>Your rating</h1>
           <div className="slider-wrapper-profile">
