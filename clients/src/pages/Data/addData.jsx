@@ -1,52 +1,51 @@
-// import { useState } from "react";
-// import { tambahPlayer, uploadPhoto } from "../services/service";
+import { useState } from "react";
+import { createAnime } from "../../services/anime.service";
 
 export default function AddData({ }) {
-//   const [form, setForm] = useState({
-//     name: "",
-//     position: "",
-//     teams: "",
-//   });
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    years: "",
+  });
 
-//   const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//   };
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-//   const handleFileChange = (e) => {
-//     setPhoto(e.target.files[0]);
-//   };
+  const handleFileChange = (e) => {
+    setPhoto(e.target.files[0]);
+  };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//     const ok = confirm("Yakin mau menambahkan player?");
-//     if (!ok) return;
+    const ok = confirm("Yakin mau menambahkan player?");
+    if (!ok) return;
 
-//     try {
-//       let photoUrl = null;
+    try {
+      let photoUrl = null;
 
-//       if (photo && photo.size > 2_000_000) {
-//         alert("Foto maksimal 2MB");
-//         return;
-//       }
+      if (photo && photo.size > 2_000_000) {
+        alert("Foto maksimal 2MB");
+        return;
+      }
 
-//       if (photo) {
-//         photoUrl = await uploadPhoto(photo);
-//       }
+      if (photo) {
+        photoUrl = await uploadPhoto(photo);
+      }
 
-//       await tambahPlayer({
-//         ...form,
-//         photo: photoUrl,
-//       });
+      await createAnime({
+        ...form,
+        photo: photoUrl,
+      });
 
-//       onSuccess();
-//     } catch (err) {
-//       alert(err.message);
-//       console.error(err);
-//     }
-//   };
+    } catch (err) {
+      alert(err.message);
+      console.error(err);
+    }
+  };
 
   return (
     <>
