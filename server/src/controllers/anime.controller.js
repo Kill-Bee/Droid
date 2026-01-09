@@ -1,4 +1,9 @@
-import { getAllAnime, createAnimeService, updateAnimeService, deleteAnimeService } from "../services/anime.service.js";
+import {
+  getAllAnime,
+  createAnimeService,
+  updateAnimeService,
+  deleteAnimeService,
+} from "../services/anime.service.js";
 
 export async function getAnimeList(req, res, next) {
   try {
@@ -11,19 +16,15 @@ export async function getAnimeList(req, res, next) {
 
 export async function createAnime(req, res, next) {
   try {
-    const { title, description, cover_image, release_year } = req.body;
-
-    if (!title || !release_year) {
-      return res.status(400).json({
-        message: "title and release_year are required",
-      });
-    }
+    const { title, description, cover_image, release_year, genre_ids } =
+      req.body;
 
     const anime = await createAnimeService({
       title,
       description,
       cover_image,
       release_year,
+      genre_ids,
     });
 
     res.status(201).json(anime);

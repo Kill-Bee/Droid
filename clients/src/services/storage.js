@@ -6,7 +6,7 @@ export async function uploadCover(file) {
   const filePath = `cover/${fileName}`;
 
   const { error } = await supabase.storage
-    .from("anime_covers")
+    .from("anime-covers")
     .upload(filePath, file);
 
   if (error) throw error;

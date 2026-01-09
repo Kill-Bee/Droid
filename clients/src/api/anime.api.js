@@ -1,0 +1,30 @@
+import { apiFetch } from "./client";
+
+export async function getAnimesApi() {
+  const response = await apiFetch("/anime");
+  return response.json();
+}
+
+export async function deleteAnimeApi(id) {
+  const response = await apiFetch(`/anime/${id}`, {
+    method: "DELETE",
+  });
+  return response.json();
+}
+
+export function createAnimeApi({
+  title,
+  description,
+  cover_image,
+  release_year,
+}) {
+  return apiFetch("/anime", {
+    method: "POST",
+    body: JSON.stringify({
+      title,
+      description,
+      cover_image,
+      release_year,
+    }),
+  });
+}

@@ -1,40 +1,25 @@
-import { apiFetch } from "../api/client.js";
+import { uploadCover } from "./storage";
+import { getAnimesApi, deleteAnimeApi, createAnimeApi } from "../api/anime.api";
 
-export const getAnimes = async () => {
-  const response = await apiFetch("/anime");
-  return response.json();
-};
+export async function getAnimes() {
+  return getAnimesApi();
+}
 
-export const createAnime = async (
-  title,
-  description,
-  coverImage,
-  releaseYear,
-) => {
-  const response = await apiFetch("/anime", {
-    method: "POST",
-    body: JSON.stringify({ title, description, coverImage, releaseYear }),
+export async function deleteAnime(id) {
+  return deleteAnimeApi(id);
+}
+
+export async function createAnime(data) {
+  let coverUrl = null;
+
+  if (data.coverFile) {
+    coverUrl = await uploadCover(data.coverFile);
+  }
+
+  return createAnimeApi({
+    title: data.title,
+    description: data.description,
+    cover_image: coverUrl,
+    release_year: data.releaseYear,
   });
-  return response.json();
-};
-
-export const updateAnime = async (
-  id,
-  title,
-  description,
-  coverImage,
-  releaseYear,
-) => {
-  const response = await apiFetch(`/anime/${id}`, {
-    method: "PUT",
-    body: JSON.stringify({ title, description, coverImage, releaseYear }),
-  });
-  return response.json();
-};
-
-export const deleteAnime = async (id) => {
-  const response = await apiFetch(`/anime/${id}`, {
-    method: "DELETE",
-  });
-  return response.json();
-};
+}
