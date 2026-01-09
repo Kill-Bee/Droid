@@ -5,6 +5,7 @@ export default function AddData() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
+  const [episodes, setEpisodes] = useState("");
   const [coverFile, setCoverFile] = useState(null);
 
   const inputStyle = {
@@ -17,14 +18,18 @@ export default function AddData() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    await createAnime({
-      title,
-      description,
-      coverFile,
-      releaseYear: Number(releaseYear),
-    });
-
-    alert("Anime berhasil ditambahkan!");
+    try {
+      await createAnime({
+        title,
+        description,
+        coverFile,
+        episodes: Number(episodes),
+        releaseYear: Number(releaseYear),
+      });
+      alert("Anime berhasil ditambahkan!");
+    } catch (error) {
+      alert("Terjadi kesalahan saat menambahkan anime.", error.message);
+    }
   }
 
   return (
@@ -53,7 +58,7 @@ export default function AddData() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Contoh: Ibu Mochi Tuyul Tangan Panjang"
+            placeholder="Contoh: Ibu Mochi Tuyul Tangan 100rb Ngrogoh Ngrogoh"
             style={inputStyle}
           />
         </div>
@@ -87,7 +92,19 @@ export default function AddData() {
             type="number"
             value={releaseYear}
             onChange={(e) => setReleaseYear(e.target.value)}
-            placeholder="100rb"
+            placeholder="2001"
+            style={inputStyle}
+          />
+        </div>
+
+        {/* Jumlah Episode */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <label>Jumlah Episode</label>
+          <input
+            type="number"
+            value={episodes}
+            onChange={(e) => setEpisodes(e.target.value)}
+            placeholder="26"
             style={inputStyle}
           />
         </div>

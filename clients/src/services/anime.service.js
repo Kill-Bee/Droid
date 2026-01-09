@@ -21,5 +21,6 @@ export async function createAnime(data) {
     description: data.description,
     cover_image: coverUrl,
     release_year: data.releaseYear,
+    episodes: data.episodes,    
   });
 }

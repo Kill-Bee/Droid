@@ -16,7 +16,7 @@ export async function getAnimeList(req, res, next) {
 
 export async function createAnime(req, res, next) {
   try {
-    const { title, description, cover_image, release_year, genre_ids } =
+    const { title, description, cover_image, release_year, episodes } =
       req.body;
 
     const anime = await createAnimeService({
@@ -24,7 +24,7 @@ export async function createAnime(req, res, next) {
       description,
       cover_image,
       release_year,
-      genre_ids,
+      episodes,
     });
 
     res.status(201).json(anime);
@@ -36,7 +36,8 @@ export async function createAnime(req, res, next) {
 export async function updateAnime(req, res, next) {
   try {
     const { id } = req.params;
-    const { title, description, cover_image, release_year } = req.body;
+    const { title, description, cover_image, release_year, episodes } =
+      req.body;
 
     if (!id || !title || !release_year) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -47,6 +48,7 @@ export async function updateAnime(req, res, next) {
       description,
       cover_image,
       release_year,
+      episodes,
     });
     res.json(updatedAnime);
   } catch (err) {

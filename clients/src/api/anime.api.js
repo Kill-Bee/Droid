@@ -17,6 +17,7 @@ export function createAnimeApi({
   description,
   cover_image,
   release_year,
+  episodes,
 }) {
   return apiFetch("/anime", {
     method: "POST",
@@ -25,6 +26,7 @@ export function createAnimeApi({
       description,
       cover_image,
       release_year,
+      episodes
     }),
   });
 }

@@ -17,14 +17,15 @@ export async function createAnime({
   description,
   cover_image,
   release_year,
+  episodes,
 }) {
   const result = await query(
     `
-    INSERT INTO anime (title, description, cover_image, release_year)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO anime (title, description, cover_image, release_year, episodes)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `,
-    [title, description, cover_image, release_year],
+    [title, description, cover_image, release_year, episodes],
   );
 
   return result.rows[0];
@@ -33,7 +34,7 @@ export async function createAnime({
 // Update
 export async function updateAnime(
   id,
-  { title, description, cover_image, release_year },
+  { title, description, cover_image, release_year, episodes },
 ) {
   const result = await query(
     `
@@ -41,11 +42,12 @@ export async function updateAnime(
     SET title = $1,
         description = $2,
         cover_image = $3,
-        release_year = $4
-    WHERE id = $5
+        release_year = $4,
+        episodes = $5
+    WHERE id = $6
     RETURNING *
     `,
-    [title, description, cover_image, release_year, id],
+    [title, description, cover_image, release_year, episodes, id],
   );
 
   return result.rows[0];
