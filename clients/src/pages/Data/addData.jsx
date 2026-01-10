@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createAnime } from "../../services/anime.service";
 
 export default function AddData() {
@@ -7,6 +7,7 @@ export default function AddData() {
   const [releaseYear, setReleaseYear] = useState("");
   const [episodes, setEpisodes] = useState("");
   const [coverFile, setCoverFile] = useState(null);
+  const fileRef = useRef(null);
 
   const inputStyle = {
     padding: "10px 12px",
@@ -15,20 +16,52 @@ export default function AddData() {
     fontSize: 14,
   };
 
+  function clearForm() {
+    setTitle("");
+    setDescription("");
+    setReleaseYear("");
+    setEpisodes("");
+    setCoverFile(null);
+
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!title.trim()) {
+      alert("Judul tidak boleh kosong!");
+      return;
+    }
+
+    const year = Number(releaseYear);
+    const eps = Number(episodes);
+
+    if (!releaseYear || year <= 1900) {
+      alert("Tahun rilis tidak boleh kosong!");
+      return;
+    }
+
+    if (!episodes || eps <= 0) {
+      alert("Jumlah episode tidak boleh kosong!");
+      return;
+    }
 
     try {
       await createAnime({
         title,
         description,
         coverFile,
-        episodes: Number(episodes),
-        releaseYear: Number(releaseYear),
+        episodes: eps,
+        releaseYear: year,
       });
+
       alert("Anime berhasil ditambahkan!");
+      clearForm();
     } catch (error) {
-      alert("Terjadi kesalahan saat menambahkan anime.", error.message);
+      alert(error.message || "Gagal menambahkan anime");
     }
   }
 
@@ -80,6 +113,7 @@ export default function AddData() {
           <label>Cover</label>
           <input
             type="file"
+            ref={fileRef}
             accept="image/*"
             onChange={(e) => setCoverFile(e.target.files[0])}
           />

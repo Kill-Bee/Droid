@@ -1,8 +1,7 @@
 import { apiFetch } from "./client";
 
 export async function getAnimesApi() {
-  const response = await apiFetch("/anime");
-  return response.json();
+  return apiFetch("/anime");
 }
 
 export async function deleteAnimeApi(id) {
@@ -26,7 +25,7 @@ export function createAnimeApi({
       description,
       cover_image,
       release_year,
-      episodes
+      episodes,
     }),
   });
 }

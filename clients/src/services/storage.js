@@ -11,9 +11,7 @@ export async function uploadCover(file) {
 
   if (error) throw error;
 
-  const { data } = await supabase.storage
-    .from("anime_covers")
-    .getPublicUrl(filePath);
+  const { data } = supabase.storage.from("anime-covers").getPublicUrl(filePath);
 
   return data.publicUrl;
 }
