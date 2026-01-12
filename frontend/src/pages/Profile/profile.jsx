@@ -10,39 +10,55 @@ export default function Profile() {
   const handlePopupClose = () => {
     setIspopupOpne(false);
   };
+  const defProfile = [
+    {
+      id: 1,
+      nama: "Irul",
+      deskripsi: "AZarel",
+      dp: "https://i.pinimg.com/1200x/64/ea/c9/64eac9d3e7906fa45b3f7f298f29e11e.jpg",
+      bg: "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg",
+    },
+  ];
   return (
     <>
       <div className="box"></div>
       <div className="bacground">
-        <div className="headerProfile">
+        <div className="headerProfile" style={{
+          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url(${defProfile[0].bg})`
+        }}>
           <div className="biodata">
-            <img
-              src="https://i.pinimg.com/1200x/64/ea/c9/64eac9d3e7906fa45b3f7f298f29e11e.jpg"
-              alt="profile"
-              className="fotoProfile"
-            />
-            <div>
-              <h1>FauzanGaming0202</h1>
-              <div className="hero-tags">
-                <span className="tag">VETERAN</span>
-                <span className="tag">SERVIS GOD</span>
-                <span className="tag">TABOLA BALE</span>
-                <span className="tag">DEVELOPERS</span>
-              </div>
-              <label>carpe diem!</label>
-              <p htmlFor="">Joined on September 17, 2025</p>
-            </div>
+            {defProfile.map((profile) => (
+              <>
+                <img key={`img-${profile.id}`} src={profile.dp} alt="profile" className="fotoProfile" />
+                <div key={profile.id}>
+                  <h1>{profile.nama}</h1>
+                  <div className="hero-tags">
+                    <span className="tag">VETERAN</span>
+                    <span className="tag">SERVIS GOD</span>
+                    <span className="tag">TABOLA BALE</span>
+                    <span className="tag">DEVELOPERS</span>
+                  </div>
+                  <label>{profile.deskripsi}</label>
+                  <p>Joined on September 17, 2025</p>
+                </div>
+              </>
+            ))}
             <button onClick={handlePopupOpen}>Edit Profile</button>
           </div>
         </div>
         {IsPopupOpen && (
           <div className="popup-overlay" onClick={handlePopupClose}>
-            <div className="popup-container" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="popup-container"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="popup-header">
                 <h2>Edit Profile</h2>
-                <button className="popup-close" onClick={handlePopupClose}>✕</button>
+                <button className="popup-close" onClick={handlePopupClose}>
+                  ✕
+                </button>
               </div>
-              
+
               <div className="popup-body">
                 <div className="form-field">
                   <label>Nickname</label>
@@ -66,7 +82,9 @@ export default function Profile() {
               </div>
 
               <div className="popup-footer">
-                <button className="btn-cancel" onClick={handlePopupClose}>Cancel</button>
+                <button className="btn-cancel" onClick={handlePopupClose}>
+                  Cancel
+                </button>
                 <button className="btn-save">Save</button>
               </div>
             </div>

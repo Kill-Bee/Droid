@@ -88,7 +88,6 @@ export default function Home({ onRatingClick }) {
                       onClick={onRatingClick}
                     />
                     <h3 onClick={onRatingClick}>{anime.title}</h3>
-                    <p>⭐ 9.0</p>
                   </div>
                 </div>
               );

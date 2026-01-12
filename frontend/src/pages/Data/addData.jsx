@@ -91,7 +91,7 @@ export default function AddData() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Contoh: Ibu Mochi Tuyul Tangan 100rb Ngrogoh Ngrogoh"
+            placeholder="Kingdom..."
             style={inputStyle}
           />
         </div>
