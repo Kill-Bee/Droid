@@ -4,7 +4,6 @@ import { findUserByUsername, createUser } from "../models/auth.model.js";
 
 export async function login(username, password) {
   const user = await findUserByUsername(username);
-
   if (!user) throw new Error("User not found");
 
   const isPasswordValid = await bcrypt.compare(password, user.password_hash);
@@ -16,7 +15,13 @@ export async function login(username, password) {
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
-  return token;
+  return {
+    token,
+    user: {
+      id: user.id,
+      username: user.username,
+    },
+  };
 }
 
 export async function register(username, password) {

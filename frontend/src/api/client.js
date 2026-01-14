@@ -15,8 +15,16 @@ export const apiFetch = async (path, options = {}) => {
   });
 
   if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || `Request failed with status`);
+    let errorMessage = "Request failed";
+
+    try {
+      const errorBody = await res.json();
+      errorMessage = errorBody?.message || errorBody?.error || errorMessage;
+    } catch {
+      // response bukan JSON
+    }
+
+    throw new Error(errorMessage);
   }
 
   return res.json();

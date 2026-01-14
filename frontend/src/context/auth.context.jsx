@@ -7,7 +7,8 @@ export function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(authService.isAuthenticated());
 
   async function login(username, password) {
-    await authService.login(username, password);
+    const data = await authService.login(username, password);
+    if (!data?.token) throw new Error("Invalid login response");
     setIsAuth(true);
   }
 

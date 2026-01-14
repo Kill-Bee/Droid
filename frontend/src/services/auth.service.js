@@ -1,17 +1,21 @@
 import { loginApi, registerApi } from "../api/auth.api.js";
 
 export async function login(username, password) {
-  return loginApi(username, password);
+  const data = await loginApi(username, password);
+  localStorage.setItem("token", data.token);
+  return data;
 }
 
 export async function register(username, password) {
-  return registerApi(username, password);
+  const data = await registerApi(username, password);
+  localStorage.setItem("token", data.token);
+  return data;
 }
 
 export async function logout() {
   localStorage.removeItem("token");
 }
 
-export async function isAuthenticated() {
+export function isAuthenticated() {
   return !!localStorage.getItem("token");
 }

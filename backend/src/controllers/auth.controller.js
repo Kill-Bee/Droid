@@ -3,10 +3,18 @@ import { login, register } from "../services/auth.service.js";
 export async function loginController(req, res, next) {
   try {
     const { username, password } = req.body;
+
     const result = await login(username, password);
-    res.json({ result });
+
+    if (!result) {
+      return res.status(401).json({
+        message: "Username atau password salah",
+      });
+    }
+
+    res.json(result);
   } catch (err) {
-    next(err);
+    next(err); // hanya error teknis
   }
 }
 

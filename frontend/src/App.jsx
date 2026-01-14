@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home/home.jsx";
 import Profile from "./pages/Profile/profile.jsx";
@@ -29,6 +31,18 @@ export default function App() {
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       {!isLoginView && (
         <Navbar
           search={search}
