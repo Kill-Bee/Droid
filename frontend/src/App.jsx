@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home/home.jsx";
 import Profile from "./pages/Profile/profile.jsx";
@@ -8,40 +8,44 @@ import AddData from "./pages/Data/addData.jsx";
 
 export default function App() {
   const [view, setView] = useState("login");
+  const [search, setSearch] = useState("");
   const isLoginView = view === "login";
 
-  const handleProfileClick = () =>{
+  const handleProfileClick = () => {
     setView("profile");
-  }
-  const handleHomeClick = () =>{
+  };
+  const handleHomeClick = () => {
     setView("home");
-  }
-   const handleLoginClick = () =>{
+  };
+  const handleLoginClick = () => {
     setView("login");
-  }
-  const handleRatingClick = () =>{
+  };
+  const handleRatingClick = () => {
     setView("rating");
-  }
-  const handleAddDataClick = () =>{
+  };
+  const handleAddDataClick = () => {
     setView("add");
-  }
+  };
 
   return (
     <>
       {!isLoginView && (
         <Navbar
+          search={search}
+          setSearch={setSearch}
           onHomeClick={handleHomeClick}
           onProfileClick={handleProfileClick}
           onLoginClick={handleLoginClick}
           onAddDataClick={handleAddDataClick}
         />
       )}
-      {view === "home" && <Home  onRatingClick={handleRatingClick} />}
+      {view === "home" && (
+        <Home search={search} onRatingClick={handleRatingClick} />
+      )}
       {view === "profile" && <Profile />}
       {view === "login" && <LoginPage onHomeClick={handleHomeClick} />}
-      {view === "rating" && <Rating/>}
-      {view === "add" && <AddData/>}
-      
+      {view === "rating" && <Rating />}
+      {view === "add" && <AddData />}
     </>
   );
 }

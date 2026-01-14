@@ -2,8 +2,18 @@ import { useState, useEffect } from "react";
 import { getAnimes } from "../../services/anime.service";
 import "./home.css";
 
-export default function Home({ onRatingClick }) {
+export default function Home({ search, onRatingClick }) {
   const [animes, setAnimes] = useState([]);
+  const [debounceSearch, setDebounceSearch] = useState("");
+  const keyword = (debounceSearch || search || "").toLowerCase();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebounceSearch(search);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [search]);
 
   useEffect(() => {
     (async () => {
@@ -26,6 +36,10 @@ export default function Home({ onRatingClick }) {
     const container = document.querySelector(".container-slide");
     container.scrollBy({ left: 400, behavior: "smooth" });
   };
+
+  const filteredAnimes = animes.filter((anime) =>
+    anime.title.toLowerCase().includes(keyword),
+  );
 
   return (
     <>
@@ -78,7 +92,7 @@ export default function Home({ onRatingClick }) {
             ‹
           </button>
           <div className="container-slide">
-            {animes.map((anime) => {
+            {filteredAnimes.map((anime) => {
               return (
                 <div className="card" key={anime.id}>
                   <div>
