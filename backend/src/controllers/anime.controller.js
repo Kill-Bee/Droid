@@ -1,5 +1,5 @@
 import {
-  getAllAnime,
+  getAnimeService,
   createAnimeService,
   updateAnimeService,
   deleteAnimeService,
@@ -7,7 +7,7 @@ import {
 
 export async function getAnimeList(req, res, next) {
   try {
-    const animeList = await getAllAnime();
+    const animeList = await getAnimeService();
     res.json(animeList);
   } catch (err) {
     next(err);

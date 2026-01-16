@@ -1,11 +1,11 @@
 import {
   findAllAnime,
-  createAnime,
-  updateAnime,
+  makeAnime,
+  changeAnime,
   deleteAnime,
 } from "../models/anime.model.js";
 
-export async function getAllAnime() {
+export async function getAnimeService() {
   return await findAllAnime();
 }
 
@@ -18,11 +18,11 @@ export async function createAnimeService(data) {
     throw new Error("Release year must be greater than 1900");
   }
   
-  return await createAnime(data);
+  return await makeAnime(data);
 }
 
 export async function updateAnimeService(id, data) {
-  return await updateAnime(id, data);
+  return await changeAnime(id, data);
 }
 
 export async function deleteAnimeService(id) {
