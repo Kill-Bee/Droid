@@ -29,3 +29,22 @@ export function createAnimeApi({
     }),
   });
 }
+
+export function createAnimeCarouselApi({
+  title,
+  description,
+  cover_image,
+  release_year,
+  episodes,
+}) {
+  return apiFetch("/anime/carousel", {
+    method: "POST",
+    body: JSON.stringify({
+      title,
+      description,
+      cover_image,
+      release_year,
+      episodes,
+    }),
+  });
+}

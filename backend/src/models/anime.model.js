@@ -6,13 +6,14 @@ export async function findAllAnime() {
   return result.rows;
 }
 
+
 export async function findAnimeById(id) {
   const result = await query("SELECT * FROM anime WHERE id = $1", [id]);
   return result.rows[0];
 }
 
 // Insert
-export async function createAnime({
+export async function makeAnime({
   title,
   description,
   cover_image,
@@ -25,16 +26,16 @@ export async function createAnime({
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `,
-    [title, description, cover_image, release_year, episodes],
+    [title, description, cover_image, release_year, episodes]
   );
 
   return result.rows[0];
 }
 
 // Update
-export async function updateAnime(
+export async function changeAnime(
   id,
-  { title, description, cover_image, release_year, episodes },
+  { title, description, cover_image, release_year, episodes }
 ) {
   const result = await query(
     `
@@ -47,7 +48,7 @@ export async function updateAnime(
     WHERE id = $6
     RETURNING *
     `,
-    [title, description, cover_image, release_year, episodes, id],
+    [title, description, cover_image, release_year, episodes, id]
   );
 
   return result.rows[0];
