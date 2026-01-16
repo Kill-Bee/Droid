@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { getAnimes } from "../../services/anime.service";
+import { getAnimesCarousel } from "../../services/anime-carousel.service";
 import "./home.css";
 
 export default function Home({ search, onRatingClick }) {
   const [animes, setAnimes] = useState([]);
+  const [animesCarousel, setAnimesCarousel] = useState([]);
   const [debounceSearch, setDebounceSearch] = useState("");
   const keyword = (debounceSearch || search || "").toLowerCase();
 
@@ -27,6 +29,18 @@ export default function Home({ search, onRatingClick }) {
     })();
   }, []);
 
+    useEffect(() => {
+    (async () => {
+      try {
+        const data = await getAnimesCarousel();
+        setAnimesCarousel(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error fetching animes carousel:", error);
+        setAnimesCarousel([]);
+      }
+    })();
+  }, []);
+
   const handleSlideLeft = () => {
     const container = document.querySelector(".container-slide");
     container.scrollBy({ left: -400, behavior: "smooth" });
@@ -38,7 +52,7 @@ export default function Home({ search, onRatingClick }) {
   };
 
   const filteredAnimes = animes.filter((anime) =>
-    anime.title.toLowerCase().includes(keyword),
+    anime.title.toLowerCase().includes(keyword)
   );
 
   return (
@@ -79,8 +93,8 @@ export default function Home({ search, onRatingClick }) {
           </div>
         </div>
 
-        <button className="hero-arrow hero-arrow-left">‹</button>
-        <button className="hero-arrow hero-arrow-right">›</button>
+        <button className="hero-arrow hero-arrow-left"></button>
+        <button className="hero-arrow hero-arrow-right"></button>
       </div>
       <div className="main">
         <h1>Sedang Trending (ANIME)</h1>
@@ -88,9 +102,7 @@ export default function Home({ search, onRatingClick }) {
           <button
             className="slide-arrow slide-arrow-left"
             onClick={handleSlideLeft}
-          >
-            ‹
-          </button>
+          ></button>
           <div className="container-slide">
             {filteredAnimes.map((anime) => {
               return (
@@ -110,9 +122,7 @@ export default function Home({ search, onRatingClick }) {
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
-          >
-            ›
-          </button>
+          ></button>
         </div>
       </div>
     </>

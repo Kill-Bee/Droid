@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-import { createAnime, createAnimeCarousel } from "../../services/anime.service";
+import { createAnime } from "../../services/anime.service";
+import { createAnimeCarousel } from "../../services/anime-carousel.service";
 import { toast } from "react-toastify";
 
 export default function AddData() {
@@ -290,7 +291,7 @@ function Anime({ onAnimeCarouselClick }) {
             fontFamily: "system-ui, sans-serif",
           }}
         >
-          <h2 style={{ marginBottom: 8 }}>Tambah Anime Baru</h2>
+          <h2 style={{ marginBottom: 8 }}>Tambah Anime Cards Baru</h2>
 
           {/* Judul */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
