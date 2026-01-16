@@ -101,7 +101,7 @@ export default function Home({ search, onRatingClick }) {
                       alt={anime.title}
                       onClick={onRatingClick}
                     />
-                    <h3 onClick={onRatingClick}>{anime.title}</h3>
+                    <h3 onClick={onRatingClick}>{anime.title.length > 15 ? anime.title.substring(0, 15) + "..." : anime.title}</h3>
                   </div>
                 </div>
               );

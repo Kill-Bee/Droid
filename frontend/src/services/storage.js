@@ -15,3 +15,18 @@ export async function uploadCover(file) {
 
   return data.publicUrl;
 }
+export async function uploadProfile(file) {
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${crypto.randomUUID()}.${fileExt}`;
+  const filePath = `cover/${fileName}`;
+
+  const { error } = await supabase.storage
+    .from("profile")
+    .upload(filePath, file);
+
+  if (error) throw error;
+
+  const { data } = supabase.storage.from("profile").getPublicUrl(filePath);
+
+  return data.publicUrl;
+}
