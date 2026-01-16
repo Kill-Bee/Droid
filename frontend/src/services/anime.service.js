@@ -1,5 +1,9 @@
 import { uploadCover } from "./storage.js";
-import { getAnimesApi, deleteAnimeApi, createAnimeApi, createAnimeCarouselApi } from "../api/anime.api.js";
+import {
+  getAnimesApi,
+  deleteAnimeApi,
+  createAnimeApi,
+} from "../api/anime.api.js";
 
 export async function getAnimes() {
   return getAnimesApi();
@@ -21,22 +25,6 @@ export async function createAnime(data) {
     description: data.description,
     cover_image: coverUrl,
     release_year: data.releaseYear,
-    episodes: data.episodes,    
-  });
-}
-
-export async function createAnimeCarousel(data) {
-  let coverUrl = null;
-
-  if (data.coverFile) {
-    coverUrl = await uploadCover(data.coverFile);
-  }
-
-  return createAnimeCarouselApi({
-    title: data.title,
-    description: data.description,
-    cover_image: coverUrl,
-    release_year: data.releaseYear,
-    episodes: data.episodes,    
+    episodes: data.episodes,
   });
 }
