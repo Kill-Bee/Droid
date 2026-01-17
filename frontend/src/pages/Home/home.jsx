@@ -29,7 +29,7 @@ export default function Home({ search, onRatingClick }) {
     })();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     (async () => {
       try {
         const data = await getAnimesCarousel();
@@ -58,43 +58,42 @@ export default function Home({ search, onRatingClick }) {
   return (
     <>
       <div className="header">
-        <div className="background">
-          <img
-            src="https://i.pinimg.com/736x/84/0c/fe/840cfe78663db88b699b805b25e1eb9d.jpg"
-            alt="bacground"
-          />
-        </div>
+        {animesCarousel.map((carousel) => (
+          <div key={carousel.id} className="carousel-item">
+            <div className="background">
+              <img
+                src={
+                  carousel.cover_image ||
+                  "https://i.pinimg.com/736x/84/0c/fe/840cfe78663db88b699b805b25e1eb9d.jpg"
+                }
+                alt={carousel.title}
+              />
+            </div>
 
-        <div className="hero-content">
-          <h1 className="hero-title">ONE PUNCH MAN</h1>
+            <div className="hero-content">
+              <h1 className="hero-title">{carousel.title}</h1>
 
-          <div className="hero-tags">
-            <span className="tag">Adaptasi komik</span>
-            <span className="tag">Berjuang</span>
-            <span className="tag">Inspiratif</span>
-            <span className="tag">Diperbarui ke E 35</span>
+              <div className="hero-tags">
+                <span className="tag">Tahun: {carousel.release_year}</span>
+                <span className="tag">Episode: {carousel.episodes}</span>
+              </div>
+
+              <p className="hero-description">{carousel.description}</p>
+
+              <div className="hero-buttons">
+                <button className="btn-play">
+                  <span>⭐</span> Rateing
+                </button>
+                <button className="btn-favorite">
+                  <span>🔖</span> Favorit Saya
+                </button>
+              </div>
+            </div>
+
+            <button className="hero-arrow hero-arrow-left"></button>
+            <button className="hero-arrow hero-arrow-right"></button>
           </div>
-
-          <p className="hero-description">
-            Saitama adalah seorang pria yang memulai hobi menjadi pahlawan.
-            Setelah tiga tahun menjalani latihan khusus, dia mendapatkan
-            kekuatan tak terkalahkan yang mampu mengalahkan musuh mana pun
-            dengan satu pukulan. Secara kebetulan, dia bertemu dengan Genos yang
-            kemudian menjadi muridnya....
-          </p>
-
-          <div className="hero-buttons">
-            <button className="btn-play">
-              <span>⭐</span> Rateing
-            </button>
-            <button className="btn-favorite">
-              <span>🔖</span> Favorit Saya
-            </button>
-          </div>
-        </div>
-
-        <button className="hero-arrow hero-arrow-left"></button>
-        <button className="hero-arrow hero-arrow-right"></button>
+        ))}
       </div>
       <div className="main">
         <h1>Sedang Trending (ANIME)</h1>
