@@ -3,20 +3,20 @@ import { useAuth } from "../../context/useAuth";
 import { toast } from "react-toastify";
 import "./login.css";
 
-export default function LoginPage({ onHomeClick }) {
+export default function LoginPage({ onAnimeClick }) {
   const [view, setView] = useState("login");
 
   const showLogin = () => setView("login");
   const showRegister = () => setView("register");
 
   return view === "login" ? (
-    <Login onHomeClick={onHomeClick} onRegisterClick={showRegister} />
+    <Login onAnimeClick={onAnimeClick} onRegisterClick={showRegister} />
   ) : (
-    <Register onHomeClick={onHomeClick} onLoginClick={showLogin} />
+    <Register onAnimeClick={onAnimeClick} onLoginClick={showLogin} />
   );
 }
 
-function Login({ onHomeClick, onRegisterClick }) {
+function Login({ onAnimeClick, onRegisterClick }) {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ function Login({ onHomeClick, onRegisterClick }) {
     try {
       await login(username, password);
       toast.success("Login berhasil");
-      onHomeClick();
+      onAnimeClick();
     } catch (err) {
       toast.error(err.message || "Login gagal");
     } finally {
@@ -40,7 +40,7 @@ function Login({ onHomeClick, onRegisterClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={onHomeClick} viewBox="0 0 24 24">
+          <svg onClick={onAnimeClick} viewBox="0 0 24 24">
             <path d="M15 7L10 12L15 17" />
           </svg>
           <h2>Login</h2>
@@ -84,7 +84,7 @@ function Login({ onHomeClick, onRegisterClick }) {
   );
 }
 
-function Register({ onHomeClick, onLoginClick }) {
+function Register({ onAnimeClick, onLoginClick }) {
   const { register } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -109,7 +109,7 @@ function Register({ onHomeClick, onLoginClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={onHomeClick} viewBox="0 0 24 24">
+          <svg onClick={onAnimeClick} viewBox="0 0 24 24">
             <path d="M15 7L10 12L15 17" />
           </svg>
           <h2>Register</h2>

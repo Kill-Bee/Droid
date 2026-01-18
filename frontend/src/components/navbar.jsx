@@ -3,16 +3,17 @@ import "./navbar.css";
 export default function Navbar({
   search,
   setSearch,
-  onHomeClick,
+  onAnimeClick,
   onProfileClick,
   onLoginClick,
   onAddDataClick,
+  onHomeClick
 }) {
   return (
     <nav>
       <ul>
         <li onClick={onHomeClick}>Home</li>
-        <li>Anime</li>
+        <li onClick={onAnimeClick}>Anime</li>
         <li>Manga</li>
         <li onClick={onAddDataClick}>Comunitiy</li>
       </ul>

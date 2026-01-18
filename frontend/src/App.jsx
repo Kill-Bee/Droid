@@ -2,22 +2,23 @@ import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
-import Home from "./pages/Home/home.jsx";
+import Anime from "./pages/Anime/anime.jsx";
 import Profile from "./pages/Profile/profile.jsx";
 import LoginPage from "./pages/login/login.jsx";
 import Rating from "./pages/Rating/rating.jsx";
 import AddData from "./pages/Data/addData.jsx";
+import Home from "./pages/Home/home.jsx"
 
 export default function App() {
-  const [view, setView] = useState("login");
+  const [view, setView] = useState("home");
   const [search, setSearch] = useState("");
   const isLoginView = view === "login";
 
   const handleProfileClick = () => {
     setView("profile");
   };
-  const handleHomeClick = () => {
-    setView("home");
+  const handleAnimeClick = () => {
+    setView("anime");
   };
   const handleLoginClick = () => {
     setView("login");
@@ -28,6 +29,9 @@ export default function App() {
   const handleAddDataClick = () => {
     setView("add");
   };
+  const handleHomeClick = () => {
+    setView("home");
+  }
 
   return (
     <>
@@ -43,7 +47,7 @@ export default function App() {
         pauseOnHover
         theme="dark"
       />
-      {!isLoginView && (
+      {!isLoginView && view !=="home" &&(
         <Navbar
           search={search}
           setSearch={setSearch}
@@ -51,15 +55,18 @@ export default function App() {
           onProfileClick={handleProfileClick}
           onLoginClick={handleLoginClick}
           onAddDataClick={handleAddDataClick}
+          onAnimeClick={handleAnimeClick}
         />
       )}
-      {view === "home" && (
-        <Home search={search} onRatingClick={handleRatingClick} />
+      {view === "anime" && (
+        <Anime search={search} onRatingClick={handleRatingClick} />
       )}
       {view === "profile" && <Profile />}
-      {view === "login" && <LoginPage onHomeClick={handleHomeClick} />}
+      {view === "login" && <LoginPage onAnimeClick={handleAnimeClick} />}
       {view === "rating" && <Rating />}
       {view === "add" && <AddData />}
+      {view === "home" && <Home onAnimeClick={handleAnimeClick} />}
+
     </>
   );
 }
