@@ -8,6 +8,7 @@ export default function Home({ search, onRatingClick }) {
   const [animesCarousel, setAnimesCarousel] = useState([]);
   const [debounceSearch, setDebounceSearch] = useState("");
   const keyword = (debounceSearch || search || "").toLowerCase();
+  const [slide, setSlide] = useState (0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,6 +42,17 @@ export default function Home({ search, onRatingClick }) {
     })();
   }, []);
 
+  useEffect (() =>{
+    if (animesCarousel.length === 0) return;
+
+    const interval = setInterval (() =>{
+      setSlide((prev) => (prev+1) % animesCarousel.length);
+    },10000);
+
+    return () => clearInterval(interval);
+  }, [animesCarousel.length]);
+
+
   const handleSlideLeft = () => {
     const container = document.querySelector(".container-slide");
     container.scrollBy({ left: -400, behavior: "smooth" });
@@ -58,42 +70,56 @@ export default function Home({ search, onRatingClick }) {
   return (
     <>
       <div className="header">
-        {animesCarousel.map((carousel) => (
-          <div key={carousel.id} className="carousel-item">
+        {animesCarousel.length > 0 &&  (
+          <div className="carousel-item">
             <div className="background">
               <img
                 src={
-                  carousel.cover_image ||
+                  animesCarousel[slide].cover_image ||
                   "https://i.pinimg.com/736x/84/0c/fe/840cfe78663db88b699b805b25e1eb9d.jpg"
                 }
-                alt={carousel.title}
+                alt={animesCarousel[slide].title}
               />
             </div>
 
             <div className="hero-content">
-              <h1 className="hero-title">{carousel.title}</h1>
+              <h1 className="hero-title">{animesCarousel[slide].title}</h1>
 
               <div className="hero-tags">
-                <span className="tag">Tahun: {carousel.release_year}</span>
-                <span className="tag">Episode: {carousel.episodes}</span>
+                <span className="tag">Tahun: {animesCarousel[slide].release_year}</span>
+                <span className="tag">Episode: {animesCarousel[slide].episodes}</span>
               </div>
 
-              <p className="hero-description">{carousel.description}</p>
+              <p className="hero-description">{animesCarousel[slide].description.length > 600 ? (
+                <>
+                {animesCarousel[slide].description.substring(0,600)}
+                <span className="read-more" onClick={onRatingClick}> ...ReadMore</span>
+                </>
+              ) : (
+                animesCarousel[slide].description
+              )}</p>
 
               <div className="hero-buttons">
-                <button className="btn-play">
-                  <span>⭐</span> Rateing
-                </button>
-                <button className="btn-favorite">
-                  <span>🔖</span> Favorit Saya
+                <button className="btn-favorite" onClick={onRatingClick}>
+                  <span>⭐</span> Rating
                 </button>
               </div>
             </div>
 
-            <button className="hero-arrow hero-arrow-left"></button>
-            <button className="hero-arrow hero-arrow-right"></button>
+            {/* <button className="hero-arrow hero-arrow-left" onClick={handlePrevCarousel}></button>
+            <button className="hero-arrow hero-arrow-right" onClick={handleNextCarousel}></button> */}
+
+            <div className="carousel-dots">
+              {animesCarousel.map((_, i) => (
+                <span 
+                key={i}
+                className={`dot ${i === slide ? 'active' : ''}`}
+                onClick={() => setSlide(i)}
+                />
+              ))}
+            </div>
           </div>
-        ))}
+        )}
       </div>
       <div className="main">
         <h1>Sedang Trending (ANIME)</h1>
@@ -112,7 +138,7 @@ export default function Home({ search, onRatingClick }) {
                       alt={anime.title}
                       onClick={onRatingClick}
                     />
-                    <h3 onClick={onRatingClick}>{anime.title.length > 15 ? anime.title.substring(0, 15) + "..." : anime.title}</h3>
+                    <h3 onClick={onRatingClick}>{anime.title.length > 20 ? anime.title.substring(0, 20) + "..." : anime.title}</h3>
                   </div>
                 </div>
               );
