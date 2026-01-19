@@ -1,5 +1,6 @@
 import {
   findAllAnime,
+  findAnimeById,
   makeAnime,
   changeAnime,
   deleteAnime,
@@ -7,6 +8,10 @@ import {
 
 export async function getAnimeService() {
   return await findAllAnime();
+}
+
+export async function getAnimeByIdService(id) {
+  return await findAnimeById(id);
 }
 
 export async function createAnimeService(data) {

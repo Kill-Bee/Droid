@@ -1,6 +1,6 @@
 import "./home.css";
 
-export default function Home({onAnimeClick}) {
+export default function Home({ onLoginClick }) {
   return (
     <>
       <div className="header-home">
@@ -11,9 +11,13 @@ export default function Home({onAnimeClick}) {
             className="img-home"
           />
           <div className="hero-content-home">
-          <h1 className="h1-home">Welcome to droid</h1>
-          <p className="p-home">Here You can Rattings anime && Manga 👇👇👇 </p>
-          <button className="button-home" onClick={onAnimeClick}>Login</button>
+            <h1 className="h1-home">Welcome to DROID</h1>
+            <p className="p-home">
+              Here You can Ratings Anime && Manga 👇👇👇{" "}
+            </p>
+            <button className="button-home" onClick={onLoginClick}>
+              Login
+            </button>
           </div>
         </div>
       </div>

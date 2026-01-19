@@ -90,9 +90,9 @@ export default function Anime({ search, onRatingClick }) {
                 <span className="tag">Episode: {animesCarousel[slide].episodes}</span>
               </div>
 
-              <p className="hero-description">{animesCarousel[slide].description.length > 600 ? (
+              <p className="hero-description">{animesCarousel[slide].description.length > 250 ? (
                 <>
-                {animesCarousel[slide].description.substring(0,600)}
+                {animesCarousel[slide].description.substring(0, 250)}
                 <span className="read-more" onClick={onRatingClick}> ...ReadMore</span>
                 </>
               ) : (

@@ -65,7 +65,7 @@ export default function App() {
       {view === "login" && <LoginPage onAnimeClick={handleAnimeClick} />}
       {view === "rating" && <Rating />}
       {view === "add" && <AddData />}
-      {view === "home" && <Home onAnimeClick={handleAnimeClick} />}
+      {view === "home" && <Home onLoginClick={handleLoginClick} />}
 
     </>
   );
