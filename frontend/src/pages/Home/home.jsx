@@ -1,6 +1,9 @@
 import "./home.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Home({ onLoginClick }) {
+export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="header-home">
@@ -15,7 +18,7 @@ export default function Home({ onLoginClick }) {
             <p className="p-home">
               Here You can Ratings Anime && Manga 👇👇👇{" "}
             </p>
-            <button className="button-home" onClick={onLoginClick}>
+            <button className="button-home" onClick={() => navigate("/login")}>
               Login
             </button>
           </div>

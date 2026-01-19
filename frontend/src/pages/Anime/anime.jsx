@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAnimes } from "../../services/anime.service";
 import { getAnimesCarousel } from "../../services/anime-carousel.service";
 import "./anime.css";
 
 export default function Anime({ search, onRatingClick }) {
+  const navigate = useNavigate();
   const [animes, setAnimes] = useState([]);
   const [animesCarousel, setAnimesCarousel] = useState([]);
   const [debounceSearch, setDebounceSearch] = useState("");
   const keyword = (debounceSearch || search || "").toLowerCase();
-  const [slide, setSlide] = useState (0);
+  const [slide, setSlide] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,16 +44,15 @@ export default function Anime({ search, onRatingClick }) {
     })();
   }, []);
 
-  useEffect (() =>{
+  useEffect(() => {
     if (animesCarousel.length === 0) return;
 
-    const interval = setInterval (() =>{
-      setSlide((prev) => (prev+1) % animesCarousel.length);
-    },10000);
+    const interval = setInterval(() => {
+      setSlide((prev) => (prev + 1) % animesCarousel.length);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [animesCarousel.length]);
-
 
   const handleSlideLeft = () => {
     const container = document.querySelector(".container-slide");
@@ -63,14 +64,18 @@ export default function Anime({ search, onRatingClick }) {
     container.scrollBy({ left: 400, behavior: "smooth" });
   };
 
+  const handleAnimeClick = (animeId) => {
+    navigate(`/anime/${animeId}`);
+  };
+
   const filteredAnimes = animes.filter((anime) =>
-    anime.title.toLowerCase().includes(keyword)
+    anime.title.toLowerCase().includes(keyword),
   );
 
   return (
     <>
       <div className="header">
-        {animesCarousel.length > 0 &&  (
+        {animesCarousel.length > 0 && (
           <div className="carousel-item">
             <div className="background">
               <img
@@ -86,18 +91,27 @@ export default function Anime({ search, onRatingClick }) {
               <h1 className="hero-title">{animesCarousel[slide].title}</h1>
 
               <div className="hero-tags">
-                <span className="tag">Tahun: {animesCarousel[slide].release_year}</span>
-                <span className="tag">Episode: {animesCarousel[slide].episodes}</span>
+                <span className="tag">
+                  Tahun: {animesCarousel[slide].release_year}
+                </span>
+                <span className="tag">
+                  Episode: {animesCarousel[slide].episodes}
+                </span>
               </div>
 
-              <p className="hero-description">{animesCarousel[slide].description.length > 250 ? (
-                <>
-                {animesCarousel[slide].description.substring(0, 250)}
-                <span className="read-more" onClick={onRatingClick}> ...ReadMore</span>
-                </>
-              ) : (
-                animesCarousel[slide].description
-              )}</p>
+              <p className="hero-description">
+                {animesCarousel[slide].description.length > 250 ? (
+                  <>
+                    {animesCarousel[slide].description.substring(0, 250)}
+                    <span className="read-more" onClick={onRatingClick}>
+                      {" "}
+                      ...ReadMore
+                    </span>
+                  </>
+                ) : (
+                  animesCarousel[slide].description
+                )}
+              </p>
 
               <div className="hero-buttons">
                 <button className="btn-favorite" onClick={onRatingClick}>
@@ -111,10 +125,10 @@ export default function Anime({ search, onRatingClick }) {
 
             <div className="carousel-dots">
               {animesCarousel.map((_, i) => (
-                <span 
-                key={i}
-                className={`dot ${i === slide ? 'active' : ''}`}
-                onClick={() => setSlide(i)}
+                <span
+                  key={i}
+                  className={`dot ${i === slide ? "active" : ""}`}
+                  onClick={() => setSlide(i)}
                 />
               ))}
             </div>
@@ -136,9 +150,13 @@ export default function Anime({ search, onRatingClick }) {
                     <img
                       src={anime.cover_image}
                       alt={anime.title}
-                      onClick={onRatingClick}
+                      onClick={() => handleAnimeClick(anime.id)}
                     />
-                    <h3 onClick={onRatingClick}>{anime.title.length > 20 ? anime.title.substring(0, 20) + "..." : anime.title}</h3>
+                    <h3 onClick={() => handleAnimeClick(anime.id)}>
+                      {anime.title.length > 20
+                        ? anime.title.substring(0, 20) + "..."
+                        : anime.title}
+                    </h3>
                   </div>
                 </div>
               );

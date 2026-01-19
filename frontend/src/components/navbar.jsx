@@ -1,21 +1,16 @@
 import "./navbar.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Navbar({
-  search,
-  setSearch,
-  onAnimeClick,
-  onProfileClick,
-  onLoginClick,
-  onAddDataClick,
-  onHomeClick
-}) {
+export default function Navbar({ search, setSearch }) {
+  const navigate = useNavigate();
+
   return (
     <nav>
       <ul>
-        <li onClick={onHomeClick}>Home</li>
-        <li onClick={onAnimeClick}>Anime</li>
+        <li onClick={() => navigate("/")}>Home</li>
+        <li onClick={() => navigate("/anime")}>Anime</li>
         <li>Manga</li>
-        <li onClick={onAddDataClick}>Comunitiy</li>
+        <li onClick={() => navigate("/add-data")}>Add Data</li>
       </ul>
       <div className="nav-right">
         <input
@@ -28,9 +23,9 @@ export default function Navbar({
         <img
           src="https://i.pinimg.com/1200x/64/ea/c9/64eac9d3e7906fa45b3f7f298f29e11e.jpg"
           alt="profile"
-          onClick={onProfileClick}
+          onClick={() => navigate("/profile")}
         />
-        <button onClick={onLoginClick} className="login-navbar">
+        <button onClick={() => navigate("/login")} className="login-navbar">
           Logout
         </button>
       </div>
