@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import { toast } from "react-toastify";
 import "./login.css";
@@ -17,6 +18,7 @@ export default function LoginPage({ onAnimeClick }) {
 }
 
 function Login({ onAnimeClick, onRegisterClick }) {
+  const navigate = useNavigate();
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +42,7 @@ function Login({ onAnimeClick, onRegisterClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={onAnimeClick} viewBox="0 0 24 24">
+          <svg onClick={() => navigate("/anime")} viewBox="0 0 24 24">
             <path d="M15 7L10 12L15 17" />
           </svg>
           <h2>Login</h2>
@@ -84,7 +86,8 @@ function Login({ onAnimeClick, onRegisterClick }) {
   );
 }
 
-function Register({ onAnimeClick, onLoginClick }) {
+function Register({ onLoginClick }) {
+  const navigate = useNavigate();
   const { register } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -109,7 +112,7 @@ function Register({ onAnimeClick, onLoginClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={onAnimeClick} viewBox="0 0 24 24">
+          <svg onClick={() => navigate("/anime")} viewBox="0 0 24 24">
             <path d="M15 7L10 12L15 17" />
           </svg>
           <h2>Register</h2>
