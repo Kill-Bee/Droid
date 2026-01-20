@@ -1,13 +1,34 @@
 import "./rating.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { getAnimeById } from "../../services/anime.service";
 
 export default function Rating() {
+  const { id } = useParams();
+  const [anime, setAnime] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
 
   // Label untuk setiap rating
   const ratingLabels = ["worst", "bad", "mid", "good", "GOAT"];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await getAnimeById(id);
+        setAnime(data);
+      } catch (error) {
+        toast.error("Failed to fetch anime data");
+        console.error("Error fetching anime:", error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [id]);
 
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
@@ -16,6 +37,26 @@ export default function Rating() {
     setIsPopupOpen(false);
   };
 
+  if (loading) {
+    return (
+      <div className="background-hitam">
+        <div className="container-rating">
+          <p style={{ color: "white", textAlign: "center" }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!anime) {
+    return (
+      <div className="background-hitam">
+        <div className="container-rating">
+          <p style={{ color: "white", textAlign: "center" }}>Anime not found</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="background-hitam">
       <div className="box"></div>
@@ -23,37 +64,29 @@ export default function Rating() {
         <div className="rating-wrapper">
           <div className="rating-left">
             <img
-              src="https://cdn.myanimelist.net/images/anime/1015/138006.jpg"
-              alt="banner img"
+              src={anime.cover_image || "https://via.placeholder.com/300x450"}
+              alt={anime.title}
               className="vertical-banner"
             />
-            <h1 className="h1-left">NARUTO</h1>
+            <h1 className="h1-left">{anime.title}</h1>
             <div className="information">
               <p>
                 <b>Genre:</b> Action, Adventure, Comedy
               </p>
               <p>
-                <b>Release:</b> 22-06-08
+                <b>Release Year:</b> {anime.release_year}
               </p>
               <p>
-                <b>Status:</b> Completed
+                <b>Episodes:</b> {anime.episodes}
               </p>
             </div>
           </div>
 
           <div className="rating-right">
-            <h1 className="h1-right">Naruto</h1>
+            <h1 className="h1-right">{anime.title}</h1>
             <label htmlFor="">Synopsis</label>
             <p className="text-light">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos in
-              sit culpa. Iusto asperiores eius ex enim voluptas necessitatibus
-              doloribus, placeat molestias inventore voluptatem, quo animi
-              mollitia non quis nemo! Odit voluptates sunt, eum rerum non
-              temporibus reiciendis officiis corporis nesciunt, repellendus
-              quam, harum aut dolore officia fuga animi natus blanditiis
-              repudiandae ipsa alias eius enim libero! Fugiat placeat quod
-              pariatur aliquid exercitationem porro excepturi dolorem ipsam enim
-              rem labore nostrum in vitae, non voluptas autem.
+              {anime.description || "No description available."}
             </p>
             <div className="buttons-rating">
               <button onClick={handleOpenPopup}>Rating ★ </button>
@@ -86,15 +119,20 @@ export default function Rating() {
             </div>
             {/* tampilan & logic bintang */}
             <p className="rating-text">
-              {rating > 0 
-                ? `rating: ${ratingLabels[rating - 1]}` 
+              {rating > 0
+                ? `rating: ${ratingLabels[rating - 1]}`
                 : "belum memilih"}
             </p>
-            <button onClick={handleClosePopup} className="close-btn-rating">Tutup</button>
-            <button onClick={() => {
-              console.log("Rating:", rating, "-", ratingLabels[rating - 1]);
-              handleClosePopup();
-            }} className="submit-btn-rating">
+            <button onClick={handleClosePopup} className="close-btn-rating">
+              Tutup
+            </button>
+            <button
+              onClick={() => {
+                console.log("Rating:", rating, "-", ratingLabels[rating - 1]);
+                handleClosePopup();
+              }}
+              className="submit-btn-rating"
+            >
               Submit
             </button>
           </div>
