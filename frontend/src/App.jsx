@@ -8,6 +8,7 @@ import Profile from "./pages/Profile/profile.jsx";
 import LoginPage from "./pages/login/login.jsx";
 import Rating from "./pages/Rating/rating.jsx";
 import AddData from "./pages/Data/addData.jsx";
+import AddManga from "./pages/Data/addManga.jsx"
 import Home from "./pages/Home/home.jsx";
 import Manga from "./pages/Manga/Manga.jsx";
 
@@ -22,6 +23,15 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
 
+        <Route
+          path="/anime"
+          element={
+            <>
+              <Navbar search={search} setSearch={setSearch} />
+              <AddManga search={search} />
+            </>
+          }
+        />
         <Route
           path="/anime"
           element={
