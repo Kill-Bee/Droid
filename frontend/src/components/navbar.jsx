@@ -9,7 +9,7 @@ export default function Navbar({ search, setSearch }) {
       <ul>
         <li onClick={() => navigate("/")}>Home</li>
         <li onClick={() => navigate("/anime")}>Anime</li>
-        <li>Manga</li>
+        <li onClick={() => navigate("/manga")}>Manga</li>
         <li onClick={() => navigate("/add-data")}>Add Data</li>
       </ul>
       <div className="nav-right">

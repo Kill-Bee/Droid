@@ -9,6 +9,7 @@ import LoginPage from "./pages/login/login.jsx";
 import Rating from "./pages/Rating/rating.jsx";
 import AddData from "./pages/Data/addData.jsx";
 import Home from "./pages/Home/home.jsx";
+import Manga from "./pages/Manga/Manga.jsx";
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -37,6 +38,15 @@ export default function App() {
             <>
               <Navbar search={search} setSearch={setSearch} />
               <Rating />
+            </>
+          }
+        />
+        <Route
+          path="/manga"
+          element={
+            <>
+              <Navbar search={search} setSearch={setSearch} />
+              <Manga search={search} />
             </>
           }
         />
