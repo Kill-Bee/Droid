@@ -4,7 +4,7 @@ import { getAnimes } from "../../services/anime.service";
 import { getAnimesCarousel } from "../../services/anime-carousel.service";
 import "./anime.css";
 
-export default function Anime({ search, onRatingClick }) {
+export default function Anime({ search,  }) {
   const navigate = useNavigate();
   const [animes, setAnimes] = useState([]);
   const [animesCarousel, setAnimesCarousel] = useState([]);
@@ -103,7 +103,7 @@ export default function Anime({ search, onRatingClick }) {
                 {animesCarousel[slide].description.length > 250 ? (
                   <>
                     {animesCarousel[slide].description.substring(0, 250)}
-                    <span className="read-more" onClick={onRatingClick}>
+                    <span className="read-more" onClick={ () => handleAnimeClick(animesCarousel.id)}>
                       {" "}
                       ...ReadMore
                     </span>
@@ -114,7 +114,7 @@ export default function Anime({ search, onRatingClick }) {
               </p>
 
               <div className="hero-buttons">
-                <button className="btn-favorite" onClick={onRatingClick}>
+                <button className="btn-favorite" onClick={() => handleAnimeClick(animesCarousel.id)}>
                   <span>⭐</span> Rating
                 </button>
               </div>

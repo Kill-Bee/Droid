@@ -2,8 +2,6 @@ import {
   getAnimeService,
   getAnimeByIdService,
   createAnimeService,
-  updateAnimeService,
-  deleteAnimeService,
 } from "../services/anime.service.js";
 
 export async function getAnimeList(req, res, next) {

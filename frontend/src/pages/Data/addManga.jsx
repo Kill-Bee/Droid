@@ -156,7 +156,7 @@ function MangaCarousel({ onMangaClick }) {
             <input
               type="number"
               value={chapters}
-              onChange={(e) => setEpisodes(e.target.value)}
+              onChange={(e) => setChapters(e.target.value)}
               placeholder="100"
               style={inputStyle}
             />
