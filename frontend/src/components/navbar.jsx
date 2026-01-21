@@ -1,8 +1,17 @@
+import { useState } from "react";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar({ search, setSearch }) {
   const navigate = useNavigate();
+
+  const [select, setSelect] = useState("");
+
+  const handleChange = (e) => {
+    const value = (e.target.value);
+    setSelect(value);
+    if (value) navigate(value);
+  };
 
   return (
     <nav>
@@ -10,7 +19,13 @@ export default function Navbar({ search, setSearch }) {
         <li onClick={() => navigate("/")}>Home</li>
         <li onClick={() => navigate("/anime")}>Anime</li>
         <li onClick={() => navigate("/manga")}>Manga</li>
-        <li onClick={() => navigate("/add-data")}>Add Data</li>
+        <li>
+          <select name="" id="" onChange={handleChange} value={select} className="data">
+            <option value="" disabled hidden>Add data</option>
+            <option value="/add-data">Add Anime</option>
+            <option value="/add-manga">Add Manga</option>
+          </select>
+        </li>
       </ul>
       <div className="nav-right">
         <input

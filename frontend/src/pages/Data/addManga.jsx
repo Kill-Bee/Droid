@@ -1,26 +1,26 @@
 import { useState, useRef } from "react";
 import { createManga } from "../../services/manga.service";
-import { createAnimeCarousel } from "../../services/manga.service";
+import { createMangaCarousel } from "../../services/manga-carousel.service";
 import { toast } from "react-toastify";
 
 export default function AddManga() {
   const [view, setView] = useState("manga");
 
-  const showAnime = () => setView("manga");
-  const showAnimeCarousel = () => setView("animeCarousel");
+  const showManga = () => setView("manga");
+  const showMangaCarousel = () => setView("mangaCarousel");
 
-  return view === "anime" ? (
-    <Anime onAnimeCarouselClick={showAnimeCarousel} />
+  return view === "manga" ? (
+    <Manga onMangaCarouselClick={showMangaCarousel} />
   ) : (
-    <AnimeCarousel onAnimeClick={showAnime} />
+    <MangaCarousel onMangaClick={showManga} />
   );
 }
 
-function AnimeCarousel({ onAnimeClick }) {
+function MangaCarousel({ onMangaClick }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
-  const [episodes, setEpisodes] = useState("");
+  const [chapters, setChapters] = useState("");
   const [coverFile, setCoverFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
@@ -36,7 +36,7 @@ function AnimeCarousel({ onAnimeClick }) {
     setTitle("");
     setDescription("");
     setReleaseYear("");
-    setEpisodes("");
+    setChapters("");
     setCoverFile(null);
 
     if (fileRef.current) {
@@ -53,31 +53,31 @@ function AnimeCarousel({ onAnimeClick }) {
     }
 
     const year = Number(releaseYear);
-    const eps = Number(episodes);
+    const chp = Number(chapters);
 
     if (!releaseYear || year <= 1900) {
       toast.info("Tahun rilis tidak boleh kosong!");
       return;
     }
 
-    if (!episodes || eps <= 0) {
-      toast.info("Jumlah episode tidak boleh kosong!");
+    if (!chapters || chp <= 0) {
+      toast.info("Jumlah chapters tidak boleh kosong!");
       return;
     }
 
     try {
-      await createAnimeCarousel({
+      await createMangaCarousel({
         title,
         description,
         coverFile,
-        episodes: eps,
+        chapters: chp,
         releaseYear: year,
       });
 
-      toast.success("Anime carousel berhasil ditambahkan!");
+      toast.success("Manga carousel berhasil ditambahkan!");
       clearForm();
     } catch (error) {
-      toast.error(error.message || "Gagal menambahkan anime carousel");
+      toast.error(error.message || "Gagal menambahkan Manga carousel");
     } finally {
       setLoading(false)
     }
@@ -101,7 +101,7 @@ function AnimeCarousel({ onAnimeClick }) {
             fontFamily: "system-ui, sans-serif",
           }}
         >
-          <h2 style={{ marginBottom: 8 }}>Tambah Anime Carousel Baru</h2>
+          <h2 style={{ marginBottom: 8 }}>Tambah Manga Carousel Baru</h2>
 
           {/* Judul */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -122,7 +122,7 @@ function AnimeCarousel({ onAnimeClick }) {
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Anime tentang..."
+              placeholder="Manga tentang..."
               style={inputStyle}
             />
           </div>
@@ -152,10 +152,10 @@ function AnimeCarousel({ onAnimeClick }) {
 
           {/* Jumlah Episode */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label>Jumlah Episode</label>
+            <label>Jumlah Chapters</label>
             <input
               type="number"
-              value={episodes}
+              value={chapters}
               onChange={(e) => setEpisodes(e.target.value)}
               placeholder="100"
               style={inputStyle}
@@ -163,12 +163,12 @@ function AnimeCarousel({ onAnimeClick }) {
           </div>
 
           <p>
-            Wanna input anime?{" "}
+            Wanna input Manga?{" "}
             <a
               href=""
               onClick={(e) => {
                 e.preventDefault();
-                onAnimeClick();
+                onMangaClick();
               }}
             >
               Click here
@@ -206,11 +206,11 @@ function AnimeCarousel({ onAnimeClick }) {
 }
 
 
-function Anime({ onAnimeCarouselClick }) {
+function Manga({ onMangaCarouselClick }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
-  const [chapter, setChapter] = useState("");
+  const [chapters, setChapters] = useState("");
   const [coverFile, setCoverFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
@@ -226,7 +226,7 @@ function Anime({ onAnimeCarouselClick }) {
     setTitle("");
     setDescription("");
     setReleaseYear("");
-    setChapter("");
+    setChapters("");
     setCoverFile(null);
 
     if (fileRef.current) {
@@ -243,31 +243,31 @@ function Anime({ onAnimeCarouselClick }) {
     }
 
     const year = Number(releaseYear);
-    const eps = Number(episodes);
+    const chp = Number(chapters);
 
     if (!releaseYear || year <= 1900) {
       toast.info("Tahun rilis tidak boleh kosong!");
       return;
     }
 
-    if (!episodes || eps <= 0) {
+    if (!chapters || chp <= 0) {
       toast.info("Jumlah episode tidak boleh kosong!");
       return;
     }
 
     try {
-      await createAnime({
+      await createManga({
         title,
         description,
         coverFile,
-        episodes: eps,
+        chapters: chp,
         releaseYear: year,
       });
 
-      toast.success("Anime berhasil ditambahkan!");
+      toast.success("Manga berhasil ditambahkan!");
       clearForm();
     } catch (error) {
-      toast.error(error.message || "Gagal menambahkan anime");
+      toast.error(error.message || "Gagal menambahkan Manga");
     } finally {
       setLoading(false)
     }
@@ -291,7 +291,7 @@ function Anime({ onAnimeCarouselClick }) {
             fontFamily: "system-ui, sans-serif",
           }}
         >
-          <h2 style={{ marginBottom: 8 }}>Tambah Anime Cards Baru</h2>
+          <h2 style={{ marginBottom: 8 }}>Tambah Manga Cards Baru</h2>
 
           {/* Judul */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -300,7 +300,7 @@ function Anime({ onAnimeCarouselClick }) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Kingdom..."
+              placeholder="sekar gambuh pinng catur..."
               style={inputStyle}
             />
           </div>
@@ -312,7 +312,7 @@ function Anime({ onAnimeCarouselClick }) {
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Anime tentang..."
+              placeholder="Manga tentang..."
               style={inputStyle}
             />
           </div>
@@ -342,11 +342,11 @@ function Anime({ onAnimeCarouselClick }) {
 
           {/* Jumlah Episode */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <label>Jumlah Episode</label>
+            <label>Jumlah chapters</label>
             <input
               type="number"
-              value={episodes}
-              onChange={(e) => setEpisodes(e.target.value)}
+              value={chapters}
+              onChange={(e) => setChapters(e.target.value)}
               placeholder="26"
               style={inputStyle}
             />
@@ -358,7 +358,7 @@ function Anime({ onAnimeCarouselClick }) {
               href=""
               onClick={(e) => {
                 e.preventDefault();
-                onAnimeCarouselClick();
+                onMangaCarouselClick();
               }}
             >
               Click here
