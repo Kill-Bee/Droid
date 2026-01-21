@@ -3,8 +3,6 @@ import {
   getAnimeList,
   getAnimeById,
   createAnime,
-  updateAnime,
-  deleteAnime,
 } from "../controllers/anime.controller.js";
 import {
   getAnimeCarouselList,
@@ -23,7 +21,5 @@ router.post("/carousel", createAnimeCarousel);
 
 // Anime | Carousel by ID
 router.get("/:id", getAnimeById);
-router.put("/:id", updateAnime);
-router.delete("/:id", deleteAnime);
 
 export default router;

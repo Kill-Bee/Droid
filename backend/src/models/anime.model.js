@@ -32,32 +32,3 @@ export async function makeAnime({
   return result.rows[0];
 }
 
-// Update
-export async function changeAnime(
-  id,
-  { title, description, cover_image, release_year, episodes }
-) {
-  const result = await query(
-    `
-    UPDATE anime
-    SET title = $1,
-        description = $2,
-        cover_image = $3,
-        release_year = $4,
-        episodes = $5
-    WHERE id = $6
-    RETURNING *
-    `,
-    [title, description, cover_image, release_year, episodes, id]
-  );
-
-  return result.rows[0];
-}
-
-// Delete
-export async function deleteAnime(id) {
-  const result = await query("DELETE FROM anime WHERE id = $1 RETURNING *", [
-    id,
-  ]);
-  return result.rows[0];
-}

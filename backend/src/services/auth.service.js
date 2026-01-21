@@ -1,13 +1,27 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { findUserByUsername, createUser } from "../models/auth.model.js";
+import {
+  ValidationError,
+  UnauthorizedError,
+  ConflictError,
+} from "../errors/index.js";
 
 export async function login(username, password) {
+  // Validasi input
+  if (!username || !password) {
+    throw new ValidationError("Username dan password harus diisi");
+  }
+
   const user = await findUserByUsername(username);
-  if (!user) throw new Error("User not found");
+  if (!user) {
+    throw new UnauthorizedError("Username atau password salah");
+  }
 
   const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-  if (!isPasswordValid) throw new Error("Invalid password");
+  if (!isPasswordValid) {
+    throw new UnauthorizedError("Username atau password salah");
+  }
 
   const payload = {
     id: user.id,
@@ -25,9 +39,23 @@ export async function login(username, password) {
 }
 
 export async function register(username, password) {
-  const existingUser = await findUserByUsername(username);
+  // Validasi input
+  if (!username || !password) {
+    throw new ValidationError("Username dan password harus diisi");
+  }
 
-  if (existingUser) throw new Error("Username already exists");
+  if (username.length < 3) {
+    throw new ValidationError("Username minimal 3 karakter");
+  }
+
+  if (password.length < 6) {
+    throw new ValidationError("Password minimal 6 karakter");
+  }
+
+  const existingUser = await findUserByUsername(username);
+  if (existingUser) {
+    throw new ConflictError("Username sudah digunakan");
+  }
 
   const passwordHash = await bcrypt.hash(password, 10);
 

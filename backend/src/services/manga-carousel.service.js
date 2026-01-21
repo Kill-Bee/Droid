@@ -2,19 +2,43 @@ import {
   makeMangaCarousel,
   findAllMangaCarousel,
 } from "../models/manga-carousel.model.js";
+import { ValidationError } from "../errors/index.js";
 
 export async function getMangaCarouselService() {
   return await findAllMangaCarousel();
 }
 
 export async function createMangaCarouselService(data) {
-  if (data.chapters <= 0) {
-    throw new Error("Episodes must be greater than 0");
+  // Validasi required fields
+  if (!data.title) {
+    throw new ValidationError("Judul manga harus diisi");
   }
 
-  if (data.release_year < 1900) {
-    throw new Error("Release year must be greater than 1900");
+  if (data.release_year == null) {
+    throw new ValidationError("Tahun rilis harus diisi");
   }
 
-  return await makeMangaCarousel(data);
+  if (data.chapters == null) {
+    throw new ValidationError("Jumlah chapter harus diisi");
+  }
+
+  // Konversi dan validasi data
+  const chapters = Number(data.chapters);
+  const releaseYear = Number(data.release_year);
+
+  if (isNaN(chapters) || chapters <= 0) {
+    throw new ValidationError("Jumlah chapter harus lebih dari 0");
+  }
+
+  if (isNaN(releaseYear) || releaseYear < 1900) {
+    throw new ValidationError("Tahun rilis harus lebih dari 1900");
+  }
+
+  return await makeMangaCarousel({
+    title: data.title,
+    description: data.description,
+    cover_image: data.cover_image,
+    release_year: releaseYear,
+    chapters: chapters,
+  });
 }
