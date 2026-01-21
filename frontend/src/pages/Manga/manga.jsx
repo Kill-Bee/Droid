@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getManga } from "../../services/manga.service";
 import { getMangaCarousel } from "../../services/manga-carousel.service";
 import "./manga.css";
 
-export default function Manga ({search, onRatingClick}){
+export default function Manga({ search }) {
   const navigate = useNavigate();
   const [manga, setManga] = useState([]);
   const [mangaCarousel, setMangaCarousel] = useState([]);
@@ -26,7 +27,8 @@ export default function Manga ({search, onRatingClick}){
         const data = await getManga();
         setManga(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error fetching Manga:", error);
+        toast.error("Error fetching manga");
+        console.error(error);
         setManga([]);
       }
     })();
@@ -38,7 +40,8 @@ export default function Manga ({search, onRatingClick}){
         const data = await getMangaCarousel();
         setMangaCarousel(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error fetching manga carousel:", error);
+        toast.error("Error fetching manga carousel");
+        console.error(error);
         setMangaCarousel([]);
       }
     })();
@@ -68,12 +71,16 @@ export default function Manga ({search, onRatingClick}){
     navigate(`/manga/${mangaId}`);
   };
 
+  const handleMangaCarouselClick = (mangaId) => {
+    navigate(`/manga/carousel/${mangaId}`);
+  };
+
   const filteredManga = manga.filter((manga) =>
     manga.title.toLowerCase().includes(keyword),
   );
 
-    return(
-         <>
+  return (
+    <>
       <div className="header">
         {mangaCarousel.length > 0 && (
           <div className="carousel-item">
@@ -103,7 +110,12 @@ export default function Manga ({search, onRatingClick}){
                 {mangaCarousel[slide].description.length > 250 ? (
                   <>
                     {mangaCarousel[slide].description.substring(0, 250)}
-                    <span className="read-more" onClick={onRatingClick}>
+                    <span
+                      className="read-more"
+                      onClick={() =>
+                        handleMangaCarouselClick(mangaCarousel[slide].id)
+                      }
+                    >
                       {" "}
                       ...ReadMore
                     </span>
@@ -114,7 +126,12 @@ export default function Manga ({search, onRatingClick}){
               </p>
 
               <div className="hero-buttons">
-                <button className="btn-favorite" onClick={onRatingClick}>
+                <button
+                  className="btn-favorite"
+                  onClick={() =>
+                    handleMangaCarouselClick(mangaCarousel[slide].id)
+                  }
+                >
                   <span>⭐</span> Rating
                 </button>
               </div>
@@ -169,5 +186,5 @@ export default function Manga ({search, onRatingClick}){
         </div>
       </div>
     </>
-    );
+  );
 }

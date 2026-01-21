@@ -1,11 +1,26 @@
 import {
   makeMangaCarousel,
   findAllMangaCarousel,
+  findMangaCarouselById,
 } from "../models/manga-carousel.model.js";
 import { ValidationError } from "../errors/index.js";
 
 export async function getMangaCarouselService() {
   return await findAllMangaCarousel();
+}
+
+export async function getMangaCarouselByIdService(id) {
+  if (!id) {
+    throw new ValidationError("ID manga carousel harus diisi");
+  }
+
+  const manga = await findMangaCarouselById(id);
+
+  if (!manga) {
+    throw new NotFoundError("Manga Carousel tidak ditemukan");
+  }
+
+  return manga;
 }
 
 export async function createMangaCarouselService(data) {

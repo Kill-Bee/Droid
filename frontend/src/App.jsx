@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
 import Anime from "./pages/Anime/anime.jsx";
@@ -8,9 +8,29 @@ import Profile from "./pages/Profile/profile.jsx";
 import LoginPage from "./pages/login/login.jsx";
 import Rating from "./pages/Rating/rating.jsx";
 import AddData from "./pages/Data/addData.jsx";
-import AddManga from "./pages/Data/addManga.jsx"
+import AddManga from "./pages/Data/addManga.jsx";
 import Home from "./pages/Home/home.jsx";
 import Manga from "./pages/Manga/manga.jsx";
+
+// Layout component dengan Navbar
+function MainLayout({ search, setSearch }) {
+  return (
+    <>
+      <Navbar search={search} setSearch={setSearch} />
+      <Outlet context={{ search, setSearch }} />
+    </>
+  );
+}
+
+// Layout wrapper untuk pass props ke child routes
+function LayoutWithSearch({ search, setSearch, children }) {
+  return (
+    <>
+      <Navbar search={search} setSearch={setSearch} />
+      {children}
+    </>
+  );
+}
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -20,67 +40,29 @@ export default function App() {
       <ToastContainer position="top-center" autoClose={3000} theme="dark" />
 
       <Routes>
+        {/* Public routes tanpa Navbar */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
 
-        <Route
-          path="/anime"
-          element={
-            <>
-              <Navbar search={search} setSearch={setSearch} />
-              <Anime search={search} />
-            </>
-          }
-        />
+        {/* Routes dengan Navbar menggunakan Layout */}
+        <Route element={<MainLayout search={search} setSearch={setSearch} />}>
+          {/* Anime routes */}
+          <Route path="/anime" element={<Anime search={search} />} />
+          <Route path="/anime/:id" element={<Rating />} />
 
-        <Route
-          path="/anime/:id"
-          element={
-            <>
-              <Navbar search={search} setSearch={setSearch} />
-              <Rating />
-            </>
-          }
-        />
-        <Route
-          path="/manga"
-          element={
-            <>
-              <Navbar search={search} setSearch={setSearch} />
-              <Manga search={search} />
-            </>
-          }
-        />
+          {/* Manga routes */}
+          <Route path="/manga" element={<Manga search={search} />} />
+          <Route path="/manga/:id" element={<Rating />} />
 
-        <Route
-          path="/profile"
-          element={
-            <>
-              <Navbar search={search} setSearch={setSearch} />
-              <Profile />
-            </>
-          }
-        />
+          {/* Profile route */}
+          <Route path="/profile" element={<Profile />} />
 
-        <Route
-          path="/add-data"
-          element={
-            <>
-              <Navbar search={search} setSearch={setSearch} />
-              <AddData />
-            </>
-          }
-        />
-        <Route
-          path="/add-manga"
-          element={
-            <>
-              <Navbar search={search} setSearch={setSearch} />
-              <AddManga />
-            </>
-          }
-        />
+          {/* Data management routes */}
+          <Route path="/add-data" element={<AddData />} />
+          <Route path="/add-manga" element={<AddManga />} />
+        </Route>
 
+        {/* Fallback route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

@@ -7,6 +7,11 @@ export async function findAllMangaCarousel() {
   return result.rows;
 }
 
+export async function findMangaCarouselById(id) {
+  const result = await query("SELECT * FROM manga_carousel WHERE id = $1", [id]);
+  return result.rows[0];
+}
+
 export async function makeMangaCarousel({
   title,
   description,

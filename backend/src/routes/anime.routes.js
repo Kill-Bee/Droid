@@ -6,6 +6,7 @@ import {
 } from "../controllers/anime.controller.js";
 import {
   getAnimeCarouselList,
+  getAnimeCarouselById,
   createAnimeCarousel,
 } from "../controllers/anime-carousel.controller.js";
 
@@ -21,5 +22,6 @@ router.post("/carousel", createAnimeCarousel);
 
 // Anime | Carousel by ID
 router.get("/:id", getAnimeById);
+router.get("/carousel/:id", getAnimeCarouselById);
 
 export default router;

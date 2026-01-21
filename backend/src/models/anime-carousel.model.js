@@ -7,6 +7,11 @@ export async function findAllAnimeCarousel() {
   return result.rows;
 }
 
+export async function findAnimeCarouselById(id) {
+  const result = await query("SELECT * FROM anime_carousel WHERE id = $1", [id]);
+  return result.rows[0];
+}
+
 export async function makeAnimeCarousel({
   title,
   description,

@@ -1,11 +1,26 @@
 import {
   makeAnimeCarousel,
   findAllAnimeCarousel,
+  findAnimeCarouselById,
 } from "../models/anime-carousel.model.js";
 import { ValidationError } from "../errors/index.js";
 
 export async function getAnimeCarouselService() {
   return await findAllAnimeCarousel();
+}
+
+export async function getAnimeCarouselByIdService(id) {
+  if (!id) {
+    throw new ValidationError("ID anime carousel harus diisi");
+  }
+
+  const anime = await findAnimeCarouselById(id);
+
+  if (!anime) {
+    throw new NotFoundError("Anime carousel tidak ditemukan");
+  }
+
+  return anime;
 }
 
 export async function createAnimeCarouselService(data) {

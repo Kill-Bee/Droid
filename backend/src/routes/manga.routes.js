@@ -7,6 +7,7 @@ import {
 import {
   getMangaCarouselList,
   createMangaCarousel,
+  getMangaCarouselById,
 } from "../controllers/manga-carousel.controller.js";
 
 const router = Router();
@@ -19,4 +20,5 @@ router.get("/carousel", getMangaCarouselList);
 router.post("/carousel", createMangaCarousel);
 
 router.get("/:id", getMangaById);
+router.get("/carousel/:id", getMangaCarouselById);
 export default router;
