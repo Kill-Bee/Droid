@@ -74,4 +74,22 @@ nav img:hover {
   color: white;
   border: solid 2px #969696;
 }
+.data{
+  background-color: #e0e0e000;
+  border: none;
+  font-size: large;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  font-family: 'Times New Roman', Times, serif;
+}
+.data option{
+  background-color: #2a2a2a;  
+  color: #ffffff;           
+  padding: 8px;
+  border: none;
+  box-shadow: none;
+  font-style: none;
+  font-size: smaller;
+}
 /*NAV END*/

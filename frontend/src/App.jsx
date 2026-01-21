@@ -8,8 +8,9 @@ import Profile from "./pages/Profile/profile.jsx";
 import LoginPage from "./pages/login/login.jsx";
 import Rating from "./pages/Rating/rating.jsx";
 import AddData from "./pages/Data/addData.jsx";
+import AddManga from "./pages/Data/addManga.jsx"
 import Home from "./pages/Home/home.jsx";
-import Manga from "./pages/Manga/Manga.jsx";
+import Manga from "./pages/Manga/manga.jsx";
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -67,6 +68,15 @@ export default function App() {
             <>
               <Navbar search={search} setSearch={setSearch} />
               <AddData />
+            </>
+          }
+        />
+        <Route
+          path="/add-manga"
+          element={
+            <>
+              <Navbar search={search} setSearch={setSearch} />
+              <AddManga />
             </>
           }
         />
