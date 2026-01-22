@@ -2,6 +2,7 @@ import { uploadCover } from "./storage.js";
 import {
   getAnimesApi,
   getAnimeByIdApi,
+  getAnimeDetailByIdApi,
   deleteAnimeApi,
   createAnimeApi,
 } from "../api/anime.api.js";
@@ -12,6 +13,10 @@ export async function getAnimes() {
 
 export async function getAnimeById(id) {
   return getAnimeByIdApi(id);
+}
+
+export async function getAnimeDetailById(id) {
+  return getAnimeDetailByIdApi(id);
 }
 
 export async function deleteAnime(id) {

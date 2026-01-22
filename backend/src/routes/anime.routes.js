@@ -3,6 +3,7 @@ import {
   getAnimeList,
   getAnimeById,
   createAnime,
+  animeDetail,
 } from "../controllers/anime.controller.js";
 import {
   getAnimeCarouselList,
@@ -21,6 +22,7 @@ router.get("/carousel", getAnimeCarouselList);
 router.post("/carousel", createAnimeCarousel);
 
 // Anime | Carousel by ID
+router.get("/detail/:id", animeDetail);
 router.get("/:id", getAnimeById);
 router.get("/carousel/:id", getAnimeCarouselById);
 

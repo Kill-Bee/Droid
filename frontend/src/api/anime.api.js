@@ -8,6 +8,10 @@ export async function getAnimeByIdApi(id) {
   return apiFetch(`/anime/${id}`);
 }
 
+export async function getAnimeDetailByIdApi(id) {
+  return apiFetch(`/anime/detail/${id}`);
+}
+
 export async function deleteAnimeApi(id) {
   const response = await apiFetch(`/anime/${id}`, {
     method: "DELETE",

@@ -2,6 +2,7 @@ import {
   findAllAnime,
   findAnimeById,
   makeAnime,
+  animeDetails,
 } from "../models/anime.model.js";
 import { ValidationError, NotFoundError } from "../errors/index.js";
 
@@ -56,4 +57,18 @@ export async function createAnimeService(data) {
     release_year: releaseYear,
     episodes: episodes,
   });
+}
+
+export async function animeDetailService(id) {
+  if (!id) {
+    throw new ValidationError("ID anime harus diisi");
+  }
+
+  const anime = await animeDetails(id);
+
+  if (!anime) {
+    throw new NotFoundError("Anime tidak ditemukan");
+  }
+
+  return anime;
 }

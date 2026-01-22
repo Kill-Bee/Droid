@@ -2,7 +2,7 @@ import "./rating.css";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { getAnimeById } from "../../services/anime.service";
+import { getAnimeDetailById } from "../../services/anime.service";
 
 export default function Rating() {
   const { id } = useParams();
@@ -19,7 +19,7 @@ export default function Rating() {
     (async () => {
       try {
         setLoading(true);
-        const data = await getAnimeById(id);
+        const data = await getAnimeDetailById(id);
         setAnime(data);
       } catch (error) {
         toast.error("Failed to fetch anime data");
@@ -71,7 +71,7 @@ export default function Rating() {
             <h1 className="h1-left">{anime.title}</h1>
             <div className="information">
               <p>
-                <b>Genre:</b> Action, Adventure, Comedy
+                <b>Genre:</b> {anime.genres.join(", ")}
               </p>
               <p>
                 <b>Release Year:</b> {anime.release_year}

@@ -6,7 +6,6 @@ export async function findAllAnime() {
   return result.rows;
 }
 
-
 export async function findAnimeById(id) {
   const result = await query("SELECT * FROM anime WHERE id = $1", [id]);
   return result.rows[0];
@@ -26,9 +25,35 @@ export async function makeAnime({
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `,
-    [title, description, cover_image, release_year, episodes]
+    [title, description, cover_image, release_year, episodes],
   );
 
   return result.rows[0];
 }
 
+export async function animeDetails(id) {
+  const result = await query(
+    `
+    SELECT
+      a.id,
+      a.title,
+      a.description,
+      a.cover_image,
+      a.release_year,
+      a.episodes,
+      a.created_at,
+      COALESCE(
+        ARRAY_AGG(DISTINCT g.name) FILTER (WHERE g.name IS NOT NULL),
+        '{}'
+      ) AS genres
+    FROM anime a
+    LEFT JOIN anime_genres ag ON ag.anime_id = a.id
+    LEFT JOIN genres g ON g.id = ag.genre_id
+    WHERE a.id = $1
+    GROUP BY a.id;
+    `,
+    [id],
+  );
+
+  return result.rows[0];
+}

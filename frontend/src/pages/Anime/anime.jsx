@@ -109,7 +109,9 @@ export default function Anime({ search }) {
                     {animesCarousel[slide].description.substring(0, 250)}
                     <span
                       className="read-more"
-                      onClick={() => handleAnimeCarouselClick(animesCarousel[slide].id)}
+                      onClick={() =>
+                        handleAnimeCarouselClick(animesCarousel[slide].id)
+                      }
                     >
                       {" "}
                       ...ReadMore
@@ -123,7 +125,9 @@ export default function Anime({ search }) {
               <div className="hero-buttons">
                 <button
                   className="btn-favorite"
-                  onClick={() => handleAnimeCarouselClick(animesCarousel[slide].id)}
+                  onClick={() =>
+                    handleAnimeCarouselClick(animesCarousel[slide].id)
+                  }
                 >
                   <span>⭐</span> Rating
                 </button>
