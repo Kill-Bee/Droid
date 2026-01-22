@@ -11,6 +11,7 @@ import AddData from "./pages/Data/addData.jsx";
 import AddManga from "./pages/Data/addManga.jsx";
 import Home from "./pages/Home/home.jsx";
 import Manga from "./pages/Manga/manga.jsx";
+import Footer from "./components/footer.jsx";
 
 // Layout component dengan Navbar
 function MainLayout({ search, setSearch }) {
@@ -18,6 +19,7 @@ function MainLayout({ search, setSearch }) {
     <>
       <Navbar search={search} setSearch={setSearch} />
       <Outlet context={{ search, setSearch }} />
+      <Footer/>
     </>
   );
 }
@@ -28,6 +30,7 @@ function LayoutWithSearch({ search, setSearch, children }) {
     <>
       <Navbar search={search} setSearch={setSearch} />
       {children}
+
     </>
   );
 }
@@ -41,8 +44,8 @@ export default function App() {
 
       <Routes>
         {/* Public routes tanpa Navbar */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<><Home/> <Footer/></>} />
+        <Route path="/login" element={<><LoginPage /> <Footer/></>} />
 
         {/* Routes dengan Navbar menggunakan Layout */}
         <Route element={<MainLayout search={search} setSearch={setSearch} />}>

@@ -152,6 +152,7 @@ export default function Manga({ search }) {
           </div>
         )}
       </div>
+      <div className="banner-bottom-bg" aria-hidden="true" />
       <div className="main">
         <h1>Sedang Trending (Manga)</h1>
         <div className="slider-wrapper">

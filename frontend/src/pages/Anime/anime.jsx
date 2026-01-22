@@ -149,8 +149,40 @@ export default function Anime({ search }) {
           </div>
         )}
       </div>
+      <div className="banner-bottom-bg" aria-hidden="true" />
       <div className="main">
-        <h1>Sedang Trending (ANIME)</h1>
+        <h1>Sedang Trending</h1>
+        <div className="slider-wrapper">
+          <button
+            className="slide-arrow slide-arrow-left"
+            onClick={handleSlideLeft}
+          ></button>
+          <div className="container-slide">
+            {filteredAnimes.map((anime) => {
+              return (
+                <div className="card" key={anime.id}>
+                  <div>
+                    <img
+                      src={anime.cover_image}
+                      alt={anime.title}
+                      onClick={() => handleAnimeClick(anime.id)}
+                    />
+                    <h3 onClick={() => handleAnimeClick(anime.id)}>
+                      {anime.title.length > 20
+                        ? anime.title.substring(0, 20) + "..."
+                        : anime.title}
+                    </h3>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <button
+            className="slide-arrow slide-arrow-right"
+            onClick={handleSlideRight}
+          ></button>
+        </div>
+        <h1>Action</h1>
         <div className="slider-wrapper">
           <button
             className="slide-arrow slide-arrow-left"
