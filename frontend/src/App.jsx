@@ -19,7 +19,7 @@ function MainLayout({ search, setSearch }) {
     <>
       <Navbar search={search} setSearch={setSearch} />
       <Outlet context={{ search, setSearch }} />
-      <Footer/>
+      <Footer />
     </>
   );
 }
@@ -30,7 +30,6 @@ function LayoutWithSearch({ search, setSearch, children }) {
     <>
       <Navbar search={search} setSearch={setSearch} />
       {children}
-
     </>
   );
 }
@@ -44,8 +43,23 @@ export default function App() {
 
       <Routes>
         {/* Public routes tanpa Navbar */}
-        <Route path="/" element={<><Home/> <Footer/></>} />
-        <Route path="/login" element={<><LoginPage /> <Footer/></>} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Home />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <>
+              <LoginPage />
+            </>
+          }
+        />
 
         {/* Routes dengan Navbar menggunakan Layout */}
         <Route element={<MainLayout search={search} setSearch={setSearch} />}>

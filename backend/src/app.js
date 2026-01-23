@@ -21,16 +21,16 @@ export function buildApp() {
   app.use(express.urlencoded({ extended: true }));
 
   // Authentication routes
-  app.use("/auth", authRoutes);
+  app.use("/api/auth", authRoutes);
 
   // Health routes
-  app.use("/health", healthRoutes);
+  app.use("/api/health", healthRoutes);
 
   // Anime use
-  app.use("/anime", animeRoutes);
+  app.use("/api/anime", animeRoutes);
 
   // Manga use
-  app.use("/manga", mangaRoutes);
+  app.use("/api/manga", mangaRoutes);
 
   // Error handling middleware
   app.use(errorMiddleware);

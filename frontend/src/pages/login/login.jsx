@@ -4,20 +4,20 @@ import { useAuth } from "../../context/useAuth";
 import { toast } from "react-toastify";
 import "./login.css";
 
-export default function LoginPage({ onAnimeClick }) {
+export default function LoginPage() {
   const [view, setView] = useState("login");
 
   const showLogin = () => setView("login");
   const showRegister = () => setView("register");
 
   return view === "login" ? (
-    <Login onAnimeClick={onAnimeClick} onRegisterClick={showRegister} />
+    <Login onRegisterClick={showRegister} />
   ) : (
-    <Register onAnimeClick={onAnimeClick} onLoginClick={showLogin} />
+    <Register onLoginClick={showLogin} />
   );
 }
 
-function Login({ onAnimeClick, onRegisterClick }) {
+function Login({ onRegisterClick }) {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [username, setUsername] = useState("");
@@ -30,7 +30,7 @@ function Login({ onAnimeClick, onRegisterClick }) {
     try {
       await login(username, password);
       toast.success("Login berhasil");
-      onAnimeClick();
+      navigate("/anime");
     } catch (err) {
       toast.error(err.message || "Login gagal");
     } finally {
@@ -42,7 +42,7 @@ function Login({ onAnimeClick, onRegisterClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={() => navigate("/anime")} viewBox="0 0 24 24">
+          <svg onClick={() => navigate("/")} viewBox="0 0 24 24">
             <path d="M15 7L10 12L15 17" />
           </svg>
           <h2>Login</h2>
@@ -112,7 +112,7 @@ function Register({ onLoginClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={() => navigate("/anime")} viewBox="0 0 24 24">
+          <svg onClick={() => navigate("/login")} viewBox="0 0 24 24">
             <path d="M15 7L10 12L15 17" />
           </svg>
           <h2>Register</h2>
