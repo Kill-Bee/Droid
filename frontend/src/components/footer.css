@@ -3,9 +3,11 @@
   width: 100%;
   padding: 0;
   margin-top: 0;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+*{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
+}
 
 .footer-content {
   display: grid;
@@ -56,7 +58,34 @@
 .footer-section ul li a:hover {
   color: #ffffff;
 }
+.banner-bottom-bg-footer {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  margin-top: 0;
+  background: linear-gradient(
+    to top,
+    #0a0a0a 0%,
+    #121212 55%,
+    #1a1a1a 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
 
+/* gradient unutk ratting dan profile */
+.banner-bottom-bg-footer--rating,
+.banner-bottom-bg-footer--profile {
+  height: 180px;
+  margin-top: 80px;
+  background: linear-gradient(
+    to top,
+    #0a0a0a 0%,
+    #121212 50%,
+    #1a1a1a 100%
+  );
+  z-index: 0;
+}
 .footer-divider {
   height: 1px;
   background: linear-gradient(to right, #333333, #666666, #333333);

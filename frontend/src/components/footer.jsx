@@ -3,8 +3,8 @@ import "./footer.css";
 export default function Footer() {
   return (
     <>
-    <div className="banner-bottom-bg" aria-hidden="true" />
 
+    <div className="banner-bottom-bg-footer" aria-hidden="true" />
     <footer className="footer">
       <div className="footer-content">
         {/* Logo Section */}
@@ -51,7 +51,8 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <div className="social-icons">
-          <a href="https://github.com/kuzanf3b" className="social-btn"><img src="src/assets/Github.svg" alt="" /></a>
+          <a href="https://github.com/Kill-Bee" className="social-btn"><img src="src/assets/Github.svg" alt="" /></a>
+          <a href="https://github.com/Kill-Bee" className="social-btn"><img src="src/assets/gmail.svg" alt="" /></a>
         </div>
 
         <p className="copyright">© Copyright. All rights reserved.</p>

@@ -17,7 +17,7 @@ export default function Navbar({ search, setSearch }) {
     <>
       <nav>
         <ul>
-          <li onClick={() => navigate("/")}>Home</li>
+          {/* <li onClick={() => navigate("/")}>Home</li> */}
           <li onClick={() => navigate("/anime")}>Anime</li>
           <li onClick={() => navigate("/manga")}>Manga</li>
           <li>

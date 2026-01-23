@@ -8,7 +8,8 @@
   background-color: rgb(16, 16, 16);
 }
 .bacground{
-background-color: #1d1d1d;
+ background-color: rgb(26, 26, 26);
+padding-bottom: 200px;
 }
 .headerProfile {
   flex-direction: column;
