@@ -2,42 +2,85 @@ import "./rating.css";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+
 import { getAnimeDetailById } from "../../services/anime.service";
+import { getAnimeRate, setAnimeRate } from "../../services/rating.service";
+import StarRating from "./components/StarRating";
 
 export default function Rating() {
   const { id } = useParams();
-  const [anime, setAnime] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
 
-  // Label untuk setiap rating
-  const ratingLabels = ["worst", "bad", "mid", "good", "GOAT"];
+  const [anime, setAnime] = useState(null);
+  const [savedRating, setSavedRating] = useState(0);
+  const [draftRating, setDraftRating] = useState(0);
+
+  const [pageLoading, setPageLoading] = useState(true);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupLoading, setPopupLoading] = useState(false);
+
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
 
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true);
+        setPageLoading(true);
         const data = await getAnimeDetailById(id);
         setAnime(data);
       } catch (error) {
         toast.error("Failed to fetch anime data");
-        console.error("Error fetching anime:", error);
+        console.error(error);
       } finally {
-        setLoading(false);
+        setPageLoading(false);
       }
     })();
   }, [id]);
 
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
+    (async () => {
+      try {
+        const res = await getAnimeRate(id);
+        if (res?.rating !== null && res?.rating !== undefined) {
+          setSavedRating(res.rating);
+          setDraftRating(res.rating);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [id, isLoggedIn]);
+
   const handleOpenPopup = () => {
+    if (!isLoggedIn) {
+      toast.error("Please login to rate");
+      return;
+    }
+    setDraftRating(savedRating);
     setIsPopupOpen(true);
   };
+
   const handleClosePopup = () => {
+    if (popupLoading) return; // cegah close saat submit
     setIsPopupOpen(false);
   };
 
-  if (loading) {
+  const handleSubmitRating = async (value) => {
+    try {
+      setPopupLoading(true);
+      await setAnimeRate(id, value);
+      setSavedRating(value);
+      toast.success("Rating updated");
+      setIsPopupOpen(false);
+    } catch (error) {
+      toast.error("Failed to update rating");
+      console.error(error);
+    } finally {
+      setPopupLoading(false);
+    }
+  };
+
+  if (pageLoading) {
     return (
       <div className="background-hitam">
         <div className="container-rating">
@@ -60,8 +103,10 @@ export default function Rating() {
   return (
     <div className="background-hitam">
       <div className="box"></div>
+
       <div className="container-rating">
         <div className="rating-wrapper">
+          {/* LEFT */}
           <div className="rating-left">
             <img
               src={anime.cover_image || "https://via.placeholder.com/300x450"}
@@ -82,58 +127,40 @@ export default function Rating() {
             </div>
           </div>
 
+          {/* RIGHT */}
           <div className="rating-right">
             <h1 className="h1-right">{anime.title}</h1>
-            <label htmlFor="">Synopsis</label>
+            <label>Synopsis</label>
             <p className="text-light">
               {anime.description || "No description available."}
             </p>
+
             <div className="buttons-rating">
-              <button onClick={handleOpenPopup}>Rating ★ </button>
+              <button onClick={handleOpenPopup}>Rating ★</button>
             </div>
           </div>
         </div>
       </div>
-      {/* terbuka jika ispopup true */}
+
+      {/* Pop Up*/}
       {isPopupOpen && (
-        // agar bisa cllose di luar content  onClick={handleClosePopup
         <div className="popup-overlay" onClick={handleClosePopup}>
-          {/* agar popup tidak tertutup */}
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <h2>What is your ratting to this anime</h2>
-            {/* array bintang */}
-            <div className="stars-container">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                  key={star}
-                  className={
-                    star <= (hoverRating || rating) ? "star active" : "star"
-                  }
-                  onClick={() => setRating(star)}
-                  onMouseEnter={() => setHoverRating(star)}
-                  onMouseLeave={() => setHoverRating(0)}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-            {/* tampilan & logic bintang */}
-            <p className="rating-text">
-              {rating > 0
-                ? `rating: ${ratingLabels[rating - 1]}`
-                : "belum memilih"}
-            </p>
-            <button onClick={handleClosePopup} className="close-btn-rating">
-              Tutup
-            </button>
+            <h2>What is your rating to this anime?</h2>
+
+            <StarRating
+              value={draftRating}
+              loading={popupLoading}
+              onChange={setDraftRating}
+              onSubmit={handleSubmitRating}
+            />
+
             <button
-              onClick={() => {
-                console.log("Rating:", rating, "-", ratingLabels[rating - 1]);
-                handleClosePopup();
-              }}
-              className="submit-btn-rating"
+              onClick={handleClosePopup}
+              className="close-btn-rating"
+              disabled={popupLoading}
             >
-              Submit
+              Tutup
             </button>
           </div>
         </div>
