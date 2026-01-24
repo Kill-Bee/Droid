@@ -7,10 +7,10 @@ export async function findUserByUsername(username) {
   return result.rows[0];
 }
 
-export async function createUser(username, passwordHash) {
+export async function createUser(username, passwordHash, avatar) {
   const result = await query(
-    "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING id, username, created_at",
-    [username, passwordHash],
+    "INSERT INTO users (username, password_hash, avatar) VALUES ($1, $2, $3) RETURNING id, username, avatar, created_at",
+    [username, passwordHash, avatar],
   );
   return result.rows[0];
 }

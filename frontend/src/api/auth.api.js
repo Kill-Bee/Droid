@@ -7,9 +7,9 @@ export function loginApi(username, password) {
   });
 }
 
-export function registerApi(username, password) {
+export function registerApi(username, password, avatar) {
   return apiFetch("/auth/register", {
     method: "POST",
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, avatar }),
   });
 }

@@ -25,7 +25,7 @@ export async function getAnimeRating(req, res) {
 
     let userRating = null;
     if (req.user && req.user.id) {
-      const existing = await findUserRating(animeId, req.user.id);
+      const existing = await findUserRating(req.user.id, animeId);
       userRating = existing ? existing.rating : null;
     }
 

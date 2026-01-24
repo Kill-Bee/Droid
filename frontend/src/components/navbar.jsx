@@ -49,7 +49,7 @@ export default function Navbar({ search, setSearch }) {
             alt="profile"
             onClick={() => navigate("/profile")}
           />
-          <button onClick={() => navigate("/login")} className="login-navbar">
+          <button onClick={() => navigate("/auth")} className="login-navbar">
             Logout
           </button>
         </div>

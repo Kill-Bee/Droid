@@ -1,4 +1,4 @@
-import { uploadManga } from "./storage";
+import { uploadCoverManga } from "./storage";
 import { getMangaApi, getMangaByIdApi, createMangaApi } from "../api/manga.api";
 
 export async function getManga() {
@@ -12,7 +12,7 @@ export async function createManga(data) {
   let coverUrl = null;
 
   if (data.coverFile) {
-    coverUrl = await uploadManga(data.coverFile);
+    coverUrl = await uploadCoverManga(data.coverFile);
   }
 
   return createMangaApi({

@@ -1,4 +1,4 @@
-import { uploadCover } from "./storage";
+import { uploadCoverAnime } from "./storage";
 import { getAnimeCarouselApi, createAnimeCarouselApi } from "../api/anime-carousel.api";
 
 export async function getAnimesCarousel() {
@@ -9,7 +9,7 @@ export async function createAnimeCarousel(data) {
   let coverUrl = null;
 
   if (data.coverFile) {
-    coverUrl = await uploadCover(data.coverFile);
+    coverUrl = await uploadCoverAnime(data.coverFile);
   }
 
   return createAnimeCarouselApi({

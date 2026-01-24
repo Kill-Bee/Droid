@@ -1,4 +1,4 @@
-import { uploadManga } from "./storage";
+import { uploadCoverManga } from "./storage";
 import { getMangaCarouselApi, createMangaCarouselApi } from "../api/Manga-carousel.api";
 
 export async function getMangaCarousel() {
@@ -9,7 +9,7 @@ export async function createMangaCarousel(data) {
   let coverUrl = null;
 
   if (data.coverFile) {
-    coverUrl = await uploadManga(data.coverFile);
+    coverUrl = await uploadCoverManga(data.coverFile);
   }
 
   return createMangaCarouselApi({
