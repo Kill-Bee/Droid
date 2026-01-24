@@ -69,7 +69,10 @@ export default function Rating() {
     try {
       setPopupLoading(true);
       await setAnimeRate(id, value);
+      
       setSavedRating(value);
+      setDraftRating(value);
+      
       toast.success("Rating updated");
       setIsPopupOpen(false);
     } catch (error) {

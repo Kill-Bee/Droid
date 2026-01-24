@@ -9,6 +9,7 @@ export default function StarRating({
   labels = ["worst", "bad", "mid", "good", "GOAT"],
 }) {
   const [hover, setHover] = useState(0);
+  const activeValue = hover > 0 ? hover : value;
 
   return (
     <div className="star-rating">
@@ -16,7 +17,7 @@ export default function StarRating({
         {[1, 2, 3, 4, 5].map((star) => (
           <span
             key={star}
-            className={star <= (hover || value) ? "star active" : "star"}
+            className={star <= activeValue ? "star active" : "star"}
             onClick={() => !loading && onChange(star)}
             onMouseEnter={() => !loading && setHover(star)}
             onMouseLeave={() => setHover(0)}
