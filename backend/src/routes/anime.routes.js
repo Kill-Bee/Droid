@@ -30,6 +30,6 @@ router.get("/carousel/:id", getAnimeCarouselById);
 
 // Anime | Rating
 router.post("/:animeId/rating", authMiddleware, rateAnime);
-router.get("/:animeId/rating", getAnimeRating);
+router.get("/:animeId/rating", authMiddleware, getAnimeRating);
 
 export default router;
