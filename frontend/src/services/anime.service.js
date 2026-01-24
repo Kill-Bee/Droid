@@ -1,4 +1,4 @@
-import { uploadCover } from "./storage.js";
+import { uploadCoverAnime } from "./storage.js";
 import {
   getAnimesApi,
   getAnimeByIdApi,
@@ -27,7 +27,7 @@ export async function createAnime(data) {
   let coverUrl = null;
 
   if (data.coverFile) {
-    coverUrl = await uploadCover(data.coverFile);
+    coverUrl = await uploadCoverAnime(data.coverFile);
   }
 
   return createAnimeApi({

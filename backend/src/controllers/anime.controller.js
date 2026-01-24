@@ -42,23 +42,3 @@ export async function animeDetail(req, res, next) {
     next(err);
   }
 }
-
-export async function updateAnime(req, res, next) {
-  try {
-    const { id } = req.params;
-    const updatedAnime = await updateAnimeService(id, req.body);
-    res.json(updatedAnime);
-  } catch (err) {
-    next(err);
-  }
-}
-
-export async function deleteAnime(req, res, next) {
-  try {
-    const { id } = req.params;
-    await deleteAnimeService(id);
-    res.status(204).send();
-  } catch (err) {
-    next(err);
-  }
-}

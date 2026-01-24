@@ -12,8 +12,8 @@ export async function loginController(req, res, next) {
 
 export async function registerController(req, res, next) {
   try {
-    const { username, password } = req.body;
-    const user = await register(username, password);
+    const { username, password, avatar } = req.body;
+    const user = await register(username, password, avatar);
     res.status(201).json({ message: "User registered successfully", user });
   } catch (err) {
     next(err);

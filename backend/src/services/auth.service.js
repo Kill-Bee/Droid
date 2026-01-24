@@ -38,7 +38,7 @@ export async function login(username, password) {
   };
 }
 
-export async function register(username, password) {
+export async function register(username, password, avatar) {
   // Validasi input
   if (!username || !password) {
     throw new ValidationError("Username dan password harus diisi");
@@ -59,5 +59,5 @@ export async function register(username, password) {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-  return await createUser(username, passwordHash);
+  return await createUser(username, passwordHash, avatar);
 }

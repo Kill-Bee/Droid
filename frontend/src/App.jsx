@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
 import Anime from "./pages/Anime/anime.jsx";
 import Profile from "./pages/Profile/profile.jsx";
-import LoginPage from "./pages/login/login.jsx";
+import Auth from "./pages/login/auth.jsx";
 import Rating from "./pages/Rating/rating.jsx";
 import AddData from "./pages/Data/addData.jsx";
 import AddManga from "./pages/Data/addManga.jsx";
@@ -53,10 +53,10 @@ export default function App() {
           }
         />
         <Route
-          path="/login"
+          path="/auth"
           element={
             <>
-              <LoginPage />
+              <Auth />
             </>
           }
         />

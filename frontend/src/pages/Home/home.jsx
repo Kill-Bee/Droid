@@ -18,7 +18,7 @@ export default function Home() {
             <p className="p-home">
               Here You can Ratings Anime && Manga 👇👇👇{" "}
             </p>
-            <button className="button-home" onClick={() => navigate("/login")}>
+            <button className="button-home" onClick={() => navigate("/auth")}>
               Login
             </button>
           </div>
