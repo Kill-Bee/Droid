@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getManga } from "../../services/manga.service";
 import { getMangaCarousel } from "../../services/manga-carousel.service";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "./manga.css";
 
 export default function Manga({ search }) {
@@ -12,6 +14,10 @@ export default function Manga({ search }) {
   const [debounceSearch, setDebounceSearch] = useState("");
   const keyword = (debounceSearch || search || "").toLowerCase();
   const [slide, setSlide] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [expectedCount, setExpectedCount] = useState(10);
+  const [carouselLoading, setCarouselLoading] = useState(true);
+  const skeletonItems = Array.from({ length: expectedCount });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,12 +30,16 @@ export default function Manga({ search }) {
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const data = await getManga();
         setManga(Array.isArray(data) ? data : []);
+        if (data && data.length > 0) setExpectedCount(data.length);
       } catch (error) {
         toast.error("Error fetching manga");
         console.error(error);
         setManga([]);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -37,12 +47,15 @@ export default function Manga({ search }) {
   useEffect(() => {
     (async () => {
       try {
+        setCarouselLoading(true);
         const data = await getMangaCarousel();
         setMangaCarousel(Array.isArray(data) ? data : []);
       } catch (error) {
         toast.error("Error fetching manga carousel");
         console.error(error);
         setMangaCarousel([]);
+      }finally{
+        setCarouselLoading(false);
       }
     })();
   }, []);
@@ -59,11 +72,13 @@ export default function Manga({ search }) {
 
   const handleSlideLeft = () => {
     const container = document.querySelector(".container-slide");
+    if (!container) return;
     container.scrollBy({ left: -400, behavior: "smooth" });
   };
 
   const handleSlideRight = () => {
     const container = document.querySelector(".container-slide");
+    if (!container) return;
     container.scrollBy({ left: 400, behavior: "smooth" });
   };
 
@@ -82,7 +97,9 @@ export default function Manga({ search }) {
   return (
     <>
       <div className="header">
-        {mangaCarousel.length > 0 && (
+        {carouselLoading ? (
+          <CarouselSkeleton/>
+        ) :mangaCarousel.length > 0 ? (
           <div className="carousel-item">
             <div className="background">
               <img
@@ -150,7 +167,8 @@ export default function Manga({ search }) {
               ))}
             </div>
           </div>
-        )}
+        ) : null }
+        
       </div>
       <div className="banner-bottom-bg" aria-hidden="true" />
       <div className="main">
@@ -160,8 +178,15 @@ export default function Manga({ search }) {
             className="slide-arrow slide-arrow-left"
             onClick={handleSlideLeft}
           ></button>
-          <div className="container-slide">
-            {filteredManga.map((manga) => {
+          {loading ? (
+            <div className="container-slide">
+              {skeletonItems.map((_, i) => (
+                <CardSkeleton key={`trend-skel-${i}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="container-slide">
+              {filteredManga.map((manga) => {
               return (
                 <div className="card" key={manga.id}>
                   <div>
@@ -180,6 +205,7 @@ export default function Manga({ search }) {
               );
             })}
           </div>
+          )}
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
@@ -187,5 +213,29 @@ export default function Manga({ search }) {
         </div>
       </div>
     </>
+  );
+}
+
+function CarouselSkeleton() {
+  return (
+    <SkeletonTheme baseColor="#1d1c1c" highlightColor="#444">
+      <div className="carousel-skeleton-wrapper">
+        <Skeleton width="100%" height={1000} borderRadius={8} />
+      </div>
+    </SkeletonTheme>
+  );
+}
+function CardSkeleton() {
+  return (
+    <SkeletonTheme baseColor="#1d1c1c" highlightColor="#444">
+      <div className="card-skeleton">
+        <div className="img-skeleton">
+          <Skeleton width={200} height={300} borderRadius={8} />
+        </div>
+        <div className="title-skeleton">
+          <Skeleton width={200} />
+        </div>
+      </div>
+    </SkeletonTheme>
   );
 }

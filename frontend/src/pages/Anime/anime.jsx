@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAnimes } from "../../services/anime.service";
 import { getAnimesCarousel } from "../../services/anime-carousel.service";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "./anime.css";
 
 export default function Anime({ search }) {
@@ -11,6 +13,10 @@ export default function Anime({ search }) {
   const [debounceSearch, setDebounceSearch] = useState("");
   const keyword = (debounceSearch || search || "").toLowerCase();
   const [slide, setSlide] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [carouselLoading, setCarouselLoading] = useState(true);
+  const [expectedCount, setExpectedCount] = useState(10);
+  const skeletonItems = Array.from({ length: expectedCount });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,11 +29,15 @@ export default function Anime({ search }) {
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const data = await getAnimes();
         setAnimes(Array.isArray(data) ? data : []);
+        if (data && data.length > 0) setExpectedCount(data.length);
       } catch (error) {
         console.error("Error fetching animes:", error);
         setAnimes([]);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -35,15 +45,19 @@ export default function Anime({ search }) {
   useEffect(() => {
     (async () => {
       try {
+        setCarouselLoading(true)
         const data = await getAnimesCarousel();
         setAnimesCarousel(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching animes carousel:", error);
         setAnimesCarousel([]);
+      } finally{
+        setCarouselLoading(false)
       }
     })();
   }, []);
 
+  // use effect untuk carousel
   useEffect(() => {
     if (animesCarousel.length === 0) return;
 
@@ -56,11 +70,13 @@ export default function Anime({ search }) {
 
   const handleSlideLeft = () => {
     const container = document.querySelector(".container-slide");
+    if (!container) return;
     container.scrollBy({ left: -400, behavior: "smooth" });
   };
 
   const handleSlideRight = () => {
     const container = document.querySelector(".container-slide");
+    if (!container) return;
     container.scrollBy({ left: 400, behavior: "smooth" });
   };
 
@@ -79,7 +95,9 @@ export default function Anime({ search }) {
   return (
     <>
       <div className="header">
-        {animesCarousel.length > 0 && (
+        {carouselLoading ? (
+          <CarouselSkeleton />
+        ) : animesCarousel.length > 0 ? (
           <div className="carousel-item">
             <div className="background">
               <img
@@ -147,7 +165,7 @@ export default function Anime({ search }) {
               ))}
             </div>
           </div>
-        )}
+        ) : null}
       </div>
       <div className="banner-bottom-bg" aria-hidden="true" />
       <div className="main">
@@ -157,26 +175,37 @@ export default function Anime({ search }) {
             className="slide-arrow slide-arrow-left"
             onClick={handleSlideLeft}
           ></button>
-          <div className="container-slide">
-            {filteredAnimes.map((anime) => {
-              return (
-                <div className="card" key={anime.id}>
-                  <div>
-                    <img
-                      src={anime.cover_image}
-                      alt={anime.title}
-                      onClick={() => handleAnimeClick(anime.id)}
-                    />
-                    <h3 onClick={() => handleAnimeClick(anime.id)}>
-                      {anime.title.length > 20
-                        ? anime.title.substring(0, 20) + "..."
-                        : anime.title}
-                    </h3>
+          {loading ? (
+            <div className="container-slide">
+              {skeletonItems.map((_, i) => (
+                <CardSkelaton key={`trend-skel-${i}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="container-slide">
+              {filteredAnimes.map((anime) => {
+                return (
+                  <div className="card" key={anime.id}>
+                    <div>
+                      <img
+                        src={
+                          anime.cover_image ||
+                          "https://via.placeholder.com/300x400?text=No+Image"
+                        }
+                        alt={anime.title}
+                        onClick={() => handleAnimeClick(anime.id)}
+                      />
+                      <h3 onClick={() => handleAnimeClick(anime.id)}>
+                        {anime.title.length > 20
+                          ? anime.title.substring(0, 20) + "..."
+                          : anime.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
@@ -188,26 +217,38 @@ export default function Anime({ search }) {
             className="slide-arrow slide-arrow-left"
             onClick={handleSlideLeft}
           ></button>
-          <div className="container-slide">
-            {filteredAnimes.map((anime) => {
-              return (
-                <div className="card" key={anime.id}>
-                  <div>
-                    <img
-                      src={anime.cover_image}
-                      alt={anime.title}
-                      onClick={() => handleAnimeClick(anime.id)}
-                    />
-                    <h3 onClick={() => handleAnimeClick(anime.id)}>
-                      {anime.title.length > 20
-                        ? anime.title.substring(0, 20) + "..."
-                        : anime.title}
-                    </h3>
+          {loading ? (
+            <div className="container-slide">
+              {skeletonItems.map((_, i) => (
+                <CardSkelaton key={`action-skel-${i}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="container-slide">
+              {filteredAnimes.map((anime) => {
+                return (
+                  <div className="card" key={anime.id}>
+                    <div>
+                      <img
+                        src={
+                          anime.cover_image ||
+                          "https://via.placeholder.com/300x400?text=No+Image"
+                        }
+                        alt={anime.title}
+                        onClick={() => handleAnimeClick(anime.id)}
+                      />
+                      <h3 onClick={() => handleAnimeClick(anime.id)}>
+                        {anime.title.length > 20
+                          ? anime.title.substring(0, 20) + "..."
+                          : anime.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
+
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
@@ -215,5 +256,30 @@ export default function Anime({ search }) {
         </div>
       </div>
     </>
+  );
+}
+
+function CarouselSkeleton() {
+  return (
+    <SkeletonTheme baseColor="#1d1c1c" highlightColor="#444">
+      <div className="carousel-skeleton-wrapper">
+        <Skeleton width="100%" height={1000} borderRadius={8} />
+      </div>
+    </SkeletonTheme>
+  );
+}
+
+function CardSkelaton({card}){
+  return(
+    <SkeletonTheme baseColor="#1d1c1c" highlightColor="#444">
+      <div className="card-skeleton">
+        <div className="img-skeleton">
+          <Skeleton height={300} borderRadius={8} />
+        </div>
+        <div className="title-skeleton">
+          <Skeleton width={120} />
+        </div>
+      </div>
+    </SkeletonTheme>
   );
 }
