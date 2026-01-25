@@ -9,7 +9,7 @@ export default function Register({ onLoginClick }) {
   const { register } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(null);
+  const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
@@ -17,7 +17,7 @@ export default function Register({ onLoginClick }) {
     setLoading(true);
 
     try {
-      await register(username, password, avatar);
+      await register(username, password, displayName);
       toast.success("Register berhasil, silakan login");
       onLoginClick();
     } catch (err) {
@@ -45,19 +45,18 @@ export default function Register({ onLoginClick }) {
             disabled={loading}
           />
 
+          <label>Display Name</label>
+          <input
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            disabled={loading}
+          />
+
           <label>Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            disabled={loading}
-          />
-
-          <label>Avatar</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setAvatar(e.target.files[0])}
             disabled={loading}
           />
 

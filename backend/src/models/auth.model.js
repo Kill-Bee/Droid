@@ -7,10 +7,26 @@ export async function findUserByUsername(username) {
   return result.rows[0];
 }
 
-export async function createUser(username, passwordHash, avatar) {
+export async function createUser(username, passwordHash) {
   const result = await query(
-    "INSERT INTO users (username, password_hash, avatar) VALUES ($1, $2, $3) RETURNING id, username, avatar, created_at",
-    [username, passwordHash, avatar],
+    `
+    INSERT INTO users (username, password_hash) VALUES ($1, $2) 
+    RETURNING id, username, created_at
+    `,
+    [username, passwordHash],
+  );
+  return result.rows[0];
+}
+
+export async function createMember(userId, memberData) {
+  const { displayName, avatar, badge, banner, bio } = memberData;
+  const result = await query(
+    `
+    INSERT INTO members (user_id, display_name, avatar, badge, banner, bio, joined_at) 
+    VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP) 
+    RETURNING *
+    `,
+    [userId, displayName, avatar, badge, banner, bio],
   );
   return result.rows[0];
 }

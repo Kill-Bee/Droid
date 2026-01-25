@@ -1,21 +1,121 @@
-import { useEffect, useState } from "react";
-import { getMyProfile } from "../../services/profile.service";
+import { useEffect, useState, useRef } from "react";
+import { getMyProfile, updateMyProfile } from "../../services/profile.service";
+import { uploadAvatar, uploadBanner } from "../../services/storage";
+import { toast } from "react-toastify";
 import "./profile.css";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    displayName: "",
+    avatar: "",
+    banner: "",
+    bio: "",
+  });
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [bannerPreview, setBannerPreview] = useState(null);
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [bannerFile, setBannerFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const avatarInputRef = useRef(null);
+  const bannerInputRef = useRef(null);
 
   useEffect(() => {
-    async function loadProfile() {
-      try {
-        const data = await getMyProfile();
-        setProfile(data);
-      } catch (err) {
-        console.error("Failed to load profile:", err);
-      }
-    }
     loadProfile();
   }, []);
+
+  async function loadProfile() {
+    try {
+      const data = await getMyProfile();
+      setProfile(data);
+      setEditForm({
+        displayName: data.display_name || "",
+        avatar: data.avatar || "",
+        banner: data.banner || "",
+        bio: data.bio || "",
+      });
+    } catch (err) {
+      console.error("Failed to load profile:", err);
+    }
+  }
+
+  function handleAvatarChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  }
+
+  function handleBannerChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      setBannerFile(file);
+      setBannerPreview(URL.createObjectURL(file));
+    }
+  }
+
+  async function handleSave() {
+    setLoading(true);
+    try {
+      let avatarUrl = editForm.avatar;
+      let bannerUrl = editForm.banner;
+
+      // Upload avatar if new file selected
+      if (avatarFile) {
+        avatarUrl = await uploadAvatar(avatarFile);
+      }
+
+      // Upload banner if new file selected
+      if (bannerFile) {
+        bannerUrl = await uploadBanner(bannerFile);
+      }
+
+      await updateMyProfile({
+        displayName: editForm.displayName,
+        avatar: avatarUrl,
+        banner: bannerUrl,
+        bio: editForm.bio,
+      });
+
+      toast.success("Profile updated successfully!");
+      await loadProfile();
+      setIsEditing(false);
+      setAvatarFile(null);
+      setBannerFile(null);
+      setAvatarPreview(null);
+      setBannerPreview(null);
+    } catch (err) {
+      toast.error(err.message || "Failed to update profile");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setEditForm((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleCloseModal() {
+    setIsEditing(false);
+    setAvatarFile(null);
+    setBannerFile(null);
+    setAvatarPreview(null);
+    setBannerPreview(null);
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return "Unknown";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
 
   if (!profile) return <div>Loading profile...</div>;
 
@@ -30,25 +130,139 @@ export default function Profile() {
           style={{
             backgroundImage: `
               linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0)),
-              url(https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg)
+              url(${profile.banner || "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg"})
             `,
           }}
         >
           <div className="biodata">
-            <img src={profile.avatar} alt="profile" className="fotoProfile" />
+            <img
+              src={
+                profile.avatar ||
+                "https://i.pinimg.com/736x/32/9c/c6/329cc6ad5210a2c666554d58c7a433e8.jpg"
+              }
+              alt="profile"
+              className="fotoProfile"
+            />
             <div>
-              <h1>{profile.username}</h1>
+              <h1>{profile.display_name || profile.username}</h1>
 
               <div className="hero-tags">
-                <span className="tag">DEVELOPER</span>
-                <span className="tag">ANIME LOVER</span>
+                {profile.badge ? (
+                  <span className="tag">{profile.badge}</span>
+                ) : (
+                  <span className="tag">MEMBER</span>
+                )}
               </div>
 
-              <label>{profile.deskripsi || "No description yet"}</label>
-              <p>Joined on September 17, 2025</p>
+              <label>{profile.bio || "No bio yet"}</label>
+              <p>Joined on {formatDate(profile.joined_at)}</p>
+
+              <button
+                className="edit-profile-btn"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Profile
+              </button>
             </div>
           </div>
         </div>
+
+        {/* EDIT MODAL */}
+        {isEditing && (
+          <div className="edit-modal-overlay">
+            <div className="edit-modal">
+              <h2>Edit Profile</h2>
+
+              <label>Display Name</label>
+              <input
+                name="displayName"
+                value={editForm.displayName}
+                onChange={handleChange}
+                placeholder="Your display name"
+                disabled={loading}
+              />
+
+              <label>Avatar</label>
+              <div className="file-upload-wrapper">
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={avatarInputRef}
+                  onChange={handleAvatarChange}
+                  style={{ display: "none" }}
+                />
+                <div className="file-upload-preview">
+                  <img
+                    src={
+                      avatarPreview ||
+                      editForm.avatar ||
+                      "https://i.pinimg.com/736x/32/9c/c6/329cc6ad5210a2c666554d58c7a433e8.jpg"
+                    }
+                    alt="Avatar preview"
+                    className="avatar-preview"
+                  />
+                  <button
+                    type="button"
+                    className="upload-btn"
+                    onClick={() => avatarInputRef.current?.click()}
+                    disabled={loading}
+                  >
+                    Choose Avatar
+                  </button>
+                </div>
+              </div>
+
+              <label>Banner</label>
+              <div className="file-upload-wrapper">
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={bannerInputRef}
+                  onChange={handleBannerChange}
+                  style={{ display: "none" }}
+                />
+                <div className="file-upload-preview banner">
+                  <img
+                    src={
+                      bannerPreview ||
+                      editForm.banner ||
+                      "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg"
+                    }
+                    alt="Banner preview"
+                    className="banner-preview"
+                  />
+                  <button
+                    type="button"
+                    className="upload-btn"
+                    onClick={() => bannerInputRef.current?.click()}
+                    disabled={loading}
+                  >
+                    Choose Banner
+                  </button>
+                </div>
+              </div>
+
+              <label>Bio</label>
+              <textarea
+                name="bio"
+                value={editForm.bio}
+                onChange={handleChange}
+                placeholder="Tell us about yourself..."
+                rows={4}
+                disabled={loading}
+              />
+
+              <div className="edit-modal-actions">
+                <button onClick={handleCloseModal} disabled={loading}>
+                  Cancel
+                </button>
+                <button onClick={handleSave} disabled={loading}>
+                  {loading ? "Saving..." : "Save"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* RATING SECTION */}
         <div className="mainProfile">

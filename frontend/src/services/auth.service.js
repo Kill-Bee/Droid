@@ -1,4 +1,3 @@
-import { uploadProfile } from "./storage.js";
 import { loginApi, registerApi } from "../api/auth.api.js";
 
 export async function login(username, password) {
@@ -7,15 +6,8 @@ export async function login(username, password) {
   return data;
 }
 
-export async function register(username, password, avatar) {
-  let avatarUrl = null;
-
-  if (avatar) {
-    avatarUrl = await uploadProfile(avatar);
-  }
-
-  const data = await registerApi(username, password, avatarUrl);
-  localStorage.setItem("token", data.token);
+export async function register(username, password, displayName) {
+  const data = await registerApi(username, password, displayName);
   return data;
 }
 

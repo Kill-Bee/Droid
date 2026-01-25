@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { findUserByUsername, createUser } from "../models/auth.model.js";
+import { findUserByUsername, createUser, createMember } from "../models/auth.model.js";
 import {
   ValidationError,
   UnauthorizedError,
@@ -38,7 +38,7 @@ export async function login(username, password) {
   };
 }
 
-export async function register(username, password, avatar) {
+export async function register(username, password, memberData = {}) {
   // Validasi input
   if (!username || !password) {
     throw new ValidationError("Username dan password harus diisi");
@@ -59,5 +59,15 @@ export async function register(username, password, avatar) {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-  return await createUser(username, passwordHash, avatar);
+  const user = await createUser(username, passwordHash);
+
+  const member = await createMember(user.id, {
+    displayName: memberData.displayName || username,
+    avatar: null,
+    badge: null,
+    banner: null,
+    bio: null,
+  });
+
+  return { user, member };
 }
