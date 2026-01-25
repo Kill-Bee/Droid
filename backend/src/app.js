@@ -4,6 +4,7 @@ import animeRoutes from "./routes/anime.routes.js";
 import mangaRoutes from "./routes/manga.routes.js";
 import healthRoutes from "./routes/health.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import profileRoutes from "./routes/profile.routes.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
 
 export function buildApp() {
@@ -24,6 +25,9 @@ export function buildApp() {
 
   // Manga use
   app.use("/api/manga", mangaRoutes);
+
+  // Profile routes
+  app.use("/api/profile", profileRoutes);
 
   // Error handling middleware
   app.use(errorMiddleware);

@@ -1,158 +1,73 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getMyProfile } from "../../services/profile.service";
 import "./profile.css";
 
 export default function Profile() {
-  const [IsPopupOpen, setIspopupOpne] = useState(false);
+  const [profile, setProfile] = useState(null);
 
-  const handlePopupOpen = () => {
-    setIspopupOpne(true);
-  };
-  const handlePopupClose = () => {
-    setIspopupOpne(false);
-  };
-  const defProfile = [
-    {
-      id: 1,
-      nama: "Irul",
-      deskripsi: "AZarel",
-      dp: "https://i.pinimg.com/1200x/64/ea/c9/64eac9d3e7906fa45b3f7f298f29e11e.jpg",
-      bg: "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg",
-    },
-  ];
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        const data = await getMyProfile();
+        setProfile(data);
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      }
+    }
+    loadProfile();
+  }, []);
+
+  if (!profile) return <div>Loading profile...</div>;
+
   return (
     <>
       <div className="box"></div>
+
       <div className="bacground">
-        <div className="headerProfile" style={{
-          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url(${defProfile[0].bg})`
-        }}>
+        {/* HEADER */}
+        <div
+          className="headerProfile"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0)),
+              url(https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg)
+            `,
+          }}
+        >
           <div className="biodata">
-            {defProfile.map((profile) => (
-              <>
-                <img key={`img-${profile.id}`} src={profile.dp} alt="profile" className="fotoProfile" />
-                <div key={profile.id}>
-                  <h1>{profile.nama}</h1>
-                  <div className="hero-tags">
-                    <span className="tag">VETERAN</span>
-                    <span className="tag">SERVIS GOD</span>
-                    <span className="tag">TABOLA BALE</span>
-                    <span className="tag">DEVELOPERS</span>
-                  </div>
-                  <label>{profile.deskripsi}</label>
-                  <p>Joined on September 17, 2025</p>
-                </div>
-              </>
-            ))}
-            {/* <button onClick={handlePopupOpen}>Edit Profile</button> */}
+            <img src={profile.avatar} alt="profile" className="fotoProfile" />
+            <div>
+              <h1>{profile.username}</h1>
+
+              <div className="hero-tags">
+                <span className="tag">DEVELOPER</span>
+                <span className="tag">ANIME LOVER</span>
+              </div>
+
+              <label>{profile.deskripsi || "No description yet"}</label>
+              <p>Joined on September 17, 2025</p>
+            </div>
           </div>
         </div>
-        {IsPopupOpen && (
-          <div className="popup-overlay" onClick={handlePopupClose}>
-            <div
-              className="popup-container"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="popup-header">
-                <h2>Edit Profile</h2>
-                <button className="popup-close" onClick={handlePopupClose}>
-                  ✕
-                </button>
-              </div>
 
-              <div className="popup-body">
-                <div className="form-field">
-                  <label>Nickname</label>
-                  <input type="text" placeholder="Enter your nickname..." />
-                </div>
-
-                <div className="form-field">
-                  <label>Profile Picture</label>
-                  <input type="file" accept="image/*" />
-                </div>
-
-                <div className="form-field">
-                  <label>Banner Image</label>
-                  <input type="file" accept="image/*" />
-                </div>
-
-                <div className="form-field">
-                  <label>About You</label>
-                  <textarea placeholder="Tell us about yourself..."></textarea>
-                </div>
-              </div>
-
-              <div className="popup-footer">
-                <button className="btn-cancel" onClick={handlePopupClose}>
-                  Cancel
-                </button>
-                <button className="btn-save">Save</button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* RATING SECTION */}
         <div className="mainProfile">
-          <h1>Your rating</h1>
+          <h1>Your Rating</h1>
+
+          {profile.rated_anime?.length === 0 && (
+            <p>You haven't rated any anime yet.</p>
+          )}
+
           <div className="slider-wrapper-profile">
-            {/* <button className="slide-arrow slide-arrow-left" onClick={handleSlideLeft}>‹</button> */}
             <div className="container-slide">
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/5/87048.webp?s=8b58c1a2928f95ed0d5dbe2f9e5b9991"
-                  alt="card"
-                />
-                <h3>Shingeki no Kyojin</h3>
-                <p>⭐ 9.0</p>
-              </div>
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/1286/99889.jpg"
-                  alt="card"
-                />
-                <h3>Demon Slayer</h3>
-                <p>⭐ 8.7</p>
-              </div>
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/1223/96541.jpg"
-                  alt="card"
-                />
-                <h3>One Piece</h3>
-                <p>⭐ 8.9</p>
-              </div>
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/10/47347.jpg"
-                  alt="card"
-                />
-                <h3>Naruto</h3>
-                <p>⭐ 8.3</p>
-              </div>
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/1208/94745.jpg"
-                  alt="card"
-                />
-                <h3>Jujutsu Kaisen</h3>
-                <p>⭐ 8.6</p>
-              </div>
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/1337/99013.jpg"
-                  alt="card"
-                />
-                <h3>My Hero Academia</h3>
-                <p>⭐ 8.4</p>
-              </div>
-              <div className="card">
-                <img
-                  src="https://cdn.myanimelist.net/r/216x326/images/anime/5/73199.jpg"
-                  alt="card"
-                />
-                <h3>Death Note</h3>
-                <p>⭐ 9.0</p>
-              </div>
+              {profile.rated_anime?.map((item) => (
+                <div className="card" key={item.anime_id}>
+                  <img src={item.cover_image} alt={item.title} />
+                  <h3>{item.title}</h3>
+                  <p>⭐ {item.rating}</p>
+                </div>
+              ))}
             </div>
-            {/* <button className="slide-arrow slide-arrow-right" onClick={handleSlideRight}>›</button> */}
           </div>
         </div>
       </div>
