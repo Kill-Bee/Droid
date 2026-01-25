@@ -240,10 +240,22 @@
 .container-slide::-webkit-scrollbar {
   display: none; 
 }
-
+.card-skeleton{
+  min-width: 200px;
+  flex-shrink: 0;
+}
+.img-skeleton{
+  /* width: 200px;
+  height: 300px;
+  border-radius: 8px; */
+  margin-bottom: 10px;
+}
+/* .title-skeleton{
+ width: 200px;
+} */
 .card {
   color: white;
-  min-width: 50px;
+  min-width: 200px;
   flex-shrink: 0;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -264,11 +276,6 @@
 .card h3 {
   font-size: 1rem;
   margin-bottom: 5px;
-}
-
-.card p {
-  color: #ffd700;
-  font-weight: 600;
 }
 
 .slide-arrow {
