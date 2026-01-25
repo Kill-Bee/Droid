@@ -1,4 +1,4 @@
-import { apiFetch } from "./client";
+import { apiFetch } from "./client/index";
 
 export async function getAnimeCarouselApi() {
   return apiFetch("/anime/carousel");

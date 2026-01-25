@@ -1,4 +1,4 @@
-import { apiFetch } from "./client.js";
+import { apiFetch } from "./client/index";
 
 export function loginApi(username, password) {
   return apiFetch("/auth/login", {
