@@ -12,9 +12,8 @@ export function AuthProvider({ children }) {
     setIsAuth(true);
   }
 
-  async function register(username, password, avatar) {
-    await authService.register(username, password, avatar);
-    setIsAuth(true);
+  async function register(username, password, displayName) {
+    await authService.register(username, password, displayName);
   }
 
   function logout() {
