@@ -7,8 +7,8 @@ import {
 import { ValidationError } from "../errors/index.js";
 
 export async function rateAnimeService({ userId, animeId, rating }) {
-  if (rating < 1 || rating > 5) {
-    throw new ValidationError("Rating must be between 1 and 5");
+  if (rating < 0.5 || rating > 5 || rating * 2 !== Math.floor(rating * 2)) {
+    throw new BadRequestException("Invalid rating");
   }
 
   const existing = await findUserRating(userId, animeId);

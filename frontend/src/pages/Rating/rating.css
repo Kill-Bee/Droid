@@ -1,8 +1,8 @@
 .background-hitam {
-  background-color: rgb(26, 26, 26);
-  min-height: 100vh;
-  position: relative;
-  padding-bottom: 30px;
+    background-color: rgb(26, 26, 26);
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 30px;
 }
 
 /* Box di belakang navbar */
@@ -17,44 +17,44 @@ position: absolute;
 } */
 
 .container-rating {
-  margin: 50px auto 0 auto;
-  max-width: 1200px;
-  padding: 0 px;
+    margin: 50px auto 0 auto;
+    max-width: 1200px;
+    padding: 0 px;
 }
 
 /* Main Layout */
 .rating-wrapper {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
 }
 
 .rating-left {
-  flex: 0 0 300px;
-  display: flex;
-  flex-direction: column;
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 .rating-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Image Styling */
 .vertical-banner {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  margin-bottom: 25px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    margin-bottom: 25px;
 }
-.table-col-left{
+.table-col-left {
     width: 25%;
     vertical-align: top;
     margin-right: 10px;
 }
-.table-col-right{
+.table-col-right {
     vertical-align: top;
     margin-top: 50px;
 }
@@ -62,118 +62,118 @@ position: absolute;
 /* Heading Styles */
 .h1-left,
 .h1-right {
-  color: white;
-  margin: 0;
-  padding: 0;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 15px;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .h1-left {
-  text-align: center;
+    text-align: center;
 }
 
 label {
-  color: #ccc;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  display: block;
+    color: #ccc;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .text-light {
-  color: #ddd;
-  line-height: 1.6;
-  font-size: 15px;
-  margin-bottom: 25px;
+    color: #ddd;
+    line-height: 1.6;
+    font-size: 15px;
+    margin-bottom: 25px;
 }
 
 /* Information Section */
 .information {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #ff0000;
-  margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #ff0000;
+    margin-bottom: 25px;
 }
 
 .information p {
-  color: #ccc;
-  margin: 0;
-  padding: 8px 0;
-  font-size: 14px;
+    color: #ccc;
+    margin: 0;
+    padding: 8px 0;
+    font-size: 14px;
 }
 
 .information p b {
-  color: #d60707;
-  margin-right: 10px;
+    color: #d60707;
+    margin-right: 10px;
 }
 
 /* Button Styling */
 .buttons-rating {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .buttons-rating button {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #ff2b01 0%, #740000 100%);
-  color: #f7f5f5;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ff2b01 0%, #740000 100%);
+    color: #f7f5f5;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .buttons-rating button:hover {
-  transform:scale(1.05);
-  /* box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4); */
+    transform: scale(1.05);
+    /* box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4); */
 }
 
 .buttons-rating button:active {
-  transform: translateY(-1px);
+    transform: translateY(-1px);
 }
 
 /* Popup Modal Styles */
 .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .popup-content {
-  background-color: #2a2a2a;
-  padding: 40px;
-  border-radius: 12px;
-  /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); */
-  animation: slideUp 0.3s ease;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  border: 1px solid rgba(255, 0, 0, 0.2);
+    background-color: #2a2a2a;
+    padding: 40px;
+    border-radius: 12px;
+    /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); */
+    animation: slideUp 0.3s ease;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid rgba(255, 0, 0, 0.2);
 }
-/* 
+/*
 @keyframes slideUp {
   from {
     transform: translateY(50px);
@@ -186,83 +186,167 @@ label {
 } */
 
 .popup-content h2 {
-  color: white;
-  margin: 0 0 25px 0;
-  font-size: 24px;
+    color: white;
+    margin: 0 0 25px 0;
+    font-size: 24px;
 }
 
 /* Popup Buttons */
 .popup-content button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  margin: 10px 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin: 10px 5px;
 }
 
 .close-btn-rating {
-  background: #555;
-  color: white;
+    background: #555;
+    color: white;
 }
 
 .close-btn-rating:hover {
-  background: #666;
-  transform: translateY(-2px);
+    background: #666;
+    transform: translateY(-2px);
 }
 
 .submit-btn-rating {
-  background: #ff0000;
-  color: white;
+    background: #ff0000;
+    color: white;
 }
 
 .submit-btn-rating:hover {
-  background: #cc0000;
-  transform: translateY(-2px);
+    background: #cc0000;
+    transform: translateY(-2px);
 }
 
 .submit-btn-rating:disabled {
-  background: #333;
-  color: #666;
-  cursor: not-allowed;
-  opacity: 0.5;
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
+/* Star Rating Component Container */
+.star-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Wrapper untuk buttons bersebelahan */
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Button base styling di dalam Star Rating */
+.star-rating button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+/* Close button - Abu-abu */
+.star-rating .close-btn-rating {
+    background: #555;
+    color: white;
+}
+
+.star-rating .close-btn-rating:hover:not(:disabled) {
+    background: #666;
+    transform: translateY(-2px);
+}
+
+/* Submit button - Merah */
+.star-rating .submit-btn-rating {
+    background: linear-gradient(135deg, #ff2b01 0%, #740000 100%);
+    color: #f7f5f5;
+}
+
+.star-rating .submit-btn-rating:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+/* Disabled state untuk semua button */
+.star-rating button:disabled {
+    background: #333 !important;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
 
 /* Rating Stars Styling */
 .stars-container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 30px 0;
-  padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
+/* Wrapper untuk support half star */
+.star-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Base star (tetap pakai style lama) */
 .star {
-  font-size: 48px;
-  cursor: pointer;
-  color: #555;
-  transition: all 0.2s ease;
-  user-select: none;
+    font-size: 48px;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.2s ease;
+    user-select: none;
+    line-height: 1;
+    display: block;
 }
 
-.star:hover {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+/* Hover masih hidup */
+.star-wrapper:hover .star.fill {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
 }
 
-.star.active {
+/* Star kosong */
+.star.empty {
+    color: #555;
+    position: relative;
+}
+
+/* Star isi (full / half via width) */
+.star.fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #ffd700;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* CLASS INI SEKARANG TIDAK DIPAKAI, TAPI TIDAK DIHAPUS */
+/* .star.active {
   color: #ffd700;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
+} */
 
 .rating-text {
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0;
-  min-height: 25px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0;
+    min-height: 25px;
 }
 
 /* Responsive Design */
