@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { getMyProfile, updateMyProfile } from "../../services/profile.service";
 import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
+import EditProfile from "./components/EditProfile";
 import "./profile.css";
 
 export default function Profile() {
@@ -10,6 +11,7 @@ export default function Profile() {
   const [editForm, setEditForm] = useState({
     displayName: "",
     avatar: "",
+    badge: "",
     banner: "",
     bio: "",
   });
@@ -33,6 +35,7 @@ export default function Profile() {
       setEditForm({
         displayName: data.display_name || "",
         avatar: data.avatar || "",
+        badge: data.badge || "",
         banner: data.banner || "",
         bio: data.bio || "",
       });
@@ -76,6 +79,7 @@ export default function Profile() {
       await updateMyProfile({
         displayName: editForm.displayName,
         avatar: avatarUrl,
+        badge: editForm.badge,
         banner: bannerUrl,
         bio: editForm.bio,
       });
@@ -130,7 +134,10 @@ export default function Profile() {
           style={{
             backgroundImage: `
               linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0)),
-              url(${profile.banner || "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg"})
+              url(${
+                profile.banner ||
+                "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg"
+              })
             `,
           }}
         >
@@ -148,7 +155,7 @@ export default function Profile() {
 
               <div className="hero-tags">
                 {profile.badge ? (
-                  <span className="tag">{profile.badge}</span>
+                  <span className="tag">{profile.badge.toUpperCase()}</span>
                 ) : (
                   <span className="tag">MEMBER</span>
                 )}
@@ -165,102 +172,20 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* EDIT MODAL */}
-        {isEditing && (
-          <div className="edit-modal-overlay">
-            <div className="edit-modal">
-              <h2>Edit Profile</h2>
-
-              <label>Display Name</label>
-              <input
-                name="displayName"
-                value={editForm.displayName}
-                onChange={handleChange}
-                placeholder="Your display name"
-                disabled={loading}
-              />
-
-              <label>Avatar</label>
-              <div className="file-upload-wrapper">
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={avatarInputRef}
-                  onChange={handleAvatarChange}
-                  style={{ display: "none" }}
-                />
-                <div className="file-upload-preview">
-                  <img
-                    src={
-                      avatarPreview ||
-                      editForm.avatar ||
-                      "https://i.pinimg.com/736x/32/9c/c6/329cc6ad5210a2c666554d58c7a433e8.jpg"
-                    }
-                    alt="Avatar preview"
-                    className="avatar-preview"
-                  />
-                  <button
-                    type="button"
-                    className="upload-btn"
-                    onClick={() => avatarInputRef.current?.click()}
-                    disabled={loading}
-                  >
-                    Choose Avatar
-                  </button>
-                </div>
-              </div>
-
-              <label>Banner</label>
-              <div className="file-upload-wrapper">
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={bannerInputRef}
-                  onChange={handleBannerChange}
-                  style={{ display: "none" }}
-                />
-                <div className="file-upload-preview banner">
-                  <img
-                    src={
-                      bannerPreview ||
-                      editForm.banner ||
-                      "https://i.pinimg.com/1200x/4f/4c/fc/4f4cfc93f7b8af19d1a5330fc60e512f.jpg"
-                    }
-                    alt="Banner preview"
-                    className="banner-preview"
-                  />
-                  <button
-                    type="button"
-                    className="upload-btn"
-                    onClick={() => bannerInputRef.current?.click()}
-                    disabled={loading}
-                  >
-                    Choose Banner
-                  </button>
-                </div>
-              </div>
-
-              <label>Bio</label>
-              <textarea
-                name="bio"
-                value={editForm.bio}
-                onChange={handleChange}
-                placeholder="Tell us about yourself..."
-                rows={4}
-                disabled={loading}
-              />
-
-              <div className="edit-modal-actions">
-                <button onClick={handleCloseModal} disabled={loading}>
-                  Cancel
-                </button>
-                <button onClick={handleSave} disabled={loading}>
-                  {loading ? "Saving..." : "Save"}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <EditProfile
+          isOpen={isEditing}
+          onClose={handleCloseModal}
+          onSave={handleSave}
+          loading={loading}
+          editForm={editForm}
+          onChange={handleChange}
+          avatarPreview={avatarPreview}
+          bannerPreview={bannerPreview}
+          avatarInputRef={avatarInputRef}
+          bannerInputRef={bannerInputRef}
+          onAvatarChange={handleAvatarChange}
+          onBannerChange={handleBannerChange}
+        />
 
         {/* RATING SECTION */}
         <div className="mainProfile">
