@@ -1,11 +1,25 @@
-import { useState} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
+import { getMyProfile } from "../services/profile.service";
 
 export default function Navbar({ search, setSearch }) {
   const navigate = useNavigate();
 
+  const [profile, setProfile] = useState(null);
   const [select, setSelect] = useState("");
+
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        const data = await getMyProfile();
+        setProfile(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    loadProfile();
+  }, []);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -45,7 +59,10 @@ export default function Navbar({ search, setSearch }) {
             placeholder="Search..."
           />
           <img
-            src="https://i.pinimg.com/736x/32/9c/c6/329cc6ad5210a2c666554d58c7a433e8.jpg"
+            src={
+              profile?.avatar ||
+              "https://i.pinimg.com/736x/32/9c/c6/329cc6ad5210a2c666554d58c7a433e8.jpg"
+            }
             alt="profile"
             onClick={() => navigate("/profile")}
           />
