@@ -153,17 +153,15 @@ export default function Profile() {
                   <span className="tag">MEMBER</span>
                 )}
               </div>
-
               <label>{profile.bio || "No bio yet"}</label>
               <p>Joined on {formatDate(profile.joined_at)}</p>
-
-              <button
-                className="edit-profile-btn"
-                onClick={() => setIsEditing(true)}
-              >
-                Edit Profile
-              </button>
             </div>
+            <button
+              className="edit-profile-btn"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit Profile
+            </button>
           </div>
         </div>
 
