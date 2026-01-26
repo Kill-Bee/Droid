@@ -192,7 +192,7 @@ export default function Profile() {
           <h1>Your Rating</h1>
 
           {profile.rated_anime?.length === 0 && (
-            <p>You haven't rated any anime yet.</p>
+            <p className="info-blank">You haven't rated any anime yet.</p>
           )}
 
           <div className="slider-wrapper-profile">

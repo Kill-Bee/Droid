@@ -13,6 +13,7 @@ export async function findAnimeCarouselById(id) {
 }
 
 export async function makeAnimeCarousel({
+  logo,
   title,
   description,
   cover_image,
@@ -21,11 +22,11 @@ export async function makeAnimeCarousel({
 }) {
   const result = await query(
     `
-    INSERT INTO anime_carousel (title, description, cover_image, release_year, episodes)
+    INSERT INTO anime_carousel (logo,title, description, cover_image, release_year, episodes)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *
     `,
-    [title, description, cover_image, release_year, episodes]
+    [logo,title, description, cover_image, release_year, episodes]
   );
 
   return result.rows[0];

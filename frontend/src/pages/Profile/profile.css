@@ -21,9 +21,10 @@
   height: 300px;
   margin: auto;
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url();
+  linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url();
   background-size: cover;
   background-blend-mode: darken;
+  padding-bottom: 100px;
 }
 .fotoProfile {
   width: 150px;
@@ -37,7 +38,7 @@
   display: flex;
   align-items: center;
   gap: 30px;
-  padding: 20px;
+  padding: 70px 30px 0px 10px;
   position: relative;
   z-index: 2;
 }
@@ -152,6 +153,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.info-blank{
+  text-align: center;
+  color: white;
+  font-size: larger;
+  font-weight: bolder;
+  margin-top: 300px ;
 }
 
 .popup-close:hover {

@@ -5,6 +5,7 @@ export async function getAnimeCarouselApi() {
 }
 
 export function createAnimeCarouselApi({
+  logo,
   title,
   description,
   cover_image,
@@ -14,6 +15,7 @@ export function createAnimeCarouselApi({
   return apiFetch("/anime/carousel", {
     method: "POST",
     body: JSON.stringify({
+      logo,
       title,
       description,
       cover_image,
