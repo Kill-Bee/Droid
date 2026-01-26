@@ -29,9 +29,6 @@ export default function Login({ onRegisterClick }) {
     <div className="login">
       <div className="login-card">
         <div className="top">
-          <svg onClick={() => navigate("/")} viewBox="0 0 24 24">
-            <path d="M15 7L10 12L15 17" />
-          </svg>
           <h2>Login</h2>
         </div>
 

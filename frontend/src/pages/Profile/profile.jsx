@@ -121,7 +121,7 @@ export default function Profile() {
       day: "numeric",
     });
   }
-  
+
   if (!profile) return <div>Loading profile...</div>;
 
   return (
@@ -156,7 +156,11 @@ export default function Profile() {
 
               <div className="hero-tags">
                 {profile.badge ? (
-                  <span className="tag">{profile.badge.toUpperCase()}</span>
+                  profile.badge.split(",").map((badge, index) => (
+                    <span className="tag" key={index}>
+                      {badge.trim().toUpperCase()}
+                    </span>
+                  ))
                 ) : (
                   <span className="tag">MEMBER</span>
                 )}

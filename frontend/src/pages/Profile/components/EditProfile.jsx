@@ -72,9 +72,21 @@ export default function EditProfileModal({
           name="badge"
           value={editForm.badge}
           onChange={onChange}
-          placeholder="Your badge"
+          placeholder="Your badge can be 2 using comma"
           disabled={loading}
         />
+        
+        <div className="badge-preview">
+          {editForm.badge ? (
+            editForm.badge.split(',').map((badge, index) => (
+              <span className="tag" key={index}>
+                {badge.trim().toUpperCase()}
+              </span>
+            ))
+          ) : (
+            <span className="tag">MEMBER</span>
+          )}
+        </div>
 
         <label>Banner</label>
         <div className="file-upload-wrapper">
