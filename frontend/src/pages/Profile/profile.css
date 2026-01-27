@@ -12,18 +12,19 @@
     padding-bottom: 200px;
 }
 .headerProfile {
-    flex-direction: column;
-    display: flex;
-    position: relative;
-    justify-content: left;
-    align-items: left;
-    width: 100%;
-    height: 300px;
-    margin: auto;
-    background-image:
-        linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url();
-    background-size: cover;
-    background-blend-mode: darken;
+  flex-direction: column;
+  display: flex;
+  position: relative;
+  justify-content: left;
+  align-items: left;
+  width: 100%;
+  height: 300px;
+  margin: auto;
+  background-image:
+  linear-gradient(to right, rgba(0, 0, 0, 0.749), rgba(0, 0, 0, 0)), url();
+  background-size: cover;
+  background-blend-mode: darken;
+  padding-bottom: 100px;
 }
 .fotoProfile {
     width: 150px;
@@ -33,13 +34,13 @@
     margin-top: 20px;
 }
 .biodata {
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    padding: 20px;
-    position: relative;
-    z-index: 2;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 70px 30px 0px 10px;
+  position: relative;
+  z-index: 2;
 }
 .biodata img {
     flex-shrink: 0;
@@ -152,6 +153,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.info-blank{
+  text-align: center;
+  color: white;
+  font-size: larger;
+  font-weight: bolder;
+  margin-top: 300px ;
 }
 
 .popup-close:hover {

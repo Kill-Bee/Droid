@@ -17,6 +17,7 @@ export default function AddData() {
 }
 
 function AnimeCarousel({ onAnimeClick }) {
+  const [logo, setLogo] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
@@ -33,6 +34,7 @@ function AnimeCarousel({ onAnimeClick }) {
   };
 
   function clearForm() {
+    setLogo(null);
     setTitle("");
     setDescription("");
     setReleaseYear("");
@@ -67,6 +69,7 @@ function AnimeCarousel({ onAnimeClick }) {
 
     try {
       await createAnimeCarousel({
+        logo,
         title,
         description,
         coverFile,
@@ -102,6 +105,16 @@ function AnimeCarousel({ onAnimeClick }) {
           }}
         >
           <h2 style={{ marginBottom: 8 }}>Tambah Anime Carousel Baru</h2>
+           {/* Logo */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <label>Logo</label>
+            <input
+              type="file"
+              ref={fileRef}
+              accept="image/*"
+              onChange={(e) => setLogo(e.target.files[0])}
+            />
+          </div>
 
           {/* Judul */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>

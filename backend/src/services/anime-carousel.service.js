@@ -50,6 +50,7 @@ export async function createAnimeCarouselService(data) {
   }
 
   return await makeAnimeCarousel({
+    logo: data.logo,
     title: data.title,
     description: data.description,
     cover_image: data.cover_image,

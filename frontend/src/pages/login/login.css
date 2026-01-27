@@ -3,27 +3,73 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom, #450b0b, #110000);
     padding: 24px;
+    background: rgb(26, 26, 26);
 }
 
 .login-card {
-    width: min(420px, 100%);
+    width: min(760px, 100%);
     background-color: #100f0f;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-direction: row-reverse;
+    align-items: stretch;
+    gap: 20px;
     padding: 28px;
     border: solid 1px #111827;
     border-radius: 18px;
     color: white;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    box-shadow: -15px 10px 15px -5px #00000c89; /* horizontal vertickal blur spread*/
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    flex: 1;
+    padding: 0 20px 0 20px;
+}
+.tulisan-warper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    color: white;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.tulisan-warper p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.gambar-wrapper {
+    position: relative;
+    width: 40%;
+    min-width: 220px;
+    height: 340px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.gambar-login {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.gambar-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;    z-index: 1;    background: linear-gradient(
+        to top,
+        rgb(0, 0, 0),
+        rgba(0, 0, 0, 0.218),
+        rgba(0, 0, 0, 0)
+    );
 }
 .top {
     color: #ffffff;
@@ -32,12 +78,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .top h2 {
-    flex: 1;
-    text-align: center;
+    flex: 0;
+    text-align: left;
     margin: 0;
 }
 .top svg {
@@ -49,6 +95,45 @@
 .login-form label {
     font-weight: 600;
     color: #e5e7eb;
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9c99a4;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #e5e7eb;
+}
+
+.toggle-password svg {
+    width: 20px;
+    height: 20px;
+    color: rgb(222, 222, 222);
+}
+
+.register-card .gambar-wrapper {
+    height: 400px;
 }
 
 .login-form input {
@@ -74,8 +159,21 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.btn-sumbit-login{
+    background-color: #e3e3e3;
+}
 
 .login-form button :hover {
     transform: scale(1.05);
-    background-color: #b80101;
+    /* background-color: #b80101; */
 }
+
+/* @media (max-width: 640px) {
+    .login-card {
+        flex-direction: column;
+    }
+
+    .gambar-login {
+        width: 100%;
+    }
+} */

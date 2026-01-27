@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAnimes } from "../../services/anime.service";
 import { getAnimesCarousel } from "../../services/anime-carousel.service";
 import "react-loading-skeleton/dist/skeleton.css";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "./anime.css";
 
 export default function Anime({ search }) {
@@ -45,14 +45,14 @@ export default function Anime({ search }) {
   useEffect(() => {
     (async () => {
       try {
-        setCarouselLoading(true)
+        setCarouselLoading(true);
         const data = await getAnimesCarousel();
         setAnimesCarousel(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching animes carousel:", error);
         setAnimesCarousel([]);
-      } finally{
-        setCarouselLoading(false)
+      } finally {
+        setCarouselLoading(false);
       }
     })();
   }, []);
@@ -81,15 +81,27 @@ export default function Anime({ search }) {
   };
 
   const handleAnimeClick = (animeId) => {
+    window.scrollTo(0, 0);
     navigate(`/anime/${animeId}`);
   };
 
   const handleAnimeCarouselClick = (animeId) => {
+    window.scrollTo(0, 0);
     navigate(`/anime/carousel/${animeId}`);
   };
 
   const filteredAnimes = animes.filter((anime) =>
     anime.title.toLowerCase().includes(keyword),
+  );
+
+  const actionAnimes = filteredAnimes.filter((anime) =>
+    anime.genres?.includes("Action"),
+  );
+  const romanceAnimes = filteredAnimes.filter((anime) =>
+    anime.genres?.includes("Romance"),
+  );
+  const fantasyAnimes = filteredAnimes.filter((anime) =>
+    anime.genres?.includes("Fantasy"),
   );
 
   return (
@@ -225,7 +237,7 @@ export default function Anime({ search }) {
             </div>
           ) : (
             <div className="container-slide">
-              {filteredAnimes.map((anime) => {
+              {actionAnimes.map((anime) => {
                 return (
                   <div className="card" key={anime.id}>
                     <div>
@@ -254,6 +266,83 @@ export default function Anime({ search }) {
             onClick={handleSlideRight}
           ></button>
         </div>
+        <h1>Romance</h1>
+        <div className="slider-wrapper">
+          <button
+            className="slide-arrow slide-arrow-left"
+            onClick={handleSlideLeft}
+          ></button>
+          {loading ? (
+            <div className="container-slide">
+              {skeletonItems.map((_, i) => (
+                <CardSkelaton key={`action-skel-${i}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="container-slide">
+              {romanceAnimes.map((anime) => {
+                return (
+                  <div className="card" key={anime.id}>
+                    <div>
+                      <img
+                        src={
+                          anime.cover_image ||
+                          "https://via.placeholder.com/300x400?text=No+Image"
+                        }
+                        alt={anime.title}
+                        onClick={() => handleAnimeClick(anime.id)}
+                      />
+                      <h3 onClick={() => handleAnimeClick(anime.id)}>
+                        {anime.title.length > 20
+                          ? anime.title.substring(0, 20) + "..."
+                          : anime.title}
+                      </h3>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <button
+            className="slide-arrow slide-arrow-right"
+            onClick={handleSlideRight}
+          ></button>
+        </div>
+
+        <h1>Other</h1>
+        {loading ? (
+          <div className="card-last">
+            {skeletonItems.map((_, i) => (
+              <CardSkelaton key={`card-ske${i}`} />
+            ))}
+          </div>
+        ) : (
+          <div className="card-last">
+            {fantasyAnimes.map((anime) => {
+              return (
+                <div className="card-diam" key={anime.id}>
+                  <div>
+                    <img
+                      src={
+                        anime.cover_image ||
+                        "https://via.placeholder.com/300x400?text=No+Image"
+                      }
+                      alt={anime.title}
+                      onClick={() => handleAnimeClick(anime.id)}
+                    />
+                    <h3 onClick={() => handleAnimeClick(anime.id)}>
+                      {anime.title.length > 20
+                        ? anime.title.substring(0, 20) + "..."
+                        : anime.title}
+                    </h3>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        
       </div>
     </>
   );
@@ -269,15 +358,15 @@ function CarouselSkeleton() {
   );
 }
 
-function CardSkelaton({card}){
-  return(
+function CardSkelaton({ card }) {
+  return (
     <SkeletonTheme baseColor="#1d1c1c" highlightColor="#444">
       <div className="card-skeleton">
         <div className="img-skeleton">
           <Skeleton height={300} borderRadius={8} />
         </div>
         <div className="title-skeleton">
-          <Skeleton width={120} />
+          <Skeleton width={200} />
         </div>
       </div>
     </SkeletonTheme>

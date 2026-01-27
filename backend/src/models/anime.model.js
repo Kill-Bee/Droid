@@ -2,7 +2,27 @@ import { query } from "../config/db.js";
 
 // Read
 export async function findAllAnime() {
-  const result = await query("SELECT * FROM anime ORDER BY created_at DESC");
+  const result = await query(
+    `
+    SELECT
+      a.id,
+      a.title,
+      a.description,
+      a.cover_image,
+      a.release_year,
+      a.episodes,
+      a.created_at,
+      COALESCE(
+        ARRAY_AGG(DISTINCT g.name) FILTER (WHERE g.name IS NOT NULL),
+        '{}'
+      ) AS genres
+    FROM anime a
+    LEFT JOIN anime_genres ag ON ag.anime_id = a.id
+    LEFT JOIN genres g ON g.id = ag.genre_id
+    GROUP BY a.id
+    ORDER BY a.created_at DESC;
+    `,
+  );
   return result.rows;
 }
 
@@ -50,7 +70,7 @@ export async function animeDetails(id) {
     LEFT JOIN anime_genres ag ON ag.anime_id = a.id
     LEFT JOIN genres g ON g.id = ag.genre_id
     WHERE a.id = $1
-    GROUP BY a.id;
+    GROUP BY a.id
     `,
     [id],
   );

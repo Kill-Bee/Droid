@@ -13,6 +13,7 @@ export async function createAnimeCarousel(data) {
   }
 
   return createAnimeCarouselApi({
+    logo: data.logo,
     title: data.title,
     description: data.description,
     cover_image: coverUrl,
