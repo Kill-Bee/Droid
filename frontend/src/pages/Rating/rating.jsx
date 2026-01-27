@@ -156,15 +156,9 @@ export default function Rating() {
               loading={popupLoading}
               onChange={setDraftRating}
               onSubmit={handleSubmitRating}
+              onClose={handleClosePopup}
             />
 
-            <button
-              onClick={handleClosePopup}
-              className="close-btn-rating"
-              disabled={popupLoading}
-            >
-              Tutup
-            </button>
           </div>
         </div>
       )}

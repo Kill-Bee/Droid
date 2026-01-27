@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { getMyProfile, updateMyProfile } from "../../services/profile.service";
 import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
+import StarDisplay from "./components/StarDisplay";
 import EditProfile from "./components/EditProfile";
 import "./profile.css";
 
@@ -155,7 +156,11 @@ export default function Profile() {
 
               <div className="hero-tags">
                 {profile.badge ? (
-                  <span className="tag">{profile.badge.toUpperCase()}</span>
+                  profile.badge.split(",").map((badge, index) => (
+                    <span className="tag" key={index}>
+                      {badge.trim().toUpperCase()}
+                    </span>
+                  ))
                 ) : (
                   <span className="tag">MEMBER</span>
                 )}
@@ -201,7 +206,7 @@ export default function Profile() {
                 <div className="card" key={item.anime_id}>
                   <img src={item.cover_image} alt={item.title} />
                   <h3>{item.title}</h3>
-                  <p>⭐ {item.rating}</p>
+                  <StarDisplay rating={item.rating} />
                 </div>
               ))}
             </div>

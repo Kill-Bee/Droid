@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
 import { toast } from "react-toastify";
 import "../login.css";
 
 export default function Register({ onLoginClick }) {
-  const navigate = useNavigate();
   const { register } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
