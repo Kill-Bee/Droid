@@ -27,8 +27,8 @@
   padding-bottom: 100px;
 }
 .fotoProfile {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     object-fit: cover;
     margin-top: 20px;
@@ -45,7 +45,7 @@
 .biodata img {
     flex-shrink: 0;
     margin-left: 60px;
-    border: solid 3px #646464;
+    border: solid 3px #171717;
 }
 .biodata > div {
     flex: 1;

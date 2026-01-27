@@ -205,7 +205,7 @@ export default function Profile() {
               {profile.rated_anime?.map((item) => (
                 <div className="card" key={item.anime_id}>
                   <img src={item.cover_image} alt={item.title} />
-                  <h3>{item.title}</h3>
+                  <h3>{item.title.length > 20 ? item.title.substring(0,20) + ".." : item.title}</h3>
                   <StarDisplay rating={item.rating} />
                 </div>
               ))}

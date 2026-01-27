@@ -122,7 +122,15 @@ export default function Anime({ search }) {
             </div>
 
             <div className="hero-content">
-              <h1 className="hero-title">{animesCarousel[slide].title}</h1>
+               <img
+                src={
+                  animesCarousel[slide].logo ||
+                  animesCarousel[slide].title
+                }
+                alt={animesCarousel[slide].title}
+                className="logo"
+              />
+              {/* <h1 className="hero-title">{animesCarousel[slide].title}</h1> */}
 
               <div className="hero-tags">
                 <span className="tag">

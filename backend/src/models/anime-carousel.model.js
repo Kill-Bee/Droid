@@ -22,11 +22,11 @@ export async function makeAnimeCarousel({
 }) {
   const result = await query(
     `
-    INSERT INTO anime_carousel (logo,title, description, cover_image, release_year, episodes)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO anime_carousel (logo, title, description, cover_image, release_year, episodes)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
     `,
-    [logo,title, description, cover_image, release_year, episodes]
+    [logo, title, description, cover_image, release_year, episodes]
   );
 
   return result.rows[0];
