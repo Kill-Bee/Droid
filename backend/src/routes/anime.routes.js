@@ -4,13 +4,17 @@ import {
   getAnimeById,
   createAnime,
   animeDetail,
-} from "../controllers/anime.controller.js";
+} from "../controllers/anime/anime.controller.js";
 import {
   getAnimeCarouselList,
   getAnimeCarouselById,
   createAnimeCarousel,
-} from "../controllers/anime-carousel.controller.js";
-import { rateAnime, getAnimeRating } from "../controllers/rating.controller.js";
+} from "../controllers/anime/anime-carousel.controller.js";
+import {
+  rateAnime,
+  getAnimeRating,
+} from "../controllers/rating/rating.controller.js";
+import { queueAnime } from "../controllers/anime/anime-search.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = Router();
@@ -22,6 +26,9 @@ router.post("/", createAnime);
 // Anime Carousel
 router.get("/carousel", getAnimeCarouselList);
 router.post("/carousel", createAnimeCarousel);
+
+// Anime Search
+router.get("/search", queueAnime);
 
 // Anime | Carousel by ID
 router.get("/:id", getAnimeById);

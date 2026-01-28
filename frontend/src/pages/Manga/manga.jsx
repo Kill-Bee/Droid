@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { getManga } from "../../services/manga.service";
-import { getMangaCarousel } from "../../services/manga-carousel.service";
+import { getManga } from "../../services/manga/manga.service";
+import { getMangaCarousel } from "../../services/manga/manga-carousel.service";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "./manga.css";
