@@ -4,13 +4,16 @@ import {
   getAnimeById,
   createAnime,
   animeDetail,
-} from "../controllers/anime.controller.js";
+} from "../controllers/anime/anime.controller.js";
 import {
   getAnimeCarouselList,
   getAnimeCarouselById,
   createAnimeCarousel,
-} from "../controllers/anime-carousel.controller.js";
-import { rateAnime, getAnimeRating } from "../controllers/rating.controller.js";
+} from "../controllers/anime/anime-carousel.controller.js";
+import {
+  rateAnime,
+  getAnimeRating,
+} from "../controllers/rating/rating.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = Router();

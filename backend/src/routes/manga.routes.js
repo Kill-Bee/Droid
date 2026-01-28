@@ -3,12 +3,12 @@ import {
   getMangaById,
   getMangaList,
   createManga,
-} from "../controllers/manga.controller.js";
+} from "../controllers/manga/manga.controller.js";
 import {
   getMangaCarouselList,
   createMangaCarousel,
   getMangaCarouselById,
-} from "../controllers/manga-carousel.controller.js";
+} from "../controllers/manga/manga-carousel.controller.js";
 
 const router = Router();
 // Manga
