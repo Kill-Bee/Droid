@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
-import { getAnimeDetailById } from "../../services/anime.service";
-import { getAnimeRate, setAnimeRate } from "../../services/rating.service";
+import { getAnimeDetailById } from "../../services/anime/anime.service";
+import { getAnimeRate, setAnimeRate } from "../../services/rating/rating.service";
 import StarRating from "./components/StarRating";
 
 export default function Rating() {

@@ -2,7 +2,7 @@ import { query } from "../../config/db.js";
 
 export async function searchAnime({ keyword }) {
   let sql = `
-    SELECT id, title
+    SELECT id, title, cover_image
     FROM anime
     WHERE 1=1
   `;

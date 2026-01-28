@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { getMyProfile, updateMyProfile } from "../../services/profile.service";
+import { getMyProfile, updateMyProfile } from "../../services/profile/profile.service";
 import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
 import StarDisplay from "./components/StarDisplay";

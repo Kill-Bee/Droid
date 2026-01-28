@@ -1,31 +1,29 @@
 const BASE_URL = "http://localhost:3000/api";
 
-export const apiFetch = async (path, options = {}) => {
-  const token = localStorage.getItem("token");
-
-  const headers = {
-    "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
-  };
-
+export async function baseFetch(
+  path,
+  { method = "GET", body, headers = {} } = {},
+) {
   const res = await fetch(`${BASE_URL}${path}`, {
-    ...options,
+    method,
     headers,
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   if (!res.ok) {
-    let errorMessage = "Request failed";
+    let message = "Request failed";
 
     try {
-      const errorBody = await res.json();
-      errorMessage = errorBody?.message || errorBody?.error || errorMessage;
+      const err = await res.json();
+      message = err?.message || err?.error || message;
     } catch {
-      // response bukan JSON
+      //
     }
 
-    throw new Error(errorMessage);
+    throw new Error(message);
   }
 
+  if (res.status === 204) return null;
+
   return res.json();
-};
+}

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { createManga } from "../../services/manga.service";
-import { createMangaCarousel } from "../../services/manga-carousel.service";
+import { createManga } from "../../services/manga/manga.service";
+import { createMangaCarousel } from "../../services/manga/manga-carousel.service";
 import { toast } from "react-toastify";
 
 export default function AddManga() {

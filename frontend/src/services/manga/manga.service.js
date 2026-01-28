@@ -1,5 +1,5 @@
-import { uploadCoverManga } from "./storage";
-import { getMangaApi, getMangaByIdApi, createMangaApi } from "../api/manga.api";
+import { uploadCoverManga } from "../storage";
+import { getMangaApi, getMangaByIdApi, createMangaApi } from "../../api/manga/manga.api";
 
 export async function getManga() {
   return getMangaApi();

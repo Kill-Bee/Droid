@@ -1,4 +1,3 @@
-import { ValidationError } from "../../errors/index.js";
 import { searchAnime } from "../../models/anime/anime-search.model.js";
 
 export async function searchAnimeService(query) {

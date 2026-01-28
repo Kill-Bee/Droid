@@ -1,5 +1,5 @@
-import { uploadCoverManga } from "./storage";
-import { getMangaCarouselApi, createMangaCarouselApi } from "../api/Manga-carousel.api";
+import { uploadCoverManga } from "../storage";
+import { getMangaCarouselApi, createMangaCarouselApi } from "../../api/manga/manga-carousel.api";
 
 export async function getMangaCarousel() {
   return getMangaCarouselApi();

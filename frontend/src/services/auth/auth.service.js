@@ -1,4 +1,4 @@
-import { loginApi, registerApi } from "../api/auth.api.js";
+import { loginApi, registerApi } from "../../api/auth/auth.api.js";
 
 export async function login(username, password) {
   const data = await loginApi(username, password);

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { createAnime } from "../../services/anime.service";
-import { createAnimeCarousel } from "../../services/anime-carousel.service";
+import { createAnime } from "../../services/anime/anime.service";
+import { createAnimeCarousel } from "../../services/anime/anime-carousel.service";
 import { toast } from "react-toastify";
 
 export default function AddData() {

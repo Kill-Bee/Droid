@@ -1,4 +1,4 @@
-import { getProfileApi, updateProfileApi } from "../api/profile.api";
+import { getProfileApi, updateProfileApi } from "../../api/profile/profile.api";
 
 export async function getMyProfile() {
   return await getProfileApi();

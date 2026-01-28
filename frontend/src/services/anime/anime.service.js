@@ -1,11 +1,11 @@
-import { uploadCoverAnime } from "./storage.js";
+import { uploadCoverAnime } from "../storage.js";
 import {
   getAnimesApi,
   getAnimeByIdApi,
   getAnimeDetailByIdApi,
   deleteAnimeApi,
   createAnimeApi,
-} from "../api/anime.api.js";
+} from "../../api/anime/anime.api.js";
 
 export async function getAnimes() {
   return getAnimesApi();

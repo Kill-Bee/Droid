@@ -1,5 +1,5 @@
-import { uploadCoverAnime, uploadLogoAnime } from "./storage";
-import { getAnimeCarouselApi, createAnimeCarouselApi } from "../api/anime-carousel.api";
+import { uploadCoverAnime, uploadLogoAnime } from "../storage";
+import { getAnimeCarouselApi, createAnimeCarouselApi } from "../../api/anime/anime-carousel.api";
 
 export async function getAnimesCarousel() {
   return getAnimeCarouselApi();

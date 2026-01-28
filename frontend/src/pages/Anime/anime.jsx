@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAnimes } from "../../services/anime.service";
-import { getAnimesCarousel } from "../../services/anime-carousel.service";
+import { getAnimes } from "../../services/anime/anime.service";
+import { getAnimesCarousel } from "../../services/anime/anime-carousel.service";
+import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "./anime.css";
@@ -10,21 +11,14 @@ export default function Anime({ search }) {
   const navigate = useNavigate();
   const [animes, setAnimes] = useState([]);
   const [animesCarousel, setAnimesCarousel] = useState([]);
-  const [debounceSearch, setDebounceSearch] = useState("");
-  const keyword = (debounceSearch || search || "").toLowerCase();
   const [slide, setSlide] = useState(0);
   const [loading, setLoading] = useState(true);
   const [carouselLoading, setCarouselLoading] = useState(true);
   const [expectedCount, setExpectedCount] = useState(10);
   const skeletonItems = Array.from({ length: expectedCount });
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebounceSearch(search);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [search]);
+  
+  const { data: searchResults, loading: searchLoading } =
+    useAnimeSearch(search);
 
   useEffect(() => {
     (async () => {
@@ -90,9 +84,12 @@ export default function Anime({ search }) {
     navigate(`/anime/carousel/${animeId}`);
   };
 
-  const filteredAnimes = animes.filter((anime) =>
-    anime.title.toLowerCase().includes(keyword),
-  );
+  // const filteredAnimes = animes.filter((anime) =>
+  //   anime.title.toLowerCase().includes(keyword),
+  // );
+
+  const filteredAnimes = search ? searchResults : animes;
+  const isLoading = search ? searchLoading : loading;
 
   const actionAnimes = filteredAnimes.filter((anime) =>
     anime.genres?.includes("Action"),
@@ -122,11 +119,8 @@ export default function Anime({ search }) {
             </div>
 
             <div className="hero-content">
-               <img
-                src={
-                  animesCarousel[slide].logo ||
-                  animesCarousel[slide].title
-                }
+              <img
+                src={animesCarousel[slide].logo || animesCarousel[slide].title}
                 alt={animesCarousel[slide].title}
                 className="logo"
               />
@@ -195,7 +189,7 @@ export default function Anime({ search }) {
             className="slide-arrow slide-arrow-left"
             onClick={handleSlideLeft}
           ></button>
-          {loading ? (
+          {isLoading ? (
             <div className="container-slide">
               {skeletonItems.map((_, i) => (
                 <CardSkelaton key={`trend-skel-${i}`} />
@@ -350,7 +344,6 @@ export default function Anime({ search }) {
             })}
           </div>
         )}
-        
       </div>
     </>
   );
