@@ -14,6 +14,7 @@ import {
   rateAnime,
   getAnimeRating,
 } from "../controllers/rating/rating.controller.js";
+import { queueAnime } from "../controllers/anime/anime-search.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = Router();
@@ -25,6 +26,9 @@ router.post("/", createAnime);
 // Anime Carousel
 router.get("/carousel", getAnimeCarouselList);
 router.post("/carousel", createAnimeCarousel);
+
+// Anime Search
+router.get("/search", queueAnime);
 
 // Anime | Carousel by ID
 router.get("/:id", getAnimeById);
