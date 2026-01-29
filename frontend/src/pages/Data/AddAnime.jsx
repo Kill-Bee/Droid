@@ -3,7 +3,7 @@ import { createAnime } from "../../services/anime/anime.service";
 import { createAnimeCarousel } from "../../services/anime/anime-carousel.service";
 import { toast } from "react-toastify";
 
-export default function AddData() {
+export default function AddAnime() {
   const [view, setView] = useState("anime");
 
   const showAnime = () => setView("anime");

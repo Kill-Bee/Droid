@@ -1,14 +1,14 @@
-import { apiAuth } from "../client/authFetch";
+import { apiPublic } from "../client/publicFetch";
 
 export function loginApi(username, password) {
-  return apiAuth.post("/auth/login", {
+  return apiPublic.post("/auth/login", {
     username,
     password,
   });
 }
 
 export function registerApi(username, password, displayName) {
-  return apiAuth.post("/auth/register", {
+  return apiPublic.post("/auth/register", {
     username,
     password,
     displayName,

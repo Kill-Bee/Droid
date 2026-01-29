@@ -2,16 +2,16 @@ import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "./components/Navbar.jsx";
-import Anime from "./pages/Anime/anime.jsx";
-import Profile from "./pages/Profile/profile.jsx";
-import Auth from "./pages/login/auth.jsx";
-import Rating from "./pages/Rating/rating.jsx";
-import AddData from "./pages/Data/addData.jsx";
-import AddManga from "./pages/Data/addManga.jsx";
-import Home from "./pages/Home/home.jsx";
-import Manga from "./pages/Manga/manga.jsx";
-import Footer from "./components/footer.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
+import Anime from "./pages/Anime/Anime.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
+import Auth from "./pages/login/Auth.jsx";
+import Rating from "./pages/Rating/Rating.jsx";
+import AddAnime from "./pages/Data/AddAnime.jsx";
+import AddManga from "./pages/Data/AddManga.jsx";
+import Home from "./pages/Home/Home.jsx";
+import Manga from "./pages/Manga/Manga.jsx";
+import Footer from "./components/footer/Footer.jsx";
 
 // Layout component dengan Navbar
 function MainLayout({ search, setSearch }) {
@@ -75,7 +75,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
 
           {/* Data management routes */}
-          <Route path="/add-data" element={<AddData />} />
+          <Route path="/add-anime" element={<AddAnime />} />
           <Route path="/add-manga" element={<AddManga />} />
         </Route>
 

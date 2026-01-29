@@ -2,11 +2,10 @@ import { baseFetch } from "./index";
 
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
-  if (!token) throw new Error("Not authenticated");
 
   return {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 }
 

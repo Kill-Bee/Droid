@@ -12,7 +12,7 @@ export const apiPublic = {
 
   put: (path, body) =>
     baseFetch(path, {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body,
     }),
