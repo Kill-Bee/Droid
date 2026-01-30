@@ -168,10 +168,10 @@ label {
     border-radius: 12px;
     /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); */
     animation: slideUp 0.3s ease;
-    max-width: 400px;
+    max-width: 500px;
     width: 90%;
     text-align: center;
-    border: 1px solid rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 /*
 @keyframes slideUp {
@@ -200,6 +200,27 @@ label {
     font-weight: bold;
     transition: all 0.3s ease;
     margin: 10px 5px;
+}
+.comment-ratting{
+    margin-top: 20px;
+    width: 400px;
+    height: 250px;
+    background-color: #333;
+    box-shadow: none;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.comment-ratting::placeholder {
+    text-align: center;
+    font-size: larger;
+    line-height: 250px;
 }
 
 .close-btn-rating {
@@ -342,11 +363,46 @@ label {
 } */
 
 .rating-text {
-    color: white;
+    color: rgb(232, 232, 232);
     font-size: 18px;
     font-weight: bold;
     margin: 20px 0;
     min-height: 25px;
+}
+
+.reviews{
+    color: rgb(217, 217, 217);
+    font-size: larger;
+    margin-top: 100px;
+    margin-bottom: 10px;
+}
+
+.card-ratting{
+    display: flex;
+    justify-content: flex-start;
+    color: rgb(217, 217, 217);
+    background-color: #0c0c0c8f;
+    padding: 30px ;
+    border-radius: 20px;
+    padding-bottom: 80px;
+}
+
+.right-card i{
+    color: #8a8a8a;
+}
+
+.left-card{
+    margin-right: 20px;
+}
+
+.left-card img{
+    width: 40px;
+    border-radius: 30px;
+}
+
+.left-card h1,i{
+    display: flex;
+    text-align: start;
 }
 
 /* Responsive Design */

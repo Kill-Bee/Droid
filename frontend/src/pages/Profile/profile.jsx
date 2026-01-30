@@ -272,7 +272,7 @@ export default function Profile() {
           onClose={handleCloseCropModal}
           onConfirm={handleBannerCropConfirm}
           imageSrc={tempImageSrc}
-          aspectRatio={4 / 5}
+          aspectRatio={3 / 1}
           cropShape="rect"
           title="Crop Banner"
         />

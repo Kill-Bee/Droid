@@ -333,11 +333,11 @@ export default function Anime({ search }) {
                       alt={anime.title}
                       onClick={() => handleAnimeClick(anime.id)}
                     />
-                    <h3 onClick={() => handleAnimeClick(anime.id)}>
+                    {/* <h3 onClick={() => handleAnimeClick(anime.id)}>
                       {anime.title.length > 20
                         ? anime.title.substring(0, 20) + "..."
                         : anime.title}
-                    </h3>
+                    </h3> */}
                   </div>
                 </div>
               );

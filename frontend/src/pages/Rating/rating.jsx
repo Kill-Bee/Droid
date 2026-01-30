@@ -141,6 +141,23 @@ export default function Rating() {
             <div className="buttons-rating">
               <button onClick={handleOpenPopup}>Rating ★</button>
             </div>
+
+          <h2 className="reviews">Reviews</h2>
+        <div className="card-ratting">
+          <div className="left-card">
+            <img src="https://i.pinimg.com/736x/1e/e6/2d/1ee62d4858bf703ef45c2a8af62f9183.jpg" alt="" />
+          </div>
+          <div className="right-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h1>LavoraRungkad13506</h1>
+                <strong>⭐⭐⭐⭐</strong>
+              </div>
+              <i>Join at</i>
+              <label>musisi,rungkad</label>
+              <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error, quam aliquam! Similique quisquam ducimus, magnam architecto alias nam totam vero recusandae aperiam libero asperiores saepe, accusamus, tempore ad. In quia aliquam ipsa vel commodi molestias soluta minima sit alias totam dicta nihil suscipit sunt tenetur quas ducimus exercitationem, magni mollitia iste. Quis eum similique, explicabo et nulla ex eaque! Est non sit nulla praesentium iusto neque iure distinctio vero ducimus!</p>
+          </div>
+        </div>
+
           </div>
         </div>
       </div>
@@ -150,7 +167,7 @@ export default function Rating() {
         <div className="popup-overlay" onClick={handleClosePopup}>
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
             <h2>What is your rating to this anime?</h2>
-
+              
             <StarRating
               value={draftRating}
               loading={popupLoading}
@@ -158,10 +175,12 @@ export default function Rating() {
               onSubmit={handleSubmitRating}
               onClose={handleClosePopup}
             />
+            <textarea className="comment-ratting" placeholder="What do you think about this Anime?(optional)"></textarea>
 
           </div>
         </div>
       )}
+
     </div>
   );
 }
