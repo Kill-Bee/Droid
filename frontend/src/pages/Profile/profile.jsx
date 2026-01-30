@@ -4,6 +4,8 @@ import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
 import StarDisplay from "./components/StarDisplay";
 import EditProfile from "./components/EditProfile";
+import ImageCropModal from "./components/ImageCropModal";
+import { getCroppedImage } from "./utils/cropUtils";
 import "./profile.css";
 
 export default function Profile() {
@@ -21,6 +23,10 @@ export default function Profile() {
   const [avatarFile, setAvatarFile] = useState(null);
   const [bannerFile, setBannerFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showAvatarCrop, setShowAvatarCrop] = useState(false);
+  const [showBannerCrop, setShowBannerCrop] = useState(false);
+  const [tempImageSrc, setTempImageSrc] = useState(null);
+  const [cropType, setCropType] = useState(null);
 
   const avatarInputRef = useRef(null);
   const bannerInputRef = useRef(null);
@@ -48,16 +54,20 @@ export default function Profile() {
   function handleAvatarChange(e) {
     const file = e.target.files[0];
     if (file) {
-      setAvatarFile(file);
-      setAvatarPreview(URL.createObjectURL(file));
+      const tempUrl = URL.createObjectURL(file);
+      setTempImageSrc(tempUrl);
+      setCropType("avatar");
+      setShowAvatarCrop(true);
     }
   }
 
   function handleBannerChange(e) {
     const file = e.target.files[0];
     if (file) {
-      setBannerFile(file);
-      setBannerPreview(URL.createObjectURL(file));
+      const tempUrl = URL.createObjectURL(file);
+      setTempImageSrc(tempUrl);
+      setCropType("banner");
+      setShowBannerCrop(true);
     }
   }
 
@@ -67,12 +77,10 @@ export default function Profile() {
       let avatarUrl = editForm.avatar;
       let bannerUrl = editForm.banner;
 
-      // Upload avatar if new file selected
       if (avatarFile) {
         avatarUrl = await uploadAvatar(avatarFile);
       }
 
-      // Upload banner if new file selected
       if (bannerFile) {
         bannerUrl = await uploadBanner(bannerFile);
       }
@@ -110,6 +118,41 @@ export default function Profile() {
     setBannerFile(null);
     setAvatarPreview(null);
     setBannerPreview(null);
+  }
+
+  async function handleAvatarCropConfirm(croppedAreaPixels) {
+    if (!tempImageSrc || !croppedAreaPixels) return;
+    try {
+      const blob = await getCroppedImage(tempImageSrc, croppedAreaPixels);
+      const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(blob));
+    } catch (error) {
+      toast.error("Failed to crop avatar: " + error.message);
+    }
+    setShowAvatarCrop(false);
+    setTempImageSrc(null);
+  }
+
+  async function handleBannerCropConfirm(croppedAreaPixels) {
+    if (!tempImageSrc || !croppedAreaPixels) return;
+    try {
+      const blob = await getCroppedImage(tempImageSrc, croppedAreaPixels);
+      const file = new File([blob], "banner.jpg", { type: "image/jpeg" });
+      setBannerFile(file);
+      setBannerPreview(URL.createObjectURL(blob));
+    } catch (error) {
+      toast.error("Failed to crop banner: " + error.message);
+    }
+    setShowBannerCrop(false);
+    setTempImageSrc(null);
+  }
+
+  function handleCloseCropModal() {
+    setShowAvatarCrop(false);
+    setShowBannerCrop(false);
+    setTempImageSrc(null);
+    setCropType(null);
   }
 
   function formatDate(dateString) {
@@ -212,6 +255,27 @@ export default function Profile() {
             </div>
           </div>
         </div>
+
+        {/* CROP MODALS */}
+        <ImageCropModal
+          isOpen={showAvatarCrop}
+          onClose={handleCloseCropModal}
+          onConfirm={handleAvatarCropConfirm}
+          imageSrc={tempImageSrc}
+          aspectRatio={1}
+          cropShape="round"
+          title="Crop Avatar"
+        />
+
+        <ImageCropModal
+          isOpen={showBannerCrop}
+          onClose={handleCloseCropModal}
+          onConfirm={handleBannerCropConfirm}
+          imageSrc={tempImageSrc}
+          aspectRatio={4 / 5}
+          cropShape="rect"
+          title="Crop Banner"
+        />
       </div>
     </>
   );
