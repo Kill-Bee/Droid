@@ -13,7 +13,8 @@ import {
 import {
   rateAnime,
   getAnimeRating,
-} from "../controllers/rating/rating.controller.js";
+} from "../controllers/review/anime/rating.controller.js";
+import { getReviewsByAnime } from "../controllers/review/anime/review.controller.js";
 import { queueAnime } from "../controllers/anime/anime-search.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
@@ -38,5 +39,8 @@ router.get("/carousel/:id", getAnimeCarouselById);
 // Anime | Rating
 router.post("/:animeId/rating", authMiddleware, rateAnime);
 router.get("/:animeId/rating", authMiddleware, getAnimeRating);
+
+// Anime | Reviews
+router.get("/:animeId/reviews", getReviewsByAnime);
 
 export default router;

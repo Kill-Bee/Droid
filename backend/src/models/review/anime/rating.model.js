@@ -1,4 +1,4 @@
-import { query } from "../../config/db.js";
+import { query } from "../../../config/db.js";
 
 // Upsert
 export async function findUserRating(userId, animeId) {
