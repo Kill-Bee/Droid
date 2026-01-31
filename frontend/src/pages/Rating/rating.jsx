@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
 import { getAnimeDetailById } from "../../services/anime/anime.service";
-import { getAnimeRate, setAnimeRate } from "../../services/rating/rating.service";
+import {
+  getAnimeRate,
+  setAnimeRate,
+} from "../../services/review/rating.service";
+import { getAnimeReviews } from "../../services/review/review.service";
+
 import StarRating from "./components/StarRating";
 
 export default function Rating() {
@@ -13,6 +18,7 @@ export default function Rating() {
   const [anime, setAnime] = useState(null);
   const [savedRating, setSavedRating] = useState(0);
   const [draftRating, setDraftRating] = useState(0);
+  const [reviews, setReviews] = useState([]);
 
   const [pageLoading, setPageLoading] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -51,6 +57,17 @@ export default function Rating() {
     })();
   }, [id, isLoggedIn]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getAnimeReviews(id);
+        setReviews(res || []);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  }, [id]);
+
   const handleOpenPopup = () => {
     if (!isLoggedIn) {
       toast.error("Please login to rate");
@@ -69,10 +86,10 @@ export default function Rating() {
     try {
       setPopupLoading(true);
       await setAnimeRate(id, value);
-      
+
       setSavedRating(value);
       setDraftRating(value);
-      
+
       toast.success("Rating updated");
       setIsPopupOpen(false);
     } catch (error) {
@@ -142,22 +159,61 @@ export default function Rating() {
               <button onClick={handleOpenPopup}>Rating ★</button>
             </div>
 
-          <h2 className="reviews">Reviews</h2>
-        <div className="card-ratting">
-          <div className="left-card">
-            <img src="https://i.pinimg.com/736x/1e/e6/2d/1ee62d4858bf703ef45c2a8af62f9183.jpg" alt="" />
-          </div>
-          <div className="right-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <h1>LavoraRungkad13506</h1>
-                <strong>⭐⭐⭐⭐</strong>
-              </div>
-              <i>Join at</i>
-              <label>musisi,rungkad</label>
-              <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error, quam aliquam! Similique quisquam ducimus, magnam architecto alias nam totam vero recusandae aperiam libero asperiores saepe, accusamus, tempore ad. In quia aliquam ipsa vel commodi molestias soluta minima sit alias totam dicta nihil suscipit sunt tenetur quas ducimus exercitationem, magni mollitia iste. Quis eum similique, explicabo et nulla ex eaque! Est non sit nulla praesentium iusto neque iure distinctio vero ducimus!</p>
-          </div>
-        </div>
+            <h2 className="reviews">Reviews</h2>
+            {reviews.length === 0 ? (
+              <p style={{ color: "#ccc" }}>No reviews yet.</p>
+            ) : (
+              reviews.map((rev, idx) => (
+                <div className="card-rating" key={idx}>
+                  <div className="left-card">
+                    <img
+                      src={rev.avatar || "https://via.placeholder.com/80"}
+                      alt={rev.display_name || rev.username}
+                    />
+                  </div>
 
+                  <div className="right-card">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <h3 style={{ margin: 0 }}>
+                        {rev.display_name || rev.username}
+                      </h3>
+                      <div
+                        style={{
+                          display: "inline-block",
+                          verticalAlign: "middle",
+                        }}
+                      >
+                        {[1, 2, 3, 4, 5].map((star) => {
+                          const fill = Math.min(
+                            Math.max((rev.rating || 0) - (star - 1), 0),
+                            1,
+                          );
+                          return (
+                            <span key={star} className="star-wrapper-mini">
+                              <span className="star-mini empty">★</span>
+                              <span
+                                className="star-mini fill"
+                                style={{ width: `${fill * 100}%` }}
+                              >
+                                ★
+                              </span>
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <i>{new Date(rev.created_at).toLocaleDateString()}</i>
+                    <p style={{ marginTop: 6 }}>{rev.content || ""}</p>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -167,7 +223,7 @@ export default function Rating() {
         <div className="popup-overlay" onClick={handleClosePopup}>
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
             <h2>What is your rating to this anime?</h2>
-              
+
             <StarRating
               value={draftRating}
               loading={popupLoading}
@@ -175,12 +231,13 @@ export default function Rating() {
               onSubmit={handleSubmitRating}
               onClose={handleClosePopup}
             />
-            <textarea className="comment-ratting" placeholder="What do you think about this Anime?(optional)"></textarea>
-
+            <textarea
+              className="comment-rating"
+              placeholder="What do you think about this Anime?(optional)"
+            ></textarea>
           </div>
         </div>
       )}
-
     </div>
   );
 }
