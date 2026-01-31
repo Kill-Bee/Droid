@@ -10,11 +10,11 @@ import {
   getAnimeCarouselById,
   createAnimeCarousel,
 } from "../controllers/anime/anime-carousel.controller.js";
+import { getAnimeRating } from "../controllers/review/anime/rating.controller.js";
 import {
-  rateAnime,
-  getAnimeRating,
-} from "../controllers/review/anime/rating.controller.js";
-import { getReviewsByAnime } from "../controllers/review/anime/review.controller.js";
+  getAnimeReviews,
+  createReview,
+} from "../controllers/review/anime/review.controller.js";
 import { queueAnime } from "../controllers/anime/anime-search.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
@@ -31,16 +31,18 @@ router.post("/carousel", createAnimeCarousel);
 // Anime Search
 router.get("/search", queueAnime);
 
-// Anime | Carousel by ID
-router.get("/:id", getAnimeById);
+// Anime | Card by ID
 router.get("/detail/:id", animeDetail);
+
+// Anime | Carousel by ID
 router.get("/carousel/:id", getAnimeCarouselById);
+router.get("/:id", getAnimeById);
 
 // Anime | Rating
-router.post("/:animeId/rating", authMiddleware, rateAnime);
 router.get("/:animeId/rating", authMiddleware, getAnimeRating);
 
 // Anime | Reviews
-router.get("/:animeId/reviews", getReviewsByAnime);
+router.post("/:animeId/reviews", authMiddleware, createReview);
+router.get("/:animeId/reviews", getAnimeReviews);
 
 export default router;
