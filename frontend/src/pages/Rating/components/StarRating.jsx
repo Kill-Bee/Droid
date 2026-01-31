@@ -52,6 +52,11 @@ export default function StarRating({
         {value > 0 ? getLabel(value) : "Belum Memilih"}
       </p>
 
+      <textarea
+        className="comment-rating"
+        placeholder="What do you think about this Anime?(optional)"
+      ></textarea>
+
       <div className="popup-buttons">
         <button
           className="close-btn-rating"

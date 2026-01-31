@@ -43,6 +43,6 @@ router.get("/:animeId/rating", authMiddleware, getAnimeRating);
 
 // Anime | Reviews
 router.post("/:animeId/reviews", authMiddleware, createReview);
-router.get("/:animeId/reviews", getAnimeReviews);
+router.get("/:animeId/reviews", authMiddleware, getAnimeReviews);
 
 export default router;

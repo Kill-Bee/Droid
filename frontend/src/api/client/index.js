@@ -6,10 +6,13 @@ export async function baseFetch(
 ) {
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
     body: body ? JSON.stringify(body) : undefined,
   });
-
+  
   if (!res.ok) {
     let message = "Request failed";
 
