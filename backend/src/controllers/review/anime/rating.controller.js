@@ -1,8 +1,8 @@
-import { findUserRating } from "../../models/rating/rating.model.js";
+import { findUserRating } from "../../../models/review/anime/rating.model.js";
 import {
   rateAnimeService,
   getAverageRatings,
-} from "../../services/rating/rating.service.js";
+} from "../../../services/review/anime/rating.service.js";
 
 export async function rateAnime(req, res) {
   try {

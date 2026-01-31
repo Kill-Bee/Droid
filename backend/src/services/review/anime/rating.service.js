@@ -3,8 +3,7 @@ import {
   findUserRating,
   updateRating,
   getAverageRating,
-} from "../../models/rating/rating.model.js";
-import { ValidationError } from "../../errors/index.js";
+} from "../../../models/review/anime/rating.model.js";
 
 export async function rateAnimeService({ userId, animeId, rating }) {
   if (rating < 0.5 || rating > 5 || rating * 2 !== Math.floor(rating * 2)) {

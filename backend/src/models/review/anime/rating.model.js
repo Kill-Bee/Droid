@@ -1,4 +1,4 @@
-import { query } from "../../config/db.js";
+import { query } from "../../../config/db.js";
 
 // Upsert
 export async function findUserRating(userId, animeId) {
@@ -11,13 +11,13 @@ export async function findUserRating(userId, animeId) {
 }
 
 export async function createRating({ userId, animeId, rating }) {
-  const result = await query(
-    `INSERT INTO ratings (user_id, anime_id, rating)
-    VALUES ($1, $2, $3) RETURNING *`,
-    [userId, animeId, rating],
-  );
-
-  return result.rows[0];
+  const sql = `
+    INSERT INTO ratings (user_id, anime_id, rating)
+    VALUES ($1, $2, $3)
+    RETURNING id, rating, created_at
+    `;
+  const { rows } = await query(sql, [userId, animeId, rating]);
+  return rows[0];
 }
 
 export async function updateRating(id, rating) {
