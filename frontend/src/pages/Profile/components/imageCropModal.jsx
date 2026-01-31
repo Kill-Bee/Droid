@@ -35,7 +35,11 @@ export default function ImageCropModal({
   return (
     <div className="crop-modal-overlay">
       <div className="crop-modal">
-        <h2>{title}</h2>
+        <div className="crop-modal-header">
+          <button className="crop-back-btn" onClick={handleClose}>←</button>
+          <h2>{title}</h2>
+          <button className="crop-apply-btn" onClick={handleConfirm}>Apply</button>
+        </div>
         
         <div className="crop-container">
           <Cropper
@@ -48,32 +52,25 @@ export default function ImageCropModal({
             onZoomChange={setZoom}
             cropShape={cropShape}
             showGrid={false}
+            objectFit="auto-cover"
+            minZoom={0.1}
+            maxZoom={3}
+            restrictPosition={true}
           />
         </div>
 
-        <div className="crop-controls">
-          <div className="control-group">
-            <label>Zoom</label>
-            <input
-              type="range"
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(e) => setZoom(Number(e.target.value))}
-              className="crop-slider"
-            />
-            <span className="zoom-value">{zoom.toFixed(1)}x</span>
-          </div>
-        </div>
-
-        <div className="crop-modal-actions">
-          <button onClick={handleClose} className="cancel-btn">
-            Cancel
-          </button>
-          <button onClick={handleConfirm} className="confirm-btn">
-            Confirm Crop
-          </button>
+        <div className="crop-controls-bottom">
+          <button className="zoom-out-btn" onClick={() => setZoom(Math.max(0.1, zoom - 0.2))}>−</button>
+          <input
+            type="range"
+            min={0.1}
+            max={3}
+            step={0.1}
+            value={zoom}
+            onChange={(e) => setZoom(Number(e.target.value))}
+            className="crop-slider"
+          />
+          <button className="zoom-in-btn" onClick={() => setZoom(Math.min(3, zoom + 0.2))}>+</button>
         </div>
       </div>
     </div>

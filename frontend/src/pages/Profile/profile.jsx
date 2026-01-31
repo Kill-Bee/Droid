@@ -194,22 +194,22 @@ export default function Profile() {
               alt="profile"
               className="fotoProfile"
             />
-            <div>
-              <h1>{profile.display_name || profile.username}</h1>
-
-              <div className="hero-tags">
-                {profile.badge ? (
-                  profile.badge.split(",").map((badge, index) => (
-                    <span className="tag" key={index}>
-                      {badge.trim().toUpperCase()}
-                    </span>
-                  ))
-                ) : (
-                  <span className="tag">MEMBER</span>
-                )}
+            <div className="penjelasan">
+              <div className="header-top">
+                <h1>{profile.display_name || profile.username}</h1>
+                <div className="hero-tags">
+                  {profile.badge ? (
+                    profile.badge.split(",").map((badge, index) => (
+                      <span className="tag" key={index}>
+                        {badge.trim().toUpperCase()}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="tag">MEMBER</span>
+                  )}
+                </div>
               </div>
-              <label>{profile.bio || "No bio yet"}</label>
-              <p>Joined on {formatDate(profile.joined_at)}</p>
+              <p className="username">@{profile.username}</p>
             </div>
             <button
               className="edit-profile-btn"
@@ -236,8 +236,12 @@ export default function Profile() {
         />
 
         {/* RATING SECTION */}
+        <div className="abcd">
+           <label>{profile.bio || "No bio yet"}</label>
+              <p>Joined on {formatDate(profile.joined_at)}</p>
+        </div>
         <div className="mainProfile">
-          <h1>Your Rating</h1>
+          <h1>Animes Ratting</h1>
 
           {profile.rated_anime?.length === 0 && (
             <p className="info-blank">You haven't rated any anime yet.</p>

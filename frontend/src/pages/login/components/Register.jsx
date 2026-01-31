@@ -40,7 +40,7 @@ export default function Register({ onLoginClick }) {
             className="gambar-login"
           />
           <div className="tulisan-warper">
-            <p>Bergabunglah dengan kami sekarang dan mulai petualangan Anda.</p>
+            <p>Mas enchunkz pernah login di sini, ayo login sekarang.</p>
           </div>
         </div>
 
