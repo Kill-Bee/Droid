@@ -26,6 +26,28 @@ export async function createReview(req, res) {
   }
 }
 
+export async function upsertReview(req, res) {
+  try {
+    const userId = req.user.id;
+    const { animeId } = req.params;
+    const { rating, comment } = req.body;
+
+    const result = await reviewService.upsertReview({
+      userId,
+      animeId,
+      rating,
+      comment,
+    });
+
+    res.status(200).json({
+      message: "Review saved",
+      data: result,
+    });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}
+
 export async function getAnimeReviews(req, res) {
   try {
     const { animeId } = req.params;
