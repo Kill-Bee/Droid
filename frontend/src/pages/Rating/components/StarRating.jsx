@@ -3,7 +3,9 @@ import "../rating.css";
 
 export default function StarRating({
   value = 0,
+  comment = "",
   onChange,
+  onCommentChange,
   onSubmit,
   onClose,
   loading = false,
@@ -55,6 +57,9 @@ export default function StarRating({
       <textarea
         className="comment-rating"
         placeholder="What do you think about this Anime?(optional)"
+        value={comment}
+        onChange={(e) => onCommentChange(e.target.value)}
+        disabled={loading}
       ></textarea>
 
       <div className="popup-buttons">
@@ -69,7 +74,7 @@ export default function StarRating({
         <button
           className="submit-btn-rating"
           disabled={loading || value === 0}
-          onClick={() => onSubmit(value)}
+          onClick={() => onSubmit(value, comment)}
         >
           {loading ? "Submitting..." : "Submit"}
         </button>

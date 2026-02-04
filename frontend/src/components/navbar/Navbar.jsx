@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { getMyProfile } from "../../services/profile/profile.service";
 import SearchBar from "./components/SearchBar";
 import AuthButton from "./components/AuthButton";
-import Avatar from "./components/Avatar";
 import "./navbar.css";
 
 export default function Navbar({ search, setSearch }) {
@@ -48,8 +47,7 @@ export default function Navbar({ search, setSearch }) {
 
       <div className="nav-right">
         <SearchBar value={search} onChange={setSearch} />
-        <Avatar avatar={profile?.avatar} />
-        <AuthButton />
+        <AuthButton avatar={profile?.avatar} />
       </div>
     </nav>
   );
