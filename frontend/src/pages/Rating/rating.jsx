@@ -4,13 +4,17 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
 import { getAnimeDetailById } from "../../services/anime/anime.service";
+import { getAnimeRate } from "../../services/review/rating.service";
 import {
-  getAnimeRate,
-  setAnimeRate,
-} from "../../services/review/rating.service";
-import { getAnimeReviews } from "../../services/review/review.service";
+  deleteAnimeReviews,
+  getAnimeReviews,
+  upsertAnimeReviews,
+} from "../../services/review/review.service";
 
-import StarRating from "./components/StarRating";
+import AnimeInfo from "./components/AnimeInfo";
+import RatingButtons from "./components/RatingButtons";
+import ReviewList from "./components/ReviewList";
+import RatingPopup from "./components/RatingPopup";
 
 export default function Rating() {
   const { id } = useParams();
@@ -18,11 +22,14 @@ export default function Rating() {
   const [anime, setAnime] = useState(null);
   const [savedRating, setSavedRating] = useState(0);
   const [draftRating, setDraftRating] = useState(0);
+  const [savedComment, setSavedComment] = useState("");
+  const [draftComment, setDraftComment] = useState("");
   const [reviews, setReviews] = useState([]);
 
   const [pageLoading, setPageLoading] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupLoading, setPopupLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const isLoggedIn = Boolean(localStorage.getItem("token"));
 
@@ -50,6 +57,8 @@ export default function Rating() {
         if (res?.rating !== null && res?.rating !== undefined) {
           setSavedRating(res.rating);
           setDraftRating(res.rating);
+          setSavedComment(res.comment || "");
+          setDraftComment(res.comment || "");
         }
       } catch (error) {
         console.error(error);
@@ -74,21 +83,27 @@ export default function Rating() {
       return;
     }
     setDraftRating(savedRating);
+    setDraftComment(savedComment);
     setIsPopupOpen(true);
   };
 
   const handleClosePopup = () => {
-    if (popupLoading) return; // cegah close saat submit
+    if (popupLoading) return;
     setIsPopupOpen(false);
   };
 
-  const handleSubmitRating = async (value) => {
+  const handleSubmitRating = async (value, comment) => {
     try {
       setPopupLoading(true);
-      await setAnimeRate(id, value);
+      await upsertAnimeReviews(id, value, comment);
 
       setSavedRating(value);
       setDraftRating(value);
+      setSavedComment(comment);
+      setDraftComment(comment);
+
+      const res = await getAnimeReviews(id);
+      setReviews(res || []);
 
       toast.success("Rating updated");
       setIsPopupOpen(false);
@@ -97,6 +112,32 @@ export default function Rating() {
       console.error(error);
     } finally {
       setPopupLoading(false);
+    }
+  };
+
+  const handleDeleteReview = async () => {
+    if (!window.confirm("Are you sure you want to delete your review?")) {
+      return;
+    }
+
+    try {
+      setDeleteLoading(true);
+      await deleteAnimeReviews(id);
+
+      setSavedRating(0);
+      setDraftRating(0);
+      setSavedComment("");
+      setDraftComment("");
+
+      const res = await getAnimeReviews(id);
+      setReviews(res || []);
+
+      toast.success("Review deleted");
+    } catch (error) {
+      toast.error("Failed to delete review");
+      console.error(error);
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -127,25 +168,7 @@ export default function Rating() {
       <div className="container-rating">
         <div className="rating-wrapper">
           {/* LEFT */}
-          <div className="rating-left">
-            <img
-              src={anime.cover_image || "https://via.placeholder.com/300x450"}
-              alt={anime.title}
-              className="vertical-banner"
-            />
-            <h1 className="h1-left">{anime.title}</h1>
-            <div className="information">
-              <p>
-                <b>Genre:</b> {anime.genres.join(", ")}
-              </p>
-              <p>
-                <b>Release Year:</b> {anime.release_year}
-              </p>
-              <p>
-                <b>Episodes:</b> {anime.episodes}
-              </p>
-            </div>
-          </div>
+          <AnimeInfo anime={anime} />
 
           {/* RIGHT */}
           <div className="rating-right">
@@ -155,85 +178,29 @@ export default function Rating() {
               {anime.description || "No description available."}
             </p>
 
-            <div className="buttons-rating">
-              <button onClick={handleOpenPopup}>Rating ★</button>
-            </div>
+            <RatingButtons
+              savedRating={savedRating}
+              deleteLoading={deleteLoading}
+              onOpenPopup={handleOpenPopup}
+              onDelete={handleDeleteReview}
+            />
 
             <h2 className="reviews">Reviews</h2>
-            {reviews.length === 0 ? (
-              <p style={{ color: "#ccc" }}>No reviews yet.</p>
-            ) : (
-              reviews.map((rev, idx) => (
-                <div className="card-rating" key={idx}>
-                  <div className="left-card">
-                    <img
-                      src={rev.avatar || "https://via.placeholder.com/80"}
-                      alt={rev.display_name || rev.username}
-                    />
-                  </div>
-
-                  <div className="right-card">
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <h3 style={{ margin: 0 }}>
-                        {rev.display_name || rev.username}
-                      </h3>
-                      <div
-                        style={{
-                          display: "inline-block",
-                          verticalAlign: "middle",
-                        }}
-                      >
-                        {[1, 2, 3, 4, 5].map((star) => {
-                          const fill = Math.min(
-                            Math.max((rev.rating || 0) - (star - 1), 0),
-                            1,
-                          );
-                          return (
-                            <span key={star} className="star-wrapper-mini">
-                              <span className="star-mini empty">★</span>
-                              <span
-                                className="star-mini fill"
-                                style={{ width: `${fill * 100}%` }}
-                              >
-                                ★
-                              </span>
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <i>{new Date(rev.created_at).toLocaleDateString()}</i>
-                    <p style={{ marginTop: 6 }}>{rev.content || ""}</p>
-                  </div>
-                </div>
-              ))
-            )}
+            <ReviewList reviews={reviews} />
           </div>
         </div>
       </div>
 
-      {/* Pop Up*/}
-      {isPopupOpen && (
-        <div className="popup-overlay" onClick={handleClosePopup}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <h2>What is your rating to this anime?</h2>
-
-            <StarRating
-              value={draftRating}
-              loading={popupLoading}
-              onChange={setDraftRating}
-              onSubmit={handleSubmitRating}
-              onClose={handleClosePopup}
-            />
-          </div>
-        </div>
-      )}
+      <RatingPopup
+        isOpen={isPopupOpen}
+        draftRating={draftRating}
+        draftComment={draftComment}
+        loading={popupLoading}
+        onRatingChange={setDraftRating}
+        onCommentChange={setDraftComment}
+        onSubmit={handleSubmitRating}
+        onClose={handleClosePopup}
+      />
     </div>
   );
 }

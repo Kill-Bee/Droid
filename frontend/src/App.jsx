@@ -39,7 +39,12 @@ export default function App() {
 
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000} theme="dark" />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        closeButton={false}
+        theme="dark"
+      />
 
       <Routes>
         {/* Public routes tanpa Navbar */}
