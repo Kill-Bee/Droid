@@ -231,10 +231,6 @@ export default function Rating() {
               onSubmit={handleSubmitRating}
               onClose={handleClosePopup}
             />
-            <textarea
-              className="comment-rating"
-              placeholder="What do you think about this Anime?(optional)"
-            ></textarea>
           </div>
         </div>
       )}

@@ -40,3 +40,27 @@ export async function getAverageRating(animeId) {
   );
   return result.rows[0];
 }
+
+export async function upsertRating({ userId, animeId, rating }) {
+  const sql = `
+    INSERT INTO ratings (user_id, anime_id, rating)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (user_id, anime_id)
+    DO UPDATE SET 
+      rating = EXCLUDED.rating, 
+      updated_at = NOW()
+    RETURNING id, rating, created_at, updated_at
+    `;
+  const { rows } = await query(sql, [userId, animeId, rating]);
+  return rows[0];
+}
+
+export async function deleteRating({ userId, animeId }) {
+  const sql = `
+    DELETE FROM ratings
+    WHERE user_id = $1 AND anime_id = $2
+    RETURNING *
+    `;
+  const { rows } = await query(sql, [userId, animeId]);
+  return rows[0];
+}
