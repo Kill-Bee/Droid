@@ -54,3 +54,13 @@ export async function upsertRating({ userId, animeId, rating }) {
   const { rows } = await query(sql, [userId, animeId, rating]);
   return rows[0];
 }
+
+export async function deleteRating({ userId, animeId }) {
+  const sql = `
+    DELETE FROM ratings
+    WHERE user_id = $1 AND anime_id = $2
+    RETURNING *
+    `;
+  const { rows } = await query(sql, [userId, animeId]);
+  return rows[0];
+}

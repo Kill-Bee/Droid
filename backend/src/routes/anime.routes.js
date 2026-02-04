@@ -15,6 +15,7 @@ import {
   getAnimeReviews,
   createReview,
   upsertReview,
+  deleteReview,
 } from "../controllers/review/anime/review.controller.js";
 import { queueAnime } from "../controllers/anime/anime-search.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
@@ -46,5 +47,6 @@ router.get("/:animeId/rating", authMiddleware, getAnimeRating);
 router.post("/:animeId/reviews/upsert", authMiddleware, upsertReview);
 router.post("/:animeId/reviews", authMiddleware, createReview);
 router.get("/:animeId/reviews", authMiddleware, getAnimeReviews);
+router.delete("/:animeId/reviews", authMiddleware, deleteReview);
 
 export default router;
