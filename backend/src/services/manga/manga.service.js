@@ -2,6 +2,7 @@ import {
   findAllManga,
   findMangaById,
   makeManga,
+  mangaDetails,
 } from "../../models/manga/manga.model.js";
 import { ValidationError, NotFoundError } from "../../errors/index.js";
 
@@ -56,4 +57,18 @@ export async function createMangaService(data) {
     release_year: releaseYear,
     chapters: chapters,
   });
+}
+
+export async function mangaDetailService(id) {
+  if (!id) {
+    throw new ValidationError("ID manga harus diisi");
+  }
+
+  const manga = await mangaDetails(id);
+
+  if (!manga) {
+    throw new NotFoundError("manga tidak ditemukan");
+  }
+
+  return manga;
 }

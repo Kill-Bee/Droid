@@ -1,4 +1,4 @@
-import { getReviewsAnime, postReviewsAnime, upsertReviewsAnime, deleteReviewsAnime } from "../../api/review/review.api";
+import { getReviewsAnime, postReviewsAnime, upsertReviewsAnime, deleteReviewsAnime } from "../../../api/review/anime/review.api";
 
 export async function getAnimeReviews(animeId) {
   return getReviewsAnime(animeId);
