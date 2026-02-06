@@ -74,7 +74,7 @@ position: absolute;
   text-align: center;
 }
 
-label {
+.container-rating label {
   color: #ccc;
   font-size: 14px;
   text-transform: uppercase;

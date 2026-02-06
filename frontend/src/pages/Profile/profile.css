@@ -93,12 +93,19 @@
     max-width: 400px;
     overflow: hidden;
 }
-.biodata button {
+
+.biodata .profile-actions {
     position: absolute;
     bottom: 20px;
     right: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 0;
+}
+
+.biodata .edit-profile-btn {
     padding: 12px 25px;
-    border: none;
     font-size: 1rem;
     border-radius: 50px;
     background-color: transparent;
@@ -106,17 +113,41 @@
     font-weight: bold;
     cursor: pointer;
     border: solid 2px #ffffffcf;
-}
-.biodata button:hover {
-    background-color: #ffffff2d;
     transition: all 0.3s ease;
 }
+
+.biodata .edit-profile-btn:hover {
+    background-color: #ffffff2d;
+}
+
+.biodata .logout-btn {
+    background: transparent;
+    color: #dc2626;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.biodata .logout-btn:hover {
+    color: #ff4444;
+    transform: scale(1.1);
+}
+
 .abcd{
     margin-left: 440px;
-    margin-top: 20px;
+    margin-top: 15px;
+    width: 100vh;
+}
+.abcd label{
+    color: rgb(206, 206, 206);
 }
 .abcd p{
     color: #6f6f6f;
+    margin-top: 5px;
 }
 .mainProfile{
     margin: 100px 100px 0 100px;
@@ -325,23 +356,6 @@
 .btn-save:hover {
     background: #b71c1c;
     transform: translateY(-2px);
-}
-
-/* Edit Profile Button */
-.edit-profile-btn {
-    margin-top: 200px;
-    background: #6366f1;
-    color: white;
-    font-size: larger;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-.edit-profile-btn:hover {
-    background: #4f46e5;
 }
 
 /* Edit Modal */

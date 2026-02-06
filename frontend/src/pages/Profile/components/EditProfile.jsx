@@ -80,7 +80,7 @@ export default function EditProfileModal({
           {editForm.badge ? (
             editForm.badge.split(',').map((badge, index) => (
               <span className="tag" key={index}>
-                {badge.trim().toUpperCase()}
+                {badge.trim()}
               </span>
             ))
           ) : (

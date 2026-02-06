@@ -28,9 +28,9 @@ export default function AuthButton({ avatar }) {
         alt="profile"
         onClick={() => navigate("/profile")}
       />
-      <button onClick={handleLogout} className="login-navbar">
+      {/* <button onClick={handleLogout} className="login-navbar">
         Logout
-      </button>
+      </button> */}
     </>
   );
 }

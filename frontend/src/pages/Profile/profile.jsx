@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { getMyProfile, updateMyProfile } from "../../services/profile/profile.service";
 import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
@@ -6,6 +7,7 @@ import StarDisplay from "./components/StarDisplay";
 import EditProfile from "./components/EditProfile";
 import ImageCropModal from "./components/ImageCropModal";
 import { getCroppedImage } from "./utils/cropUtils";
+import { useAuth } from "../../hooks/useAuth";
 import "./profile.css";
 
 export default function Profile() {
@@ -30,6 +32,13 @@ export default function Profile() {
 
   const avatarInputRef = useRef(null);
   const bannerInputRef = useRef(null);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+    navigate("/auth");
+  }
 
   useEffect(() => {
     loadProfile();
@@ -201,7 +210,7 @@ export default function Profile() {
                   {profile.badge ? (
                     profile.badge.split(",").map((badge, index) => (
                       <span className="tag" key={index}>
-                        {badge.trim().toUpperCase()}
+                        {badge.trim()}
                       </span>
                     ))
                   ) : (
@@ -211,12 +220,35 @@ export default function Profile() {
               </div>
               <p className="username">@{profile.username}</p>
             </div>
-            <button
-              className="edit-profile-btn"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Profile
-            </button>
+            <div className="profile-actions">
+              <button
+                className="edit-profile-btn"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Profile
+              </button>
+              <button
+                className="logout-btn"
+                onClick={handleLogout}
+                title="Logout"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
