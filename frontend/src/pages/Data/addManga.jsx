@@ -17,6 +17,7 @@ export default function AddManga() {
 }
 
 function MangaCarousel({ onMangaClick }) {
+  const [logo, setLogo] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
@@ -67,6 +68,7 @@ function MangaCarousel({ onMangaClick }) {
 
     try {
       await createMangaCarousel({
+        logo,
         title,
         description,
         coverFile,
@@ -102,6 +104,17 @@ function MangaCarousel({ onMangaClick }) {
           }}
         >
           <h2 style={{ marginBottom: 8 }}>Tambah Manga Carousel Baru</h2>
+
+          {/* Logo */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <label>Logo</label>
+            <input
+              type="file"
+              ref={fileRef}
+              accept="image/*"
+              onChange={(e) => setLogo(e.target.files[0])}
+            />
+          </div>
 
           {/* Judul */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>

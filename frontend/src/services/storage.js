@@ -79,3 +79,19 @@ export async function uploadLogoAnime(file) {
 
   return data.publicUrl;
 }
+
+export async function uploadLogoManga(file) {
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${crypto.randomUUID()}.${fileExt}`;
+  const filePath = `logo/${fileName}`;
+
+  const { error } = await supabase.storage
+    .from("manga-covers")
+    .upload(filePath, file);
+
+  if (error) throw error;
+
+  const { data } = supabase.storage.from("manga-covers").getPublicUrl(filePath);
+
+  return data.publicUrl;
+}

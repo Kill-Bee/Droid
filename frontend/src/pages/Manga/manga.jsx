@@ -129,7 +129,12 @@ export default function Manga({ search }) {
             </div>
 
             <div className="hero-content">
-              <h1 className="hero-title">{mangaCarousel[slide].title}</h1>
+              <img
+                src={mangaCarousel[slide].logo || mangaCarousel[slide].title}
+                alt={mangaCarousel[slide].title}
+                className="logo"
+              />
+              {/* <h1 className="hero-title">{mangaCarousel[slide].title}</h1> */}
 
               <div className="hero-tags">
                 <span className="tag">
