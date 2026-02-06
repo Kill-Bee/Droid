@@ -13,6 +13,7 @@ export async function findMangaCarouselById(id) {
 }
 
 export async function makeMangaCarousel({
+  logo,
   title,
   description,
   cover_image,
@@ -21,11 +22,11 @@ export async function makeMangaCarousel({
 }) {
   const result = await query(
     `
-    INSERT INTO manga_carousel (title, description, cover_image, release_year, chapters)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO manga_carousel (logo, title, description, cover_image, release_year, chapters)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
     `,
-    [title, description, cover_image, release_year, chapters]
+    [logo, title, description, cover_image, release_year, chapters]
   );
 
   return result.rows[0];

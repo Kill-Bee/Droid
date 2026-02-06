@@ -1,4 +1,4 @@
-import { getAnimeRating, setAnimeRating } from "../../api/review/rating.api";
+import { getAnimeRating, setAnimeRating } from "../../../api/review/anime/rating.api";
 
 export async function getAnimeRate(animeId) {
   return getAnimeRating(animeId);

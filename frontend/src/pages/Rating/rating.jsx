@@ -4,12 +4,12 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
 import { getAnimeDetailById } from "../../services/anime/anime.service";
-import { getAnimeRate } from "../../services/review/rating.service";
+import { getAnimeRate } from "../../services/review/anime/rating.service";
 import {
   deleteAnimeReviews,
   getAnimeReviews,
   upsertAnimeReviews,
-} from "../../services/review/review.service";
+} from "../../services/review/anime/review.service";
 
 import AnimeInfo from "./components/AnimeInfo";
 import RatingButtons from "./components/RatingButtons";

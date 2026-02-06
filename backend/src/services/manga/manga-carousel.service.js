@@ -50,6 +50,7 @@ export async function createMangaCarouselService(data) {
   }
 
   return await makeMangaCarousel({
+    logo: data.logo,
     title: data.title,
     description: data.description,
     cover_image: data.cover_image,

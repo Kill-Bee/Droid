@@ -5,6 +5,7 @@ export async function getMangaCarouselApi() {
 }
 
 export function createMangaCarouselApi({
+  logo,
   title,
   description,
   cover_image,
@@ -12,6 +13,7 @@ export function createMangaCarouselApi({
   chapters,
 }) {
   return apiPublic.post("/manga/carousel", {
+    logo,
     title,
     description,
     cover_image,

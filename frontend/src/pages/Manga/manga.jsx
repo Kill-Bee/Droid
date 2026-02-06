@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getManga } from "../../services/manga/manga.service";
 import { getMangaCarousel } from "../../services/manga/manga-carousel.service";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useMangaSearch } from "../../hooks/useMangaSearch";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "./manga.css";
 
@@ -18,6 +19,9 @@ export default function Manga({ search }) {
   const [expectedCount, setExpectedCount] = useState(10);
   const [carouselLoading, setCarouselLoading] = useState(true);
   const skeletonItems = Array.from({ length: expectedCount });
+
+  const { data: searchResults, loading: searchLoading } =
+    useMangaSearch(search);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -90,8 +94,21 @@ export default function Manga({ search }) {
     navigate(`/manga/carousel/${mangaId}`);
   };
 
-  const filteredManga = manga.filter((manga) =>
-    manga.title.toLowerCase().includes(keyword),
+  // const filteredManga = manga.filter((manga) =>
+  //   manga.title.toLowerCase().includes(keyword),
+  // );
+
+   const filteredManga = search ? searchResults : manga;
+  const isLoading = search ? searchLoading : loading;
+
+  const seinenManga = filteredManga.filter((manga) =>
+    manga.genres?.includes("Seinen"),
+  );
+  const romanceManga = filteredManga.filter((manga) =>
+    manga.genres?.includes("Romance"),
+  );
+  const actionManga = filteredManga.filter((manga) =>
+    manga.genres?.includes("Action"),
   );
 
   return (
@@ -112,7 +129,12 @@ export default function Manga({ search }) {
             </div>
 
             <div className="hero-content">
-              <h1 className="hero-title">{mangaCarousel[slide].title}</h1>
+              <img
+                src={mangaCarousel[slide].logo || mangaCarousel[slide].title}
+                alt={mangaCarousel[slide].title}
+                className="logo"
+              />
+              {/* <h1 className="hero-title">{mangaCarousel[slide].title}</h1> */}
 
               <div className="hero-tags">
                 <span className="tag">
@@ -178,7 +200,7 @@ export default function Manga({ search }) {
             className="slide-arrow slide-arrow-left"
             onClick={handleSlideLeft}
           ></button>
-          {loading ? (
+          {isLoading ? (
             <div className="container-slide">
               {skeletonItems.map((_, i) => (
                 <CardSkeleton key={`trend-skel-${i}`} />
@@ -210,7 +232,120 @@ export default function Manga({ search }) {
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
           ></button>
+          
         </div>
+         <h1>seinen</h1>
+        <div className="slider-wrapper">
+          <button
+            className="slide-arrow slide-arrow-left"
+            onClick={handleSlideLeft}
+          ></button>
+          {isLoading ? (
+            <div className="container-slide">
+              {skeletonItems.map((_, i) => (
+                <CardSkeleton key={`action-skel-${i}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="container-slide">
+              {seinenManga.map((manga) => {
+              return (
+                <div className="card" key={manga.id}>
+                  <div>
+                    <img
+                      src={manga.cover_image}
+                      alt={manga.title}
+                      onClick={() => handleMangaClick(manga.id)}
+                    />
+                    <h3 onClick={() => handleMangaClick(manga.id)}>
+                      {manga.title.length > 20
+                        ? manga.title.substring(0, 20) + "..."
+                        : manga.title}
+                    </h3>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          )}
+          <button
+            className="slide-arrow slide-arrow-right"
+            onClick={handleSlideRight}
+          ></button>
+          
+        </div>
+         <h1>Romance</h1>
+        <div className="slider-wrapper">
+          <button
+            className="slide-arrow slide-arrow-left"
+            onClick={handleSlideLeft}
+          ></button>
+          {isLoading ? (
+            <div className="container-slide">
+              {skeletonItems.map((_, i) => (
+                <CardSkeleton key={`action-skel-${i}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="container-slide">
+              {romanceManga.map((manga) => {
+              return (
+                <div className="card" key={manga.id}>
+                  <div>
+                    <img
+                      src={manga.cover_image}
+                      alt={manga.title}
+                      onClick={() => handleMangaClick(manga.id)}
+                    />
+                    <h3 onClick={() => handleMangaClick(manga.id)}>
+                      {manga.title.length > 20
+                        ? manga.title.substring(0, 20) + "..."
+                        : manga.title}
+                    </h3>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          )}
+          <button
+            className="slide-arrow slide-arrow-right"
+            onClick={handleSlideRight}
+          ></button>
+          
+        </div>
+        <h1>Other</h1>
+        {loading ? (
+          <div className="card-last">
+            {skeletonItems.map((_, i) => (
+              <CardSkeleton key={`card-ske${i}`} />
+            ))}
+          </div>
+        ) : (
+          <div className="card-last">
+            {actionManga.map((manga) => {
+              return (
+                <div className="card-diam" key={manga.id}>
+                  <div>
+                    <img
+                      src={
+                        manga.cover_image ||
+                        "https://via.placeholder.com/300x400?text=No+Image"
+                      }
+                      alt={manga.title}
+                      onClick={() => handleAnimeClick(manga.id)}
+                    />
+                    {/* <h3 onClick={() => handleAnimeClick(anime.id)}>
+                      {anime.title.length > 20
+                        ? anime.title.substring(0, 20) + "..."
+                        : anime.title}
+                    </h3> */}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { apiAuth } from "../client/authFetch";
+import { apiAuth } from "../../client/authFetch";
 
 export async function getReviewsAnime(animeId) {
   return await apiAuth.get(`/anime/${animeId}/reviews`);
