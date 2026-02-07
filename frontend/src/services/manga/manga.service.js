@@ -1,11 +1,20 @@
 import { uploadCoverManga } from "../storage";
-import { getMangaApi, getMangaByIdApi, createMangaApi } from "../../api/manga/manga.api";
+import {
+  getMangaApi,
+  getMangaByIdApi,
+  getMangaDetailByIdApi,
+  createMangaApi,
+} from "../../api/manga/manga.api";
 
 export async function getManga() {
   return getMangaApi();
 }
 export async function getMangaById(id) {
   return getMangaByIdApi(id);
+}
+
+export async function getMangaDetailById(id) {
+  return getMangaDetailByIdApi(id);
 }
 
 export async function createManga(data) {

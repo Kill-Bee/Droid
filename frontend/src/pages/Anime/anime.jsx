@@ -54,11 +54,9 @@ export default function Anime({ search }) {
   // use effect untuk carousel
   useEffect(() => {
     if (animesCarousel.length === 0) return;
-
     const interval = setInterval(() => {
       setSlide((prev) => (prev + 1) % animesCarousel.length);
     }, 10000);
-
     return () => clearInterval(interval);
   }, [animesCarousel.length]);
 
@@ -359,7 +357,7 @@ function CarouselSkeleton() {
   );
 }
 
-function CardSkelaton({ card }) {
+function CardSkelaton() {
   return (
     <SkeletonTheme baseColor="#1d1c1c" highlightColor="#444">
       <div className="card-skeleton">

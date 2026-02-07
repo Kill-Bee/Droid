@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getManga } from "../../services/manga/manga.service";
 import { getMangaCarousel } from "../../services/manga/manga-carousel.service";
-import "react-loading-skeleton/dist/skeleton.css";
 import { useMangaSearch } from "../../hooks/useMangaSearch";
+import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "./manga.css";
 
@@ -12,24 +11,14 @@ export default function Manga({ search }) {
   const navigate = useNavigate();
   const [manga, setManga] = useState([]);
   const [mangaCarousel, setMangaCarousel] = useState([]);
-  const [debounceSearch, setDebounceSearch] = useState("");
-  const keyword = (debounceSearch || search || "").toLowerCase();
   const [slide, setSlide] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [expectedCount, setExpectedCount] = useState(10);
   const [carouselLoading, setCarouselLoading] = useState(true);
+  const [expectedCount, setExpectedCount] = useState(10);
   const skeletonItems = Array.from({ length: expectedCount });
 
   const { data: searchResults, loading: searchLoading } =
     useMangaSearch(search);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebounceSearch(search);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [search]);
 
   useEffect(() => {
     (async () => {
@@ -39,8 +28,7 @@ export default function Manga({ search }) {
         setManga(Array.isArray(data) ? data : []);
         if (data && data.length > 0) setExpectedCount(data.length);
       } catch (error) {
-        toast.error("Error fetching manga");
-        console.error(error);
+        console.error("Error fetching manga:", error);
         setManga([]);
       } finally {
         setLoading(false);
@@ -55,10 +43,9 @@ export default function Manga({ search }) {
         const data = await getMangaCarousel();
         setMangaCarousel(Array.isArray(data) ? data : []);
       } catch (error) {
-        toast.error("Error fetching manga carousel");
-        console.error(error);
+        console.error("Error fetching manga carousel:", error);
         setMangaCarousel([]);
-      }finally{
+      } finally {
         setCarouselLoading(false);
       }
     })();
@@ -87,10 +74,12 @@ export default function Manga({ search }) {
   };
 
   const handleMangaClick = (mangaId) => {
+    window.scrollTo(0, 0);
     navigate(`/manga/${mangaId}`);
   };
 
   const handleMangaCarouselClick = (mangaId) => {
+    window.scrollTo(0, 0);
     navigate(`/manga/carousel/${mangaId}`);
   };
 
@@ -98,7 +87,7 @@ export default function Manga({ search }) {
   //   manga.title.toLowerCase().includes(keyword),
   // );
 
-   const filteredManga = search ? searchResults : manga;
+  const filteredManga = search ? searchResults : manga;
   const isLoading = search ? searchLoading : loading;
 
   const seinenManga = filteredManga.filter((manga) =>
@@ -115,8 +104,8 @@ export default function Manga({ search }) {
     <>
       <div className="header">
         {carouselLoading ? (
-          <CarouselSkeleton/>
-        ) :mangaCarousel.length > 0 ? (
+          <CarouselSkeleton />
+        ) : mangaCarousel.length > 0 ? (
           <div className="carousel-item">
             <div className="background">
               <img
@@ -189,8 +178,7 @@ export default function Manga({ search }) {
               ))}
             </div>
           </div>
-        ) : null }
-        
+        ) : null}
       </div>
       <div className="banner-bottom-bg" aria-hidden="true" />
       <div className="main">
@@ -209,32 +197,34 @@ export default function Manga({ search }) {
           ) : (
             <div className="container-slide">
               {filteredManga.map((manga) => {
-              return (
-                <div className="card" key={manga.id}>
-                  <div>
-                    <img
-                      src={manga.cover_image}
-                      alt={manga.title}
-                      onClick={() => handleMangaClick(manga.id)}
-                    />
-                    <h3 onClick={() => handleMangaClick(manga.id)}>
-                      {manga.title.length > 20
-                        ? manga.title.substring(0, 20) + "..."
-                        : manga.title}
-                    </h3>
+                return (
+                  <div className="card" key={manga.id}>
+                    <div>
+                      <img
+                        src={
+                          manga.cover_image ||
+                          "https://via.placeholder.com/300x400?text=No+Image"
+                        }
+                        alt={manga.title}
+                        onClick={() => handleMangaClick(manga.id)}
+                      />
+                      <h3 onClick={() => handleMangaClick(manga.id)}>
+                        {manga.title.length > 20
+                          ? manga.title.substring(0, 20) + "..."
+                          : manga.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           )}
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
           ></button>
-          
         </div>
-         <h1>seinen</h1>
+        <h1>seinen</h1>
         <div className="slider-wrapper">
           <button
             className="slide-arrow slide-arrow-left"
@@ -249,32 +239,34 @@ export default function Manga({ search }) {
           ) : (
             <div className="container-slide">
               {seinenManga.map((manga) => {
-              return (
-                <div className="card" key={manga.id}>
-                  <div>
-                    <img
-                      src={manga.cover_image}
-                      alt={manga.title}
-                      onClick={() => handleMangaClick(manga.id)}
-                    />
-                    <h3 onClick={() => handleMangaClick(manga.id)}>
-                      {manga.title.length > 20
-                        ? manga.title.substring(0, 20) + "..."
-                        : manga.title}
-                    </h3>
+                return (
+                  <div className="card" key={manga.id}>
+                    <div>
+                      <img
+                        src={
+                          manga.cover_image ||
+                          "https://via.placeholder.com/300x400?text=No+Image"
+                        }
+                        alt={manga.title}
+                        onClick={() => handleMangaClick(manga.id)}
+                      />
+                      <h3 onClick={() => handleMangaClick(manga.id)}>
+                        {manga.title.length > 20
+                          ? manga.title.substring(0, 20) + "..."
+                          : manga.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           )}
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
           ></button>
-          
         </div>
-         <h1>Romance</h1>
+        <h1>Romance</h1>
         <div className="slider-wrapper">
           <button
             className="slide-arrow slide-arrow-left"
@@ -289,30 +281,32 @@ export default function Manga({ search }) {
           ) : (
             <div className="container-slide">
               {romanceManga.map((manga) => {
-              return (
-                <div className="card" key={manga.id}>
-                  <div>
-                    <img
-                      src={manga.cover_image}
-                      alt={manga.title}
-                      onClick={() => handleMangaClick(manga.id)}
-                    />
-                    <h3 onClick={() => handleMangaClick(manga.id)}>
-                      {manga.title.length > 20
-                        ? manga.title.substring(0, 20) + "..."
-                        : manga.title}
-                    </h3>
+                return (
+                  <div className="card" key={manga.id}>
+                    <div>
+                      <img
+                        src={
+                          manga.cover_image ||
+                          "https://via.placeholder.com/300x400?text=No+Image"
+                        }
+                        alt={manga.title}
+                        onClick={() => handleMangaClick(manga.id)}
+                      />
+                      <h3 onClick={() => handleMangaClick(manga.id)}>
+                        {manga.title.length > 20
+                          ? manga.title.substring(0, 20) + "..."
+                          : manga.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           )}
           <button
             className="slide-arrow slide-arrow-right"
             onClick={handleSlideRight}
           ></button>
-          
         </div>
         <h1>Other</h1>
         {loading ? (
@@ -333,7 +327,7 @@ export default function Manga({ search }) {
                         "https://via.placeholder.com/300x400?text=No+Image"
                       }
                       alt={manga.title}
-                      onClick={() => handleAnimeClick(manga.id)}
+                      onClick={() => handleMangaClick(manga.id)}
                     />
                     {/* <h3 onClick={() => handleAnimeClick(anime.id)}>
                       {anime.title.length > 20

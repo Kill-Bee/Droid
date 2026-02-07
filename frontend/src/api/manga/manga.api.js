@@ -8,6 +8,15 @@ export async function getMangaByIdApi(id) {
   return apiPublic.get(`/manga/${id}`);
 }
 
+export async function getMangaDetailByIdApi(id) {
+  return apiPublic.get(`/manga/detail/${id}`);
+}
+
+export async function deleteMangaApi(id) {
+  const response = await apiPublic.delete(`/manga/${id}`);
+  return response.json();
+}
+
 export function createMangaApi({
   title,
   description,
