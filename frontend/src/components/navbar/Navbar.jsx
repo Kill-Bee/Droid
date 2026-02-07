@@ -47,7 +47,7 @@ export default function Navbar({ search, setSearch }) {
 
       <div className="nav-right">
         <SearchBar value={search} onChange={setSearch} />
-        <AuthButton avatar={profile?.avatar} />
+        <AuthButton profile={profile} />
       </div>
     </nav>
   );

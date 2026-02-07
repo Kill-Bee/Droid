@@ -73,6 +73,12 @@ export default function Profile() {
   function handleBannerChange(e) {
     const file = e.target.files[0];
     if (file) {
+      // Jika GIF, skip crop dan langsung pakai file asli
+      if (file.type === "image/gif") {
+        setBannerFile(file);
+        setBannerPreview(URL.createObjectURL(file));
+        return;
+      }
       const tempUrl = URL.createObjectURL(file);
       setTempImageSrc(tempUrl);
       setCropType("banner");

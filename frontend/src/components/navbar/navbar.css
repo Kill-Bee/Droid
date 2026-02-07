@@ -80,9 +80,109 @@ nav img {
 }
 nav img:hover {
   cursor: pointer;
-  transform: scale(1.1);
-  transition: all 0.3s ease;
 }
+
+/* Profile Hover Preview Card */
+.profile-hover-container {
+  position: relative;
+}
+
+.nav-avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.337);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.nav-avatar:hover {
+  transform: scale(1.05);
+}
+
+.profile-preview-card {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 280px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-banner {
+  width: 100%;
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+  background-color: #2a2a4a;
+}
+
+.preview-content {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  gap: 12px;
+  margin-top: -25px;
+}
+
+.preview-avatar {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 8px !important;
+  border: 3px solid #1a1a2e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 20px;
+}
+
+.preview-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.preview-user-badge {
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #ffffff54;
+}
+
+.preview-badge {
+  color: #8b8b8b;
+  font-size: 12px;
+}
+
 .login-navbar {
   padding: 5px 15px 5px 15px;
   border-radius: 8px;

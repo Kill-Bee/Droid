@@ -438,17 +438,50 @@ position: absolute;
 
 .left-card {
   margin-right: 20px;
+  position: relative;
 }
 
 .left-card img {
   width: 40px;
   border-radius: 30px;
+  cursor: pointer;
+}
+
+/* Review Card Popup */
+.review-popup {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 1000;
 }
 
 .left-card h1,
 i {
   display: flex;
   text-align: start;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.pagination span {
+  color: white;
+}
+.pagination button {
+  padding: 0.5rem 1rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Responsive Design */
