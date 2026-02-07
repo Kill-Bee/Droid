@@ -1,4 +1,4 @@
-import { getReviewsManga, postReviewsManga, upsertReviewsManga, deleteReviewsManga } from "../../../api/review/review.api";
+import { getReviewsManga, postReviewsManga, upsertReviewsManga, deleteReviewsManga } from "../../../api/review/manga/review.api";
 
 export async function getMangaReviews(mangaId) {
   return getReviewsManga(mangaId);

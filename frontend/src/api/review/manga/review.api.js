@@ -1,4 +1,4 @@
-import { apiAuth } from "../client/authFetch";
+import { apiAuth } from "../../client/authFetch";
 
 export async function getReviewsManga(mangaId) {
   return await apiAuth.get(`/manga/${mangaId}/reviews`);

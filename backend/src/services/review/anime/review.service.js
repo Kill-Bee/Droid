@@ -8,10 +8,11 @@ import {
   createComment,
   upsertComment,
 } from "../../../models/review/anime/comment.model.js";
+import { ValidationError } from "../../../errors/index.js";
 
 export async function postReview({ userId, animeId, rating, comment }) {
   if (rating < 0.5 || rating > 5 || rating * 2 !== Math.floor(rating * 2)) {
-    throw new BadRequestException("Invalid rating");
+    throw new ValidationError("Invalid rating");
   }
 
   const ratingRow = await createRating({ userId, animeId, rating });
@@ -28,7 +29,7 @@ export async function postReview({ userId, animeId, rating, comment }) {
 
 export async function upsertReview({ userId, animeId, rating, comment }) {
   if (rating < 0.5 || rating > 5 || rating * 2 !== Math.floor(rating * 2)) {
-    throw new BadRequestException("Invalid rating");
+    throw new ValidationError("Invalid rating");
   }
 
   const ratingRow = await upsertRating({ userId, animeId, rating });

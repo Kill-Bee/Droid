@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyProfile, updateMyProfile } from "../../services/profile/profile.service";
+import {
+  getMyProfile,
+  updateMyProfile,
+} from "../../services/profile/profile.service";
 import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
 import StarDisplay from "./components/StarDisplay";
@@ -8,6 +11,7 @@ import EditProfile from "./components/EditProfile";
 import ImageCropModal from "./components/ImageCropModal";
 import { getCroppedImage } from "./utils/cropUtils";
 import { useAuth } from "../../hooks/useAuth";
+import { MediaCard } from "../../components/common";
 import "./profile.css";
 
 export default function Profile() {
@@ -275,11 +279,11 @@ export default function Profile() {
 
         {/* RATING SECTION */}
         <div className="abcd">
-           <label>{profile.bio || "No bio yet"}</label>
-              <p>Joined on {formatDate(profile.joined_at)}</p>
+          <label>{profile.bio || "No bio yet"}</label>
+          <p>Joined on {formatDate(profile.joined_at)}</p>
         </div>
         <div className="mainProfile">
-          <h1>Animes Ratting</h1>
+          <h1>Animes Rating</h1>
 
           {profile.rated_anime?.length === 0 && (
             <p className="info-blank">You haven't rated any anime yet.</p>
@@ -288,11 +292,37 @@ export default function Profile() {
           <div className="slider-wrapper-profile">
             <div className="container-slide">
               {profile.rated_anime?.map((item) => (
-                <div className="card" key={item.anime_id}>
-                  <img src={item.cover_image} alt={item.title} />
-                  <h3>{item.title.length > 20 ? item.title.substring(0,20) + ".." : item.title}</h3>
+                <MediaCard
+                  key={item.anime_id}
+                  id={item.anime_id}
+                  title={item.title}
+                  coverImage={item.cover_image}
+                  onClick={(id) => navigate(`/anime/${id}`)}
+                >
                   <StarDisplay rating={item.rating} />
-                </div>
+                </MediaCard>
+              ))}
+            </div>
+          </div>
+
+          <h1>Manga Rating</h1>
+
+          {profile.rated_manga?.length === 0 && (
+            <p className="info-blank">You haven't rated any manga yet.</p>
+          )}
+
+          <div className="slider-wrapper-profile">
+            <div className="container-slide">
+              {profile.rated_manga?.map((item) => (
+                <MediaCard
+                  key={item.manga_id}
+                  id={item.manga_id}
+                  title={item.title}
+                  coverImage={item.cover_image}
+                  onClick={(id) => navigate(`/manga/${id}`)}
+                >
+                  <StarDisplay rating={item.rating} />
+                </MediaCard>
               ))}
             </div>
           </div>

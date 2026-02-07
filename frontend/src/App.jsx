@@ -6,7 +6,8 @@ import Navbar from "./components/navbar/Navbar.jsx";
 import Anime from "./pages/Anime/Anime.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Auth from "./pages/login/Auth.jsx";
-import Rating from "./pages/Rating/Rating.jsx";
+import AnimeRating from "./pages/Rating/Anime/anime-rating.jsx";
+import MangaRating from "./pages/Rating/Manga/manga-rating.jsx";
 import AddAnime from "./pages/Data/AddAnime.jsx";
 import AddManga from "./pages/Data/AddManga.jsx";
 import Home from "./pages/Home/Home.jsx";
@@ -70,11 +71,13 @@ export default function App() {
         <Route element={<MainLayout search={search} setSearch={setSearch} />}>
           {/* Anime routes */}
           <Route path="/anime" element={<Anime search={search} />} />
-          <Route path="/anime/:id" element={<Rating />} />
+          <Route path="/anime/:id" element={<AnimeRating />} />
+          <Route path="/anime/carousel/:id" element={<AnimeRating />} />
 
           {/* Manga routes */}
           <Route path="/manga" element={<Manga search={search} />} />
-          <Route path="/manga/:id" element={<Rating />} />
+          <Route path="/manga/:id" element={<MangaRating />} />
+          <Route path="/manga/carousel/:id" element={<MangaRating />} />
 
           {/* Profile route */}
           <Route path="/profile" element={<Profile />} />

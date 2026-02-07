@@ -45,7 +45,7 @@ export async function upsertRating({ userId, mangaId, rating }) {
   const sql = `
     INSERT INTO ratings (user_id, manga_id, rating)
     VALUES ($1, $2, $3)
-    ON CONFLICT (user_id, manga_id)
+    ON CONFLICT (user_id, manga_id) WHERE manga_id IS NOT NULL
     DO UPDATE SET 
       rating = EXCLUDED.rating, 
       updated_at = NOW()
