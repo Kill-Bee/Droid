@@ -11,6 +11,7 @@ import EditProfile from "./components/EditProfile";
 import ImageCropModal from "./components/ImageCropModal";
 import { getCroppedImage } from "./utils/cropUtils";
 import { useAuth } from "../../hooks/useAuth";
+import { MediaCard } from "../../components/common";
 import "./profile.css";
 
 export default function Profile() {
@@ -291,20 +292,15 @@ export default function Profile() {
           <div className="slider-wrapper-profile">
             <div className="container-slide">
               {profile.rated_anime?.map((item) => (
-                <div
-                  className="card"
+                <MediaCard
                   key={item.anime_id}
-                  onClick={() => navigate(`/anime/${item.anime_id}`)}
-                  style={{ cursor: "pointer" }}
+                  id={item.anime_id}
+                  title={item.title}
+                  coverImage={item.cover_image}
+                  onClick={(id) => navigate(`/anime/${id}`)}
                 >
-                  <img src={item.cover_image} alt={item.title} />
-                  <h3>
-                    {item.title.length > 20
-                      ? item.title.substring(0, 20) + ".."
-                      : item.title}
-                  </h3>
                   <StarDisplay rating={item.rating} />
-                </div>
+                </MediaCard>
               ))}
             </div>
           </div>
@@ -318,20 +314,15 @@ export default function Profile() {
           <div className="slider-wrapper-profile">
             <div className="container-slide">
               {profile.rated_manga?.map((item) => (
-                <div
-                  className="card"
+                <MediaCard
                   key={item.manga_id}
-                  onClick={() => navigate(`/manga/${item.manga_id}`)}
-                  style={{ cursor: "pointer" }}
+                  id={item.manga_id}
+                  title={item.title}
+                  coverImage={item.cover_image}
+                  onClick={(id) => navigate(`/manga/${id}`)}
                 >
-                  <img src={item.cover_image} alt={item.title} />
-                  <h3>
-                    {item.title.length > 20
-                      ? item.title.substring(0, 20) + ".."
-                      : item.title}
-                  </h3>
                   <StarDisplay rating={item.rating} />
-                </div>
+                </MediaCard>
               ))}
             </div>
           </div>
