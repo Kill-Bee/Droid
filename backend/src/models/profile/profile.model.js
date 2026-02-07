@@ -2,6 +2,38 @@ import { query } from "../../config/db.js";
 
 export async function getProfile(userId) {
   const sql = `
+    WITH anime_ratings AS (
+      SELECT 
+        r.user_id,
+        json_agg(
+          json_build_object(
+            'anime_id', a.id,
+            'title', a.title,
+            'cover_image', a.cover_image,
+            'rating', r.rating
+          )
+        ) AS rated_anime
+      FROM ratings r
+      JOIN anime a ON a.id = r.anime_id
+      WHERE r.user_id = $1 AND r.anime_id IS NOT NULL
+      GROUP BY r.user_id
+    ),
+    manga_ratings AS (
+      SELECT 
+        r.user_id,
+        json_agg(
+          json_build_object(
+            'manga_id', mg.id,
+            'title', mg.title,
+            'cover_image', mg.cover_image,
+            'rating', r.rating
+          )
+        ) AS rated_manga
+      FROM ratings r
+      JOIN manga mg ON mg.id = r.manga_id
+      WHERE r.user_id = $1 AND r.manga_id IS NOT NULL
+      GROUP BY r.user_id
+    )
     SELECT
       u.id,
       u.username,
@@ -11,25 +43,13 @@ export async function getProfile(userId) {
       m.banner,
       m.bio,
       m.joined_at,
-      COALESCE(
-        json_agg(
-          json_build_object(
-            'anime_id', a.id,
-            'title', a.title,
-            'cover_image', a.cover_image,
-            'rating', r.rating
-          )
-        ) FILTER (WHERE a.id IS NOT NULL),
-        '[]'
-      ) AS rated_anime
+      COALESCE(ar.rated_anime, '[]'::json) AS rated_anime,
+      COALESCE(mr.rated_manga, '[]'::json) AS rated_manga
     FROM users u
     LEFT JOIN members m ON m.user_id = u.id
-    LEFT JOIN ratings r
-      ON r.user_id = u.id AND r.anime_id IS NOT NULL
-    LEFT JOIN anime a
-      ON a.id = r.anime_id
-    WHERE u.id = $1
-    GROUP BY u.id, m.display_name, m.avatar, m.badge, m.banner, m.bio, m.joined_at;
+    LEFT JOIN anime_ratings ar ON ar.user_id = u.id
+    LEFT JOIN manga_ratings mr ON mr.user_id = u.id
+    WHERE u.id = $1;
   `;
 
   const { rows } = await query(sql, [userId]);

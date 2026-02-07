@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyProfile, updateMyProfile } from "../../services/profile/profile.service";
+import {
+  getMyProfile,
+  updateMyProfile,
+} from "../../services/profile/profile.service";
 import { uploadAvatar, uploadBanner } from "../../services/storage";
 import { toast } from "react-toastify";
 import StarDisplay from "./components/StarDisplay";
@@ -275,11 +278,11 @@ export default function Profile() {
 
         {/* RATING SECTION */}
         <div className="abcd">
-           <label>{profile.bio || "No bio yet"}</label>
-              <p>Joined on {formatDate(profile.joined_at)}</p>
+          <label>{profile.bio || "No bio yet"}</label>
+          <p>Joined on {formatDate(profile.joined_at)}</p>
         </div>
         <div className="mainProfile">
-          <h1>Animes Ratting</h1>
+          <h1>Animes Rating</h1>
 
           {profile.rated_anime?.length === 0 && (
             <p className="info-blank">You haven't rated any anime yet.</p>
@@ -288,9 +291,45 @@ export default function Profile() {
           <div className="slider-wrapper-profile">
             <div className="container-slide">
               {profile.rated_anime?.map((item) => (
-                <div className="card" key={item.anime_id}>
+                <div
+                  className="card"
+                  key={item.anime_id}
+                  onClick={() => navigate(`/anime/${item.anime_id}`)}
+                  style={{ cursor: "pointer" }}
+                >
                   <img src={item.cover_image} alt={item.title} />
-                  <h3>{item.title.length > 20 ? item.title.substring(0,20) + ".." : item.title}</h3>
+                  <h3>
+                    {item.title.length > 20
+                      ? item.title.substring(0, 20) + ".."
+                      : item.title}
+                  </h3>
+                  <StarDisplay rating={item.rating} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <h1>Manga Rating</h1>
+
+          {profile.rated_manga?.length === 0 && (
+            <p className="info-blank">You haven't rated any manga yet.</p>
+          )}
+
+          <div className="slider-wrapper-profile">
+            <div className="container-slide">
+              {profile.rated_manga?.map((item) => (
+                <div
+                  className="card"
+                  key={item.manga_id}
+                  onClick={() => navigate(`/manga/${item.manga_id}`)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img src={item.cover_image} alt={item.title} />
+                  <h3>
+                    {item.title.length > 20
+                      ? item.title.substring(0, 20) + ".."
+                      : item.title}
+                  </h3>
                   <StarDisplay rating={item.rating} />
                 </div>
               ))}
