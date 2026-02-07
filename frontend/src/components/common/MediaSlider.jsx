@@ -1,11 +1,11 @@
 import { useRef } from "react";
 
-export default function MediaSlider({ 
-  title, 
-  children, 
-  loading, 
+export default function MediaSlider({
+  title,
+  children,
+  loading,
   skeletonComponent: SkeletonComponent,
-  skeletonCount = 10 
+  skeletonCount = 10,
 }) {
   const containerRef = useRef(null);
 

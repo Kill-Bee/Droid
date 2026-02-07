@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { getAnimes } from "../../services/anime/anime.service";
 import { getAnimesCarousel } from "../../services/anime/anime-carousel.service";
 import { useAnimeSearch } from "../../hooks/useAnimeSearch";
-import { 
-  MediaCard, 
-  MediaSlider, 
-  HeroCarousel, 
-  CarouselSkeleton, 
-  CardSkeleton 
+import {
+  MediaCard,
+  MediaSlider,
+  HeroCarousel,
+  CarouselSkeleton,
+  CardSkeleton,
 } from "../../components/common";
 import "./anime.css";
 
@@ -19,7 +19,8 @@ export default function Anime({ search }) {
   const [loading, setLoading] = useState(true);
   const [carouselLoading, setCarouselLoading] = useState(true);
 
-  const { data: searchResults, loading: searchLoading } = useAnimeSearch(search);
+  const { data: searchResults, loading: searchLoading } =
+    useAnimeSearch(search);
 
   useEffect(() => {
     (async () => {
@@ -64,11 +65,17 @@ export default function Anime({ search }) {
   const filteredAnimes = search ? searchResults : animes;
   const isLoading = search ? searchLoading : loading;
 
-  const actionAnimes = filteredAnimes.filter((anime) => anime.genres?.includes("Action"));
-  const romanceAnimes = filteredAnimes.filter((anime) => anime.genres?.includes("Romance"));
-  const fantasyAnimes = filteredAnimes.filter((anime) => anime.genres?.includes("Fantasy"));
+  const actionAnimes = filteredAnimes.filter((anime) =>
+    anime.genres?.includes("Action"),
+  );
+  const romanceAnimes = filteredAnimes.filter((anime) =>
+    anime.genres?.includes("Romance"),
+  );
+  const fantasyAnimes = filteredAnimes.filter((anime) =>
+    anime.genres?.includes("Fantasy"),
+  );
 
-  const renderCards = (items, onClick) => 
+  const renderCards = (items, onClick) =>
     items.map((anime) => (
       <MediaCard
         key={anime.id}
@@ -89,7 +96,7 @@ export default function Anime({ search }) {
         type="anime"
       />
       <div className="banner-bottom-bg" aria-hidden="true" />
-      
+
       <div className="main">
         <MediaSlider
           title="Sedang Trending"
@@ -128,7 +135,10 @@ export default function Anime({ search }) {
               <div className="card-diam" key={anime.id}>
                 <div>
                   <img
-                    src={anime.cover_image || "https://via.placeholder.com/300x400?text=No+Image"}
+                    src={
+                      anime.cover_image ||
+                      "https://via.placeholder.com/300x400?text=No+Image"
+                    }
                     alt={anime.title}
                     onClick={() => handleAnimeClick(anime.id)}
                   />

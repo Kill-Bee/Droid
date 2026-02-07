@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { getManga } from "../../services/manga/manga.service";
 import { getMangaCarousel } from "../../services/manga/manga-carousel.service";
 import { useMangaSearch } from "../../hooks/useMangaSearch";
-import { 
-  MediaCard, 
-  MediaSlider, 
-  HeroCarousel, 
-  CarouselSkeleton, 
-  CardSkeleton 
+import {
+  MediaCard,
+  MediaSlider,
+  HeroCarousel,
+  CarouselSkeleton,
+  CardSkeleton,
 } from "../../components/common";
 import "./manga.css";
 
@@ -19,7 +19,8 @@ export default function Manga({ search }) {
   const [loading, setLoading] = useState(true);
   const [carouselLoading, setCarouselLoading] = useState(true);
 
-  const { data: searchResults, loading: searchLoading } = useMangaSearch(search);
+  const { data: searchResults, loading: searchLoading } =
+    useMangaSearch(search);
 
   useEffect(() => {
     (async () => {
@@ -65,10 +66,12 @@ export default function Manga({ search }) {
   const isLoading = search ? searchLoading : loading;
 
   const seinenManga = filteredManga.filter((m) => m.genres?.includes("Seinen"));
-  const romanceManga = filteredManga.filter((m) => m.genres?.includes("Romance"));
+  const romanceManga = filteredManga.filter((m) =>
+    m.genres?.includes("Romance"),
+  );
   const actionManga = filteredManga.filter((m) => m.genres?.includes("Action"));
 
-  const renderCards = (items, onClick) => 
+  const renderCards = (items, onClick) =>
     items.map((item) => (
       <MediaCard
         key={item.id}
@@ -89,7 +92,7 @@ export default function Manga({ search }) {
         type="manga"
       />
       <div className="banner-bottom-bg" aria-hidden="true" />
-      
+
       <div className="main">
         <MediaSlider
           title="Sedang Trending (Manga)"
@@ -128,7 +131,10 @@ export default function Manga({ search }) {
               <div className="card-diam" key={item.id}>
                 <div>
                   <img
-                    src={item.cover_image || "https://via.placeholder.com/300x400?text=No+Image"}
+                    src={
+                      item.cover_image ||
+                      "https://via.placeholder.com/300x400?text=No+Image"
+                    }
                     alt={item.title}
                     onClick={() => handleMangaClick(item.id)}
                   />

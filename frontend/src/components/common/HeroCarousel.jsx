@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-export default function HeroCarousel({ 
-  items = [], 
-  onItemClick, 
+export default function HeroCarousel({
+  items = [],
+  onItemClick,
   loading,
   skeletonComponent: SkeletonComponent,
-  type = "anime" // "anime" or "manga"
+  type = "anime", // "anime" or "manga"
 }) {
   const [slide, setSlide] = useState(0);
 
@@ -19,9 +19,7 @@ export default function HeroCarousel({
 
   if (loading) {
     return (
-      <div className="header">
-        {SkeletonComponent && <SkeletonComponent />}
-      </div>
+      <div className="header">{SkeletonComponent && <SkeletonComponent />}</div>
     );
   }
 
@@ -31,14 +29,18 @@ export default function HeroCarousel({
 
   const currentItem = items[slide];
   const episodeLabel = type === "manga" ? "Chapters" : "Episode";
-  const episodeCount = type === "manga" ? currentItem.chapters : currentItem.episodes;
+  const episodeCount =
+    type === "manga" ? currentItem.chapters : currentItem.episodes;
 
   return (
     <div className="header">
       <div className="carousel-item">
         <div className="background">
           <img
-            src={currentItem.cover_image || "https://i.pinimg.com/736x/84/0c/fe/840cfe78663db88b699b805b25e1eb9d.jpg"}
+            src={
+              currentItem.cover_image ||
+              "https://i.pinimg.com/736x/84/0c/fe/840cfe78663db88b699b805b25e1eb9d.jpg"
+            }
             alt={currentItem.title}
           />
         </div>
@@ -52,7 +54,9 @@ export default function HeroCarousel({
 
           <div className="hero-tags">
             <span className="tag">Tahun: {currentItem.release_year}</span>
-            <span className="tag">{episodeLabel}: {episodeCount}</span>
+            <span className="tag">
+              {episodeLabel}: {episodeCount}
+            </span>
           </div>
 
           <p className="hero-description">
@@ -63,7 +67,8 @@ export default function HeroCarousel({
                   className="read-more"
                   onClick={() => onItemClick?.(currentItem.id)}
                 >
-                  {" "}...ReadMore
+                  {" "}
+                  ...ReadMore
                 </span>
               </>
             ) : (
