@@ -39,7 +39,7 @@ export default function Navbar({ search, setSearch }) {
               <option value="" disabled hidden>
                 Add data
               </option>
-              <option value="/add-data">Add Anime</option>
+              <option value="/add-anime">Add Anime</option>
               <option value="/add-manga">Add Manga</option>
             </select>
           </li>

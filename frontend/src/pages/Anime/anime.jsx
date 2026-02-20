@@ -59,10 +59,13 @@ export default function Anime({ search }) {
 
   const handleAnimeCarouselClick = (animeId) => {
     window.scrollTo(0, 0);
-    navigate(`/anime/carousel/${animeId}`);
-  };
+    navigate(`/anime/${animeId}`);
+  }
 
-  const filteredAnimes = search ? searchResults : animes;
+  // Ambil semua anime_id dari carousel
+  const carouselIds = animesCarousel.map(item => item.anime_id);
+  // Filter anime utama agar tidak menampilkan yang sudah ada di carousel
+  const filteredAnimes = (search ? searchResults : animes).filter(item => !carouselIds.includes(item.id));
   const isLoading = search ? searchLoading : loading;
 
   const actionAnimes = filteredAnimes.filter((anime) =>

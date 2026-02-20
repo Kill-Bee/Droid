@@ -65,7 +65,7 @@ export default function HeroCarousel({
                 {currentItem.description.substring(0, 250)}
                 <span
                   className="read-more"
-                  onClick={() => onItemClick?.(currentItem.id)}
+                  onClick={() => onItemClick?.(type === "manga" ? currentItem.manga_id : currentItem.anime_id || currentItem.id)}
                 >
                   {" "}
                   ...ReadMore
@@ -79,7 +79,7 @@ export default function HeroCarousel({
           <div className="hero-buttons">
             <button
               className="btn-favorite"
-              onClick={() => onItemClick?.(currentItem.id)}
+              onClick={() => onItemClick?.(type === "manga" ? currentItem.manga_id : currentItem.anime_id || currentItem.id)}
             >
               <span>⭐</span> Rating
             </button>
