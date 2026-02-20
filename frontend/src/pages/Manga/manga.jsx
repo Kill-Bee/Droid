@@ -62,7 +62,10 @@ export default function Manga({ search }) {
     navigate(`/manga/carousel/${mangaId}`);
   };
 
-  const filteredManga = search ? searchResults : manga;
+  // Ambil semua manga_id dari carousel
+  const carouselIds = mangaCarousel.map(item => item.manga_id);
+  // Filter manga utama agar tidak menampilkan yang sudah ada di carousel
+  const filteredManga = (search ? searchResults : manga).filter(item => !carouselIds.includes(item.id));
   const isLoading = search ? searchLoading : loading;
 
   const seinenManga = filteredManga.filter((m) => m.genres?.includes("Seinen"));

@@ -56,5 +56,6 @@ export async function createAnimeCarouselService(data) {
     cover_image: data.cover_image,
     release_year: releaseYear,
     episodes: episodes,
+    anime_id: data.anime_id,
   });
 }
