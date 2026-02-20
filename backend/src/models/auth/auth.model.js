@@ -11,7 +11,7 @@ export async function createUser(username, passwordHash) {
   const result = await query(
     `
     INSERT INTO users (username, password_hash) VALUES ($1, $2) 
-    RETURNING id, username, created_at
+    RETURNING id, username, role, created_at
     `,
     [username, passwordHash],
   );

@@ -26,6 +26,7 @@ export async function login(username, password) {
   const payload = {
     id: user.id,
     username: user.username,
+    role: user.role,
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
@@ -34,6 +35,7 @@ export async function login(username, password) {
     user: {
       id: user.id,
       username: user.username,
+      role: user.role,
     },
   };
 }
@@ -69,5 +71,12 @@ export async function register(username, password, memberData = {}) {
     bio: null,
   });
 
-  return { user, member };
+  return {
+    user: {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+    },
+    member,
+  };
 }

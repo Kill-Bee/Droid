@@ -1,10 +1,9 @@
 import { useAuth } from "../../../hooks/useAuth";
 
-export default function AddButton({ handleChange, select }) {
-  const { isAuth } = useAuth();
+export default function AddButton({ onChange, select }) {
+  const { user } = useAuth();
 
-
-  if (!isAuth) {
+  if (!user || user.role !== "admin") {
     return null;
   }
 
@@ -13,7 +12,7 @@ export default function AddButton({ handleChange, select }) {
       <select
         name=""
         id=""
-        onChange={handleChange}
+        onChange={onChange}
         value={select}
         className="data"
       >
