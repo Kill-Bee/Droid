@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getMyProfile } from "../../services/profile/profile.service";
 import SearchBar from "./components/SearchBar";
 import AuthButton from "./components/AuthButton";
+import AddButton from "./components/AddButton";
 import "./navbar.css";
 
 export default function Navbar({ search, setSearch }) {
@@ -28,21 +29,7 @@ export default function Navbar({ search, setSearch }) {
       <ul>
         <li onClick={() => navigate("/anime")}>Anime</li>
         <li onClick={() => navigate("/manga")}>Manga</li>
-        <li>
-            <select
-              name=""
-              id=""
-              onChange={handleChange}
-              value={select}
-              className="data"
-            >
-              <option value="" disabled hidden>
-                Add data
-              </option>
-              <option value="/add-anime">Add Anime</option>
-              <option value="/add-manga">Add Manga</option>
-            </select>
-          </li>
+        <AddButton onChange={handleChange} select={select} />
       </ul>
 
       <div className="nav-right">
