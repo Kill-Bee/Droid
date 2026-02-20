@@ -25,16 +25,6 @@ function MainLayout({ search, setSearch }) {
   );
 }
 
-// Layout wrapper untuk pass props ke child routes
-function LayoutWithSearch({ search, setSearch, children }) {
-  return (
-    <>
-      <Navbar search={search} setSearch={setSearch} />
-      {children}
-    </>
-  );
-}
-
 export default function App() {
   const [search, setSearch] = useState("");
 
