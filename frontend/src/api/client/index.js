@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "/api";
 
 export async function baseFetch(
   path,
@@ -12,7 +12,7 @@ export async function baseFetch(
     },
     body: body ? JSON.stringify(body) : undefined,
   });
-  
+
   if (!res.ok) {
     let message = "Request failed";
 
