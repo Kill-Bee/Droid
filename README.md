@@ -1,29 +1,29 @@
 # Droid
 
-Aplikasi full-stack untuk eksplorasi Anime & Manga, termasuk fitur autentikasi pengguna, profil, rating, dan ulasan. Repo ini terdiri dari dua bagian: backend (Node.js/Express + PostgreSQL) dan frontend (React + Vite).
+A full-stack application for exploring Anime & Manga, including features for user authentication, profiles, ratings, and reviews. This repository consists of two components: the backend (Node.js/Express + PostgreSQL) and the frontend (React + Vite).
 
-## Isi Proyek
+## Project Contents
 
-- [`backend/`](https://github.com/Kill-Bee/Droid/tree/main/backend) — Server Express untuk API dengan PostgreSQL, JWT, dan middleware autentikasi.
-- [`frontend/`](https://github.com/Kill-Bee/Droid/tree/main/frontend) — Aplikasi React (Vite) untuk antarmuka pengguna.
+- [`backend/`](https://github.com/Kill-Bee/Droid/tree/main/backend) — Express server for APIs with PostgreSQL, JWT, and authentication middleware.
+- [`frontend/`](https://github.com/Kill-Bee/Droid/tree/main/frontend) — React application (Vite) for the user interface.
 
-## Teknologi
+## Technology Stack
 
 - Backend:
   - Node.js (>= 18), Express 5
   - PostgreSQL (`pg`)
   - JSON Web Token (`jsonwebtoken`)
-  - Hashing password (`bcrypt`)
+  - Password hashing (`bcrypt`)
   - CORS, `dotenv`, `nodemon`
-  - Manajer paket: `pnpm` (pnpm@10.24.0)
+  - Package manager: `pnpm` (pnpm@10.24.0)
 - Frontend:
   - React 19 + Vite 7
   - React Router 7
   - React Toastify, React Easy Crop, React Loading Skeleton
-  - Supabase JS (digunakan pada sisi frontend)
-  - ESLint (konfigurasi flat)
+  - Supabase JS (used on the frontend)
+  - ESLint (flat configuration)
 
-## Struktur Direktori
+## Directory Structure
 
 ```
 .
@@ -55,136 +55,136 @@ Aplikasi full-stack untuk eksplorasi Anime & Manga, termasuk fitur autentikasi p
         └── main.jsx
 ```
 
-## Menjalankan Secara Lokal
+## Running Locally
 
-Prasyarat:
+### Prerequisites
 - Node.js >= 18
-- `pnpm` terpasang
-- PostgreSQL berjalan (lokal atau remote)
+- `pnpm` installed
+- A running PostgreSQL instance (local or remote)
 
 ### 1) Backend (API)
 
-1. Masuk ke folder backend dan pasang dependensi:
+1. Navigate to the backend folder and install dependencies:
    ```bash
    cd backend
    pnpm install
    ```
 
-2. Siapkan variabel lingkungan. Buat file `.env` di `backend/` (contoh variabel yang umum dipakai):
+2. Set up environment variables. Create a `.env` file in the `backend/` folder (example variables):
    ```
    PORT=3000
    DATABASE_URL=postgres://user:password@host:port/dbname
    JWT_SECRET=your_jwt_secret
    ```
-   Catatan:
-   - Server membaca `PORT` dari environment (default 3000).
-   - Konfigurasi database dan secret JWT harus disesuaikan dengan lingkungan Anda.
+   Notes:
+   - The server reads the `PORT` from the environment (default 3000).
+   - Adjust the database configuration and JWT secret as per your environment.
 
-3. Jalankan mode pengembangan:
+3. Run in development mode:
    ```bash
    pnpm dev
    ```
-   atau jalankan produksi:
+   or for production:
    ```bash
    pnpm start
    ```
 
-Server akan berjalan di `http://localhost:3000`. Origin CORS di backend saat ini di-set ke `http://localhost:5173` (lihat `backend/src/app.js`), sehingga frontend dev server default Vite akan kompatibel.
+The server will run at `http://localhost:3000`. The default CORS origin in the backend is set to `http://localhost:5173` (see `backend/src/app.js`).
 
 ### 2) Frontend (React)
 
-1. Masuk ke folder frontend dan pasang dependensi:
+1. Navigate to the frontend folder and install dependencies:
    ```bash
    cd frontend
    pnpm install
    ```
 
-2. Jika aplikasi frontend membutuhkan konfigurasi environment (misalnya base URL API), tambahkan pada `.env` (contoh):
+2. If the frontend application requires environment configuration (e.g., API base URL), add it in `.env` (example):
    ```
    VITE_API_BASE_URL=http://localhost:3000
    ```
-   Sesuaikan dengan alamat backend Anda.
+   Adjust according to your backend address.
 
-3. Jalankan mode pengembangan:
+3. Run in development mode:
    ```bash
    pnpm dev
    ```
-   - Vite akan berjalan di `http://localhost:5173`.
+   - Vite will run at `http://localhost:5173`.
 
-4. Build dan preview (opsional):
+4. Build and preview (optional):
    ```bash
    pnpm build
    pnpm preview
    ```
 
-## Ringkasan API
+## API Endpoints Summary
 
-Endpoint inti disusun di folder `backend/src/routes/`. Berikut ringkasannya:
+The core endpoints are organized in the `backend/src/routes/` folder. Here is a summary:
 
 - Health:
-  - `GET /api/health` — cek status server (mengembalikan `{ status: "ok" }`)
-    - Lihat file: [`backend/src/routes/health.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/health.routes.js)
+  - `GET /api/health` — Check server status (returns `{ status: "ok" }`)
+    - File: [`backend/src/routes/health.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/health.routes.js)
 
-- Autentikasi:
-  - `POST /api/auth/login` — login
-  - `POST /api/auth/register` — registrasi
-    - Lihat file: [`backend/src/routes/auth.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/auth.routes.js)
+- Authentication:
+  - `POST /api/auth/login` — Login
+  - `POST /api/auth/register` — Register
+    - File: [`backend/src/routes/auth.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/auth.routes.js)
 
-- Profil (butuh autentikasi):
-  - `GET /api/profile` — mengambil data profil
-  - `PUT /api/profile` — memperbarui data profil
-    - Lihat file: [`backend/src/routes/profile.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/profile.routes.js)
+- Profile (authentication required):
+  - `GET /api/profile` — Retrieve profile data
+  - `PUT /api/profile` — Update profile data
+    - File: [`backend/src/routes/profile.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/profile.routes.js)
 
 - Anime:
-  - `GET /api/anime` — daftar anime
-  - `POST /api/anime` — tambah anime
-  - `GET /api/anime/carousel` — daftar carousel anime
-  - `POST /api/anime/carousel` — tambah carousel anime
-  - `GET /api/anime/search` — antre pencarian anime
-  - `GET /api/anime/detail/:id` — detail kartu anime
-  - `GET /api/anime/carousel/:id` — carousel anime berdasarkan ID
-  - `GET /api/anime/:id` — anime berdasarkan ID
-  - Rating (butuh autentikasi):
+  - `GET /api/anime` — List of animes
+  - `POST /api/anime` — Add anime
+  - `GET /api/anime/carousel` — List of anime carousel
+  - `POST /api/anime/carousel` — Add anime carousel
+  - `GET /api/anime/search` — Anime search queue
+  - `GET /api/anime/detail/:id` — Anime card detail
+  - `GET /api/anime/carousel/:id` — Anime carousel by ID
+  - `GET /api/anime/:id` — Anime by ID
+  - Rating (authentication required):
     - `GET /api/anime/:animeId/rating`
-  - Ulasan (butuh autentikasi):
+  - Reviews (authentication required):
     - `POST /api/anime/:animeId/reviews/upsert`
     - `POST /api/anime/:animeId/reviews`
     - `GET /api/anime/:animeId/reviews`
     - `DELETE /api/anime/:animeId/reviews`
-    - Lihat file: [`backend/src/routes/anime.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/anime.routes.js)
+    - File: [`backend/src/routes/anime.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/anime.routes.js)
 
-- Manga (struktur mirip Anime):
-  - `GET /api/manga` — daftar manga
-  - `POST /api/manga` — tambah manga
-  - `GET /api/manga/carousel` — daftar carousel manga
-  - `POST /api/manga/carousel` — tambah carousel manga
-  - `GET /api/manga/search` — antre pencarian manga
-  - `GET /api/manga/detail/:id` — detail kartu manga
-  - `GET /api/manga/carousel/:id` — carousel manga berdasarkan ID
-  - `GET /api/manga/:id` — manga berdasarkan ID
-  - Rating (butuh autentikasi):
+- Manga (similar structure to Anime):
+  - `GET /api/manga` — List of mangas
+  - `POST /api/manga` — Add manga
+  - `GET /api/manga/carousel` — List of manga carousel
+  - `POST /api/manga/carousel` — Add manga carousel
+  - `GET /api/manga/search` — Manga search queue
+  - `GET /api/manga/detail/:id` — Manga card detail
+  - `GET /api/manga/carousel/:id` — Manga carousel by ID
+  - `GET /api/manga/:id` — Manga by ID
+  - Rating (authentication required):
     - `GET /api/manga/:mangaId/rating`
-  - Ulasan (butuh autentikasi):
+  - Reviews (authentication required):
     - `POST /api/manga/:mangaId/reviews/upsert`
     - `POST /api/manga/:mangaId/reviews`
     - `GET /api/manga/:mangaId/reviews`
     - `DELETE /api/manga/:mangaId/reviews`
-    - Lihat file: [`backend/src/routes/manga.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/manga.routes.js)
+    - File: [`backend/src/routes/manga.routes.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/routes/manga.routes.js)
 
-## Skrip Penting
+## Important Scripts
 
 - Backend:
-  - `pnpm dev` — jalankan server dengan `nodemon` (`src/server.js`)
-  - `pnpm start` — jalankan server Node (`src/server.js`)
+  - `pnpm dev` — Run the server with `nodemon` (`src/server.js`)
+  - `pnpm start` — Run the Node server (`src/server.js`)
 - Frontend:
-  - `pnpm dev` — jalankan Vite dev server
-  - `pnpm build` — build produksi
-  - `pnpm preview` — preview hasil build
-  - `pnpm lint` — linting dengan ESLint
+  - `pnpm dev` — Run the Vite development server
+  - `pnpm build` — Build for production
+  - `pnpm preview` — Preview the build
+  - `pnpm lint` — Run ESLint for linting
 
-## Catatan Pengembangan
+## Development Notes
 
-- Origin CORS di backend saat ini di-hardcode ke `http://localhost:5173` pada [`backend/src/app.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/app.js). Ubah sesuai domain frontend saat deploy produksi.
-- Pastikan environment untuk database dan JWT dikonfigurasi dengan benar.
-- Backend menggunakan ES Modules (`"type": "module"`), sesuaikan import/export.
-- **Masih dalam tahap pengembangan**
+- The backend CORS origin is currently hardcoded to `http://localhost:5173` in [`backend/src/app.js`](https://github.com/Kill-Bee/Droid/blob/main/backend/src/app.js). Update it to match your frontend domain.
+- Ensure environment variables for the database and JWT are correctly configured.
+- The backend uses ES Modules (`"type": "module"`), adjust imports/exports accordingly.
+- **Still in development phase.**
